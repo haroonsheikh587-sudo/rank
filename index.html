@@ -12,7 +12,11 @@
      gold "X" logo mark, gold active-nav underline, and gold category
      pills (#F2C230), dark navy headline text (#2B2D42), and a white
      page background. Poppins is the site's Google-Fonts typeface. */
-  :root{
+  /* Scoped under .fsa-widget (not :root/body/*) so this can be dropped
+     into an existing page — e.g. a WordPress Custom HTML block —
+     without its variables, box-sizing reset, or input styles leaking
+     onto the rest of that page. */
+  .fsa-widget{
     --cream:#FAFAFA;
     --white:#FFFFFF;
     --ink:#2B2D42;
@@ -24,17 +28,14 @@
     --green:#2F7A4F;
     --red:#B23A2E;
     --radius:16px;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
+    max-width:720px;margin:0 auto;
     font-family:'Poppins','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
     background:var(--cream);
     color:var(--ink);
     padding:24px 12px 60px;
   }
-  .app{max-width:720px;margin:0 auto;}
-  .card{
+  .fsa-widget, .fsa-widget *{box-sizing:border-box;}
+  .fsa-widget .card{
     background:var(--white);
     border-radius:24px;
     box-shadow:0 2px 24px rgba(43,45,66,0.08);
@@ -42,213 +43,213 @@
     border:1px solid var(--border);
   }
   /* TABS */
-  .tabs{display:flex;border-bottom:1px solid var(--border);}
-  .tab{
+  .fsa-widget .tabs{display:flex;border-bottom:1px solid var(--border);}
+  .fsa-widget .tab{
     flex:1;background:var(--cream);border:none;padding:18px 8px 14px;
     font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;
     border-bottom:3px solid transparent;transition:all .15s;
   }
-  .tab .ico{display:block;font-size:20px;margin-bottom:6px;}
-  .tab.active{background:var(--white);color:var(--ink);border-bottom-color:var(--accent);}
-  .tab:hover:not(.active){background:#E8EBEF;}
+  .fsa-widget .tab .ico{display:block;font-size:20px;margin-bottom:6px;}
+  .fsa-widget .tab.active{background:var(--white);color:var(--ink);border-bottom-color:var(--accent);}
+  .fsa-widget .tab:hover:not(.active){background:#E8EBEF;}
 
-  .panel{padding:28px 24px 30px;display:none;}
-  .panel.visible{display:block;}
+  .fsa-widget .panel{padding:28px 24px 30px;display:none;}
+  .fsa-widget .panel.visible{display:block;}
 
   /* STEP INDICATOR */
-  .steps{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:26px;}
-  .step{display:flex;align-items:center;gap:8px;}
-  .step-num{
+  .fsa-widget .steps{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:26px;}
+  .fsa-widget .step{display:flex;align-items:center;gap:8px;}
+  .fsa-widget .step-num{
     width:26px;height:26px;border-radius:50%;background:var(--border);color:var(--muted);
     display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
     transition:all .2s;
   }
-  .step.active .step-num{background:var(--accent);color:var(--ink);}
-  .step-label{font-size:13px;font-weight:700;color:var(--muted);}
-  .step.active .step-label{color:var(--accent);}
-  .step-line{width:60px;height:1px;background:var(--border);}
+  .fsa-widget .step.active .step-num{background:var(--accent);color:var(--ink);}
+  .fsa-widget .step-label{font-size:13px;font-weight:700;color:var(--muted);}
+  .fsa-widget .step.active .step-label{color:var(--accent);}
+  .fsa-widget .step-line{width:60px;height:1px;background:var(--border);}
 
   /* FORM ELEMENTS */
-  label.field-label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin:20px 0 8px;}
-  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
-  .dot.fh{background:var(--legend-gold);}
-  .dot.cb{background:var(--green);}
-  .dot.jw{background:#3D5FA6;}
-  .dot.fl{background:#A63D6E;}
-  .input-wrap{position:relative;}
-  input[type=number], input[type=text]{
+  .fsa-widget label.field-label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin:20px 0 8px;}
+  .fsa-widget .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .fsa-widget .dot.fh{background:var(--legend-gold);}
+  .fsa-widget .dot.cb{background:var(--green);}
+  .fsa-widget .dot.jw{background:#3D5FA6;}
+  .fsa-widget .dot.fl{background:#A63D6E;}
+  .fsa-widget .input-wrap{position:relative;}
+  .fsa-widget input[type=number], .fsa-widget input[type=text]{
     width:100%;padding:14px 60px 14px 16px;border-radius:10px;border:1px solid var(--border);
     background:#F5F7FA;font-size:16px;color:var(--ink);
   }
-  input:focus{outline:2px solid var(--accent);outline-offset:1px;}
-  input.invalid{outline:2px solid var(--red);outline-offset:1px;}
-  .field-error{font-size:12.5px;color:var(--red);margin-top:6px;display:none;}
-  .unit-badge{
+  .fsa-widget input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .fsa-widget input.invalid{outline:2px solid var(--red);outline-offset:1px;}
+  .fsa-widget .field-error{font-size:12.5px;color:var(--red);margin-top:6px;display:none;}
+  .fsa-widget .unit-badge{
     position:absolute;right:10px;top:50%;transform:translateY(-50%);
     background:var(--accent-light);color:var(--accent);font-weight:700;font-size:12px;
     padding:4px 10px;border-radius:6px;
   }
-  .hint{font-size:12.5px;color:var(--muted);margin-top:6px;}
-  .unit-toggle{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-  .unit-toggle-label{font-weight:700;font-size:15px;}
-  .seg{display:flex;background:#E8EBEF;border-radius:20px;padding:3px;}
-  .seg button{
+  .fsa-widget .hint{font-size:12.5px;color:var(--muted);margin-top:6px;}
+  .fsa-widget .unit-toggle{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+  .fsa-widget .unit-toggle-label{font-weight:700;font-size:15px;}
+  .fsa-widget .seg{display:flex;background:#E8EBEF;border-radius:20px;padding:3px;}
+  .fsa-widget .seg button{
     border:none;background:transparent;padding:8px 18px;border-radius:18px;font-weight:700;
     font-size:14px;color:var(--muted);cursor:pointer;
   }
-  .seg button.active{background:var(--ink);color:#fff;}
-  .seg-note{font-size:12.5px;color:var(--muted);}
+  .fsa-widget .seg button.active{background:var(--ink);color:#fff;}
+  .fsa-widget .seg-note{font-size:12.5px;color:var(--muted);}
 
-  .gender-row{display:flex;gap:12px;margin:22px 0 20px;}
-  .gender-btn{
+  .fsa-widget .gender-row{display:flex;gap:12px;margin:22px 0 20px;}
+  .fsa-widget .gender-btn{
     flex:1;padding:16px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);
     font-weight:700;font-size:15px;cursor:pointer;
   }
-  .gender-btn.selected{border-color:var(--accent);background:var(--accent-light);}
+  .fsa-widget .gender-btn.selected{border-color:var(--accent);background:var(--accent-light);}
 
-  .primary-btn{
+  .fsa-widget .primary-btn{
     width:100%;padding:18px;border:none;border-radius:12px;font-size:17px;font-weight:800;
     background:var(--border);color:#9aa1a9;cursor:not-allowed;transition:all .15s;
   }
-  .primary-btn.ready{background:var(--ink);color:#fff;cursor:pointer;}
-  .primary-btn.ready:hover{background:#1E1F30;}
-  .primary-btn:disabled{opacity:.7;}
-  .privacy-note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px;}
+  .fsa-widget .primary-btn.ready{background:var(--ink);color:#fff;cursor:pointer;}
+  .fsa-widget .primary-btn.ready:hover{background:#1E1F30;}
+  .fsa-widget .primary-btn:disabled{opacity:.7;}
+  .fsa-widget .privacy-note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px;}
 
   /* diagram */
-  .measure-layout{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
-  .diagram{width:180px;flex:none;margin:0 auto;}
-  .fields{flex:1;min-width:240px;}
+  .fsa-widget .measure-layout{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+  .fsa-widget .diagram{width:180px;flex:none;margin:0 auto;}
+  .fsa-widget .fields{flex:1;min-width:240px;}
 
   /* UPLOAD / SELFIE */
-  .dropzone{
+  .fsa-widget .dropzone{
     border:2px dashed var(--border);border-radius:16px;padding:44px 16px;text-align:center;
     cursor:pointer;background:#F7F8FA;transition:all .15s;
   }
-  .dropzone.drag{border-color:var(--accent);background:var(--accent-light);}
-  .dropzone .big-emoji{font-size:34px;margin-bottom:12px;}
-  .dropzone h3{margin:0 0 6px;font-size:19px;}
-  .dropzone p{margin:0;color:var(--muted);font-size:13px;}
-  .dropzone img.preview{max-width:100%;max-height:260px;border-radius:12px;}
-  input[type=file]{display:none;}
+  .fsa-widget .dropzone.drag{border-color:var(--accent);background:var(--accent-light);}
+  .fsa-widget .dropzone .big-emoji{font-size:34px;margin-bottom:12px;}
+  .fsa-widget .dropzone h3{margin:0 0 6px;font-size:19px;}
+  .fsa-widget .dropzone p{margin:0;color:var(--muted);font-size:13px;}
+  .fsa-widget .dropzone img.preview{max-width:100%;max-height:260px;border-radius:12px;}
+  .fsa-widget input[type=file]{display:none;}
 
-  .tips-box{background:#F5F7FA;border-radius:14px;padding:16px 18px;margin:20px 0;}
-  .tips-box .tt{font-weight:800;font-size:12.5px;letter-spacing:.04em;color:var(--accent);margin-bottom:10px;}
-  .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:14px;}
-  .tips-grid div{display:flex;gap:8px;align-items:flex-start;}
+  .fsa-widget .tips-box{background:#F5F7FA;border-radius:14px;padding:16px 18px;margin:20px 0;}
+  .fsa-widget .tips-box .tt{font-weight:800;font-size:12.5px;letter-spacing:.04em;color:var(--accent);margin-bottom:10px;}
+  .fsa-widget .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:14px;}
+  .fsa-widget .tips-grid div{display:flex;gap:8px;align-items:flex-start;}
 
-  .cam-wrap{position:relative;background:#111;border-radius:16px;overflow:hidden;aspect-ratio:4/3;
+  .fsa-widget .cam-wrap{position:relative;background:#111;border-radius:16px;overflow:hidden;aspect-ratio:4/3;
     display:flex;align-items:center;justify-content:center;}
-  .cam-wrap video, .cam-wrap canvas, .cam-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-  .cam-placeholder{color:#fff;text-align:center;padding:20px;}
-  .cam-placeholder .big-emoji{font-size:30px;margin-bottom:10px;}
-  .oval-guide{
+  .fsa-widget .cam-wrap video, .fsa-widget .cam-wrap canvas, .fsa-widget .cam-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+  .fsa-widget .cam-placeholder{color:#fff;text-align:center;padding:20px;}
+  .fsa-widget .cam-placeholder .big-emoji{font-size:30px;margin-bottom:10px;}
+  .fsa-widget .oval-guide{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:56%;height:78%;border:3px solid rgba(255,255,255,0.75);border-radius:50%;pointer-events:none;
   }
-  .cam-btn{
+  .fsa-widget .cam-btn{
     width:100%;padding:16px;border:none;border-radius:12px;background:var(--ink);color:#fff;
     font-weight:800;font-size:16px;cursor:pointer;margin-top:16px;
   }
-  .cam-btn:disabled{opacity:.6;cursor:not-allowed;}
-  .cam-error{background:#FBEAE8;color:var(--red);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-top:14px;}
-  .cam-warn{background:var(--accent-light);color:var(--accent);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px;}
+  .fsa-widget .cam-btn:disabled{opacity:.6;cursor:not-allowed;}
+  .fsa-widget .cam-error{background:#FBEAE8;color:var(--red);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-top:14px;}
+  .fsa-widget .cam-warn{background:var(--accent-light);color:var(--accent);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px;}
 
   /* RESULTS */
-  .back-link{background:none;border:none;color:var(--muted);font-weight:700;font-size:13.5px;
+  .fsa-widget .back-link{background:none;border:none;color:var(--muted);font-weight:700;font-size:13.5px;
     cursor:pointer;padding:0 0 16px;display:inline-flex;align-items:center;gap:6px;}
-  .hero{
+  .fsa-widget .hero{
     background:linear-gradient(135deg,#2B2D42,#3F4368);
     border-radius:18px;padding:26px 24px 24px;color:#fff;position:relative;overflow:hidden;
   }
-  .hero::after{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
+  .fsa-widget .hero::after{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
     border-radius:50%;background:rgba(255,255,255,0.06);}
-  .hero .eyebrow{font-size:12.5px;font-weight:700;opacity:.85;letter-spacing:.03em;}
-  .hero .eyebrow2{font-size:13px;font-weight:700;opacity:.9;margin-top:14px;}
-  .hero h1{font-size:32px;margin:4px 0 10px;position:relative;}
-  .hero p{font-size:14px;line-height:1.5;opacity:.92;max-width:480px;position:relative;margin:0 0 18px;}
-  .conf-bar-track{background:rgba(255,255,255,0.25);border-radius:8px;height:8px;overflow:hidden;margin-bottom:8px;}
-  .conf-bar-fill{background:#fff;height:100%;border-radius:8px;}
-  .conf-label{font-size:13px;font-weight:700;}
-  .conf-label span{font-weight:400;opacity:.85;}
+  .fsa-widget .hero .eyebrow{font-size:12.5px;font-weight:700;opacity:.85;letter-spacing:.03em;}
+  .fsa-widget .hero .eyebrow2{font-size:13px;font-weight:700;opacity:.9;margin-top:14px;}
+  .fsa-widget .hero h1{font-size:32px;margin:4px 0 10px;position:relative;}
+  .fsa-widget .hero p{font-size:14px;line-height:1.5;opacity:.92;max-width:480px;position:relative;margin:0 0 18px;}
+  .fsa-widget .conf-bar-track{background:rgba(255,255,255,0.25);border-radius:8px;height:8px;overflow:hidden;margin-bottom:8px;}
+  .fsa-widget .conf-bar-fill{background:#fff;height:100%;border-radius:8px;}
+  .fsa-widget .conf-label{font-size:13px;font-weight:700;}
+  .fsa-widget .conf-label span{font-weight:400;opacity:.85;}
 
-  .stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
-  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 10px;text-align:center;}
-  .stat-card .emoji{font-size:20px;margin-bottom:8px;}
-  .stat-card .val{font-weight:800;font-size:15px;line-height:1.3;}
-  .stat-card .lbl{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin-top:6px;}
+  .fsa-widget .stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+  .fsa-widget .stat-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 10px;text-align:center;}
+  .fsa-widget .stat-card .emoji{font-size:20px;margin-bottom:8px;}
+  .fsa-widget .stat-card .val{font-weight:800;font-size:15px;line-height:1.3;}
+  .fsa-widget .stat-card .lbl{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin-top:6px;}
 
-  .note-box{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:10px;
+  .fsa-widget .note-box{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:10px;
     padding:14px 16px;font-size:13.5px;line-height:1.5;margin:16px 0;}
-  .note-box b{display:block;font-size:12px;letter-spacing:.03em;margin-bottom:4px;}
-  .note-box .sub{color:var(--muted);margin-top:6px;font-size:12.5px;}
+  .fsa-widget .note-box b{display:block;font-size:12px;letter-spacing:.03em;margin-bottom:4px;}
+  .fsa-widget .note-box .sub{color:var(--muted);margin-top:6px;font-size:12.5px;}
 
-  .ratio-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
-  .ratio-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;}
-  .ratio-card .big{font-size:24px;font-weight:800;}
-  .ratio-card .lbl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin:6px 0 10px;}
-  .pill{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:11.5px;
+  .fsa-widget .ratio-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+  .fsa-widget .ratio-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;}
+  .fsa-widget .ratio-card .big{font-size:24px;font-weight:800;}
+  .fsa-widget .ratio-card .lbl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin:6px 0 10px;}
+  .fsa-widget .pill{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:11.5px;
     font-weight:700;padding:3px 10px;border-radius:20px;}
 
-  .section-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 18px 8px;margin:16px 0;}
-  .section-title{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--muted);margin-bottom:14px;}
-  .bar-row{margin-bottom:14px;}
-  .bar-row .top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;}
-  .bar-row .top b{font-weight:700;}
-  .bar-track{background:#F0EBDF;height:9px;border-radius:5px;overflow:hidden;}
-  .bar-fill{height:100%;border-radius:5px;}
+  .fsa-widget .section-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 18px 8px;margin:16px 0;}
+  .fsa-widget .section-title{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--muted);margin-bottom:14px;}
+  .fsa-widget .bar-row{margin-bottom:14px;}
+  .fsa-widget .bar-row .top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px;}
+  .fsa-widget .bar-row .top b{font-weight:700;}
+  .fsa-widget .bar-track{background:#F0EBDF;height:9px;border-radius:5px;overflow:hidden;}
+  .fsa-widget .bar-fill{height:100%;border-radius:5px;}
 
-  .radar-wrap{display:flex;justify-content:center;margin:6px 0 4px;}
-  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
-  .match-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
-  .match-card.winner{border-color:var(--accent);background:#FDF6DE;}
-  .match-top{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;margin-bottom:6px;}
-  .match-top .name{display:flex;align-items:center;gap:8px;}
-  .swatch{width:10px;height:10px;border-radius:50%;}
-  .match-bar-track{background:#F0EBDF;height:6px;border-radius:4px;overflow:hidden;}
-  .match-bar-fill{height:100%;border-radius:4px;}
+  .fsa-widget .radar-wrap{display:flex;justify-content:center;margin:6px 0 4px;}
+  .fsa-widget .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+  .fsa-widget .match-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+  .fsa-widget .match-card.winner{border-color:var(--accent);background:#FDF6DE;}
+  .fsa-widget .match-top{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;margin-bottom:6px;}
+  .fsa-widget .match-top .name{display:flex;align-items:center;gap:8px;}
+  .fsa-widget .swatch{width:10px;height:10px;border-radius:50%;}
+  .fsa-widget .match-bar-track{background:#F0EBDF;height:6px;border-radius:4px;overflow:hidden;}
+  .fsa-widget .match-bar-fill{height:100%;border-radius:4px;}
 
-  .styling-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;margin:16px 0 4px;}
-  .styling-box h3{margin:0 0 14px;font-size:16px;}
-  .styling-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
-  .styling-cols h4{font-size:12px;letter-spacing:.03em;color:var(--muted);margin:0 0 8px;}
-  .styling-cols ul{margin:0 0 10px;padding-left:18px;font-size:14px;line-height:1.7;}
-  .avoid-pill{background:#FBEAE8;color:var(--red);font-size:12.5px;padding:8px 10px;border-radius:8px;}
+  .fsa-widget .styling-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;margin:16px 0 4px;}
+  .fsa-widget .styling-box h3{margin:0 0 14px;font-size:16px;}
+  .fsa-widget .styling-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .fsa-widget .styling-cols h4{font-size:12px;letter-spacing:.03em;color:var(--muted);margin:0 0 8px;}
+  .fsa-widget .styling-cols ul{margin:0 0 10px;padding-left:18px;font-size:14px;line-height:1.7;}
+  .fsa-widget .avoid-pill{background:#FBEAE8;color:var(--red);font-size:12.5px;padding:8px 10px;border-radius:8px;}
 
   @media (max-width:520px){
-    .stat-cards{grid-template-columns:1fr;}
-    .ratio-cards{grid-template-columns:1fr;}
-    .match-grid{grid-template-columns:1fr;}
-    .styling-cols{grid-template-columns:1fr;}
-    .measure-layout{flex-direction:column;}
-    .diagram{width:140px;}
-    .hero h1{font-size:26px;}
+    .fsa-widget .stat-cards{grid-template-columns:1fr;}
+    .fsa-widget .ratio-cards{grid-template-columns:1fr;}
+    .fsa-widget .match-grid{grid-template-columns:1fr;}
+    .fsa-widget .styling-cols{grid-template-columns:1fr;}
+    .fsa-widget .measure-layout{flex-direction:column;}
+    .fsa-widget .diagram{width:140px;}
+    .fsa-widget .hero h1{font-size:26px;}
   }
 </style>
 </head>
 <body>
-<div class="app">
+<div class="fsa-widget">
   <div class="card">
 
-    <div class="tabs" id="tabs">
+    <div class="tabs" id="fsa-tabs">
       <button class="tab active" data-tab="measure"><span class="ico">📏</span>Measurements</button>
       <button class="tab" data-tab="upload"><span class="ico">📸</span>Upload Photo</button>
       <button class="tab" data-tab="selfie"><span class="ico">🤳</span>Selfie Mode</button>
     </div>
 
     <!-- MEASUREMENTS PANEL -->
-    <div class="panel visible" id="panel-measure">
+    <div class="panel visible" id="fsa-panel-measure">
       <div class="steps">
-        <div class="step active" id="m-step1"><span class="step-num">1</span><span class="step-label">Unit</span></div>
+        <div class="step active" id="fsa-m-step1"><span class="step-num">1</span><span class="step-label">Unit</span></div>
         <div class="step-line"></div>
-        <div class="step" id="m-step2"><span class="step-num">2</span><span class="step-label">4 Measurements</span></div>
+        <div class="step" id="fsa-m-step2"><span class="step-num">2</span><span class="step-label">4 Measurements</span></div>
         <div class="step-line"></div>
-        <div class="step" id="m-step3"><span class="step-num">3</span><span class="step-label">Get Result!</span></div>
+        <div class="step" id="fsa-m-step3"><span class="step-num">3</span><span class="step-label">Get Result!</span></div>
       </div>
 
       <div class="unit-toggle">
         <span class="unit-toggle-label">Measuring unit:</span>
-        <div class="seg" id="unit-seg">
+        <div class="seg" id="fsa-unit-seg">
           <button class="active" data-unit="cm">cm</button>
           <button data-unit="in">Inches</button>
         </div>
@@ -274,68 +275,68 @@
         <div class="fields">
           <label class="field-label"><span class="dot fh"></span>Forehead Width</label>
           <div class="input-wrap">
-            <input type="number" id="in-forehead" placeholder="e.g. 14.5" min="0" step="0.1" inputmode="decimal">
-            <span class="unit-badge" id="badge-fh">cm</span>
+            <input type="number" id="fsa-in-forehead" placeholder="e.g. 14.5" min="0" step="0.1" inputmode="decimal">
+            <span class="unit-badge" id="fsa-badge-fh">cm</span>
           </div>
           <div class="hint">Widest point · ~1 finger above eyebrows</div>
-          <div class="field-error" id="err-forehead">Enter a value between 5 and 60.</div>
+          <div class="field-error" id="fsa-err-forehead">Enter a value between 5 and 60.</div>
 
           <label class="field-label"><span class="dot cb"></span>Cheekbone Width</label>
           <div class="input-wrap">
-            <input type="number" id="in-cheekbone" placeholder="e.g. 14.0" min="0" step="0.1" inputmode="decimal">
-            <span class="unit-badge" id="badge-cb">cm</span>
+            <input type="number" id="fsa-in-cheekbone" placeholder="e.g. 14.0" min="0" step="0.1" inputmode="decimal">
+            <span class="unit-badge" id="fsa-badge-cb">cm</span>
           </div>
           <div class="hint">Outer eye corner → outer eye corner</div>
-          <div class="field-error" id="err-cheekbone">Enter a value between 5 and 60.</div>
+          <div class="field-error" id="fsa-err-cheekbone">Enter a value between 5 and 60.</div>
 
           <label class="field-label"><span class="dot jw"></span>Jaw Width</label>
           <div class="input-wrap">
-            <input type="number" id="in-jaw" placeholder="e.g. 13.0" min="0" step="0.1" inputmode="decimal">
-            <span class="unit-badge" id="badge-jw">cm</span>
+            <input type="number" id="fsa-in-jaw" placeholder="e.g. 13.0" min="0" step="0.1" inputmode="decimal">
+            <span class="unit-badge" id="fsa-badge-jw">cm</span>
           </div>
           <div class="hint">Widest jaw point · corner to corner</div>
-          <div class="field-error" id="err-jaw">Enter a value between 5 and 60.</div>
+          <div class="field-error" id="fsa-err-jaw">Enter a value between 5 and 60.</div>
 
           <label class="field-label"><span class="dot fl"></span>Face Length</label>
           <div class="input-wrap">
-            <input type="number" id="in-length" placeholder="e.g. 23.0" min="0" step="0.1" inputmode="decimal">
-            <span class="unit-badge" id="badge-fl">cm</span>
+            <input type="number" id="fsa-in-length" placeholder="e.g. 23.0" min="0" step="0.1" inputmode="decimal">
+            <span class="unit-badge" id="fsa-badge-fl">cm</span>
           </div>
           <div class="hint">Hairline center → chin tip</div>
-          <div class="field-error" id="err-length">Enter a value between 5 and 60.</div>
+          <div class="field-error" id="fsa-err-length">Enter a value between 5 and 60.</div>
         </div>
       </div>
 
       <div style="margin-top:22px;font-weight:700;font-size:15px;">Your gender <span style="font-weight:400;color:var(--muted);font-size:13px;">(for personalised hairstyle tips)</span></div>
-      <div class="gender-row" id="gender-row-measure">
+      <div class="gender-row" id="fsa-gender-row-measure">
         <button class="gender-btn selected" data-gender="male">🧑 Male</button>
         <button class="gender-btn" data-gender="female">👩 Female</button>
       </div>
 
-      <button class="primary-btn" id="btn-calc-measure">🔍 Calculate My Face Shape!</button>
+      <button class="primary-btn" id="fsa-btn-calc-measure">🔍 Calculate My Face Shape!</button>
       <div class="privacy-note">🔒 Private — all calculations run in your browser, nothing is stored</div>
     </div>
 
     <!-- UPLOAD PANEL -->
-    <div class="panel" id="panel-upload">
+    <div class="panel" id="fsa-panel-upload">
       <div class="steps">
-        <div class="step active" id="u-step1"><span class="step-num">1</span><span class="step-label">Upload Photo</span></div>
+        <div class="step active" id="fsa-u-step1"><span class="step-num">1</span><span class="step-label">Upload Photo</span></div>
         <div class="step-line"></div>
-        <div class="step" id="u-step2"><span class="step-num">2</span><span class="step-label">Pick Gender</span></div>
+        <div class="step" id="fsa-u-step2"><span class="step-num">2</span><span class="step-label">Pick Gender</span></div>
         <div class="step-line"></div>
-        <div class="step" id="u-step3"><span class="step-num">3</span><span class="step-label">Get Result!</span></div>
+        <div class="step" id="fsa-u-step3"><span class="step-num">3</span><span class="step-label">Get Result!</span></div>
       </div>
 
-      <div class="dropzone" id="dropzone">
-        <div id="dropzone-empty">
+      <div class="dropzone" id="fsa-dropzone">
+        <div id="fsa-dropzone-empty">
           <div class="big-emoji">🖼️</div>
           <h3>Drop your photo here, or click to browse</h3>
           <p>JPG, PNG, WEBP · Max 10MB · <b style="color:var(--accent);">Front-facing with hair pulled back = best results</b></p>
         </div>
-        <img id="dropzone-preview" class="preview" style="display:none;" alt="Uploaded photo preview">
+        <img id="fsa-dropzone-preview" class="preview" style="display:none;" alt="Uploaded photo preview">
       </div>
-      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp">
-      <div class="cam-error" id="upload-file-error" style="display:none;"></div>
+      <input type="file" id="fsa-file-input" accept="image/jpeg,image/png,image/webp">
+      <div class="cam-error" id="fsa-upload-file-error" style="display:none;"></div>
 
       <div class="tips-box">
         <div class="tt">📋 FOR BEST RESULTS</div>
@@ -347,46 +348,46 @@
       </div>
 
       <div style="font-weight:700;font-size:15px;">Your gender <span style="font-weight:400;color:var(--muted);font-size:13px;">(for personalised tips)</span></div>
-      <div class="gender-row" id="gender-row-upload">
+      <div class="gender-row" id="fsa-gender-row-upload">
         <button class="gender-btn selected" data-gender="male">🧑 Male</button>
         <button class="gender-btn" data-gender="female">👩 Female</button>
       </div>
 
-      <button class="primary-btn" id="btn-analyze-upload" disabled>🤖 Analyze My Photo — Free!</button>
-      <div class="cam-error" id="upload-error" style="display:none;"></div>
+      <button class="primary-btn" id="fsa-btn-analyze-upload" disabled>🤖 Analyze My Photo — Free!</button>
+      <div class="cam-error" id="fsa-upload-error" style="display:none;"></div>
       <div class="privacy-note">🔒 Your photo is analyzed privately in your browser — never uploaded or stored</div>
     </div>
 
     <!-- SELFIE PANEL -->
-    <div class="panel" id="panel-selfie">
+    <div class="panel" id="fsa-panel-selfie">
       <div class="steps">
-        <div class="step active" id="s-step1"><span class="step-num">1</span><span class="step-label">Start Camera</span></div>
+        <div class="step active" id="fsa-s-step1"><span class="step-num">1</span><span class="step-label">Start Camera</span></div>
         <div class="step-line"></div>
-        <div class="step" id="s-step2"><span class="step-num">2</span><span class="step-label">Take Selfie</span></div>
+        <div class="step" id="fsa-s-step2"><span class="step-num">2</span><span class="step-label">Take Selfie</span></div>
         <div class="step-line"></div>
-        <div class="step" id="s-step3"><span class="step-num">3</span><span class="step-label">Analyze!</span></div>
+        <div class="step" id="fsa-s-step3"><span class="step-num">3</span><span class="step-label">Analyze!</span></div>
       </div>
 
-      <div class="cam-warn" id="cam-insecure-warn" style="display:none;">
+      <div class="cam-warn" id="fsa-cam-insecure-warn" style="display:none;">
         ⚠️ Camera access requires a secure context (HTTPS or localhost). Open this page over HTTPS, or use the Upload Photo tab instead.
       </div>
 
-      <div class="cam-wrap" id="cam-wrap">
-        <div class="cam-placeholder" id="cam-placeholder">
+      <div class="cam-wrap" id="fsa-cam-wrap">
+        <div class="cam-placeholder" id="fsa-cam-placeholder">
           <div class="big-emoji">🤳</div>
           <div>Tap "Start Camera" below<br>then take your selfie!</div>
         </div>
-        <video id="cam-video" autoplay playsinline muted style="display:none;"></video>
-        <canvas id="cam-canvas" style="display:none;"></canvas>
-        <img id="cam-shot" style="display:none;" alt="Captured selfie">
-        <div class="oval-guide" id="oval-guide" style="display:none;"></div>
+        <video id="fsa-cam-video" autoplay playsinline muted style="display:none;"></video>
+        <canvas id="fsa-cam-canvas" style="display:none;"></canvas>
+        <img id="fsa-cam-shot" style="display:none;" alt="Captured selfie">
+        <div class="oval-guide" id="fsa-oval-guide" style="display:none;"></div>
       </div>
 
-      <button class="cam-btn" id="btn-cam-action">📷 Start Camera</button>
-      <div class="cam-error" id="cam-error" style="display:none;"></div>
+      <button class="cam-btn" id="fsa-btn-cam-action">📷 Start Camera</button>
+      <div class="cam-error" id="fsa-cam-error" style="display:none;"></div>
 
       <div style="font-weight:700;font-size:15px;margin-top:20px;">Your gender <span style="font-weight:400;color:var(--muted);font-size:13px;">(for personalised tips)</span></div>
-      <div class="gender-row" id="gender-row-selfie">
+      <div class="gender-row" id="fsa-gender-row-selfie">
         <button class="gender-btn selected" data-gender="male">🧑 Male</button>
         <button class="gender-btn" data-gender="female">👩 Female</button>
       </div>
@@ -401,12 +402,13 @@
     </div>
 
     <!-- RESULTS PANEL -->
-    <div class="panel" id="panel-results"></div>
+    <div class="panel" id="fsa-panel-results"></div>
 
   </div>
 </div>
 
 <script>
+(function(){
 /* ============================================================
    FACE SHAPE ENGINE
    - Measurements tab: real geometry (width/length ratios) from
@@ -712,7 +714,7 @@ function renderResults(measurements, opts){
   const statsDisclaimer='<div style="text-align:center;font-size:11.5px;color:var(--muted);margin:-4px 0 4px;">Rarity, celebrity match and golden-ratio score are illustrative comparisons, not scientific measurements.</div>';
 
   const html = `
-    <button class="back-link" id="btn-back">← Try another</button>
+    <button class="back-link" id="fsa-btn-back">← Try another</button>
     <div class="hero">
       <div class="eyebrow">${isEst ? '🤖 AI PHOTO ANALYSIS' : '📏 MEASUREMENT ANALYSIS'}</div>
       <div class="eyebrow2">✨ Your Face Shape Is:</div>
@@ -767,9 +769,9 @@ function renderResults(measurements, opts){
     </div>
   `;
 
-  const panel=document.getElementById('panel-results');
+  const panel=document.getElementById('fsa-panel-results');
   panel.innerHTML=html;
-  document.getElementById('btn-back').addEventListener('click',()=>{
+  document.getElementById('fsa-btn-back').addEventListener('click',()=>{
     showTab(opts.source==='manual'?'measure':opts.source);
     panel.classList.remove('visible');
   });
@@ -780,16 +782,16 @@ function renderResults(measurements, opts){
 function showTab(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('visible'));
-  document.getElementById('panel-'+name).classList.add('visible');
+  document.getElementById('fsa-panel-'+name).classList.add('visible');
   if(name!=='selfie') stopCamera();
 }
 function showResultsPanel(){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('visible'));
-  document.getElementById('panel-results').classList.add('visible');
+  document.getElementById('fsa-panel-results').classList.add('visible');
   stopCamera();
 }
-document.getElementById('tabs').addEventListener('click',e=>{
+document.getElementById('fsa-tabs').addEventListener('click',e=>{
   const btn=e.target.closest('.tab');
   if(btn) showTab(btn.dataset.tab);
 });
@@ -797,7 +799,7 @@ document.getElementById('tabs').addEventListener('click',e=>{
 /* ---------- gender toggles ---------- */
 const genders={measure:'male',upload:'male',selfie:'male'};
 ['measure','upload','selfie'].forEach(scope=>{
-  const row=document.getElementById('gender-row-'+scope);
+  const row=document.getElementById('fsa-gender-row-'+scope);
   row.addEventListener('click',e=>{
     const btn=e.target.closest('.gender-btn');
     if(!btn) return;
@@ -809,7 +811,7 @@ const genders={measure:'male',upload:'male',selfie:'male'};
 
 /* ---------- MEASUREMENTS TAB ---------- */
 let unit='cm';
-document.getElementById('unit-seg').addEventListener('click',e=>{
+document.getElementById('fsa-unit-seg').addEventListener('click',e=>{
   const btn=e.target.closest('button');
   if(!btn) return;
   unit=btn.dataset.unit;
@@ -830,8 +832,8 @@ function checkMeasureReady(){
   const {min,max}=fieldBoundsForUnit();
   let allValid=true;
   measureFields.forEach(name=>{
-    const input=document.getElementById('in-'+name);
-    const err=document.getElementById('err-'+name);
+    const input=document.getElementById('fsa-in-'+name);
+    const err=document.getElementById('fsa-err-'+name);
     const raw=input.value.trim();
     if(raw===''){
       input.classList.remove('invalid');
@@ -848,30 +850,30 @@ function checkMeasureReady(){
       allValid=false;
     }
   });
-  const btn=document.getElementById('btn-calc-measure');
+  const btn=document.getElementById('fsa-btn-calc-measure');
   btn.classList.toggle('ready',allValid);
-  document.getElementById('m-step2').classList.toggle('active',allValid);
+  document.getElementById('fsa-m-step2').classList.toggle('active',allValid);
   return allValid;
 }
-measureFields.forEach(name=>document.getElementById('in-'+name).addEventListener('input',checkMeasureReady));
+measureFields.forEach(name=>document.getElementById('fsa-in-'+name).addEventListener('input',checkMeasureReady));
 
-document.getElementById('btn-calc-measure').addEventListener('click',()=>{
+document.getElementById('fsa-btn-calc-measure').addEventListener('click',()=>{
   if(!checkMeasureReady()) return;
   const f=v=>unit==='cm'?parseFloat(v):parseFloat(v)*2.54;
   const measurements={
-    forehead:f(document.getElementById('in-forehead').value),
-    cheekbone:f(document.getElementById('in-cheekbone').value),
-    jaw:f(document.getElementById('in-jaw').value),
-    length:f(document.getElementById('in-length').value)
+    forehead:f(document.getElementById('fsa-in-forehead').value),
+    cheekbone:f(document.getElementById('fsa-in-cheekbone').value),
+    jaw:f(document.getElementById('fsa-in-jaw').value),
+    length:f(document.getElementById('fsa-in-length').value)
   };
-  document.getElementById('m-step3').classList.add('active');
+  document.getElementById('fsa-m-step3').classList.add('active');
   renderResults(measurements,{source:'manual',gender:genders.measure});
 });
 
 /* ---------- UPLOAD TAB ---------- */
-const dropzone=document.getElementById('dropzone');
-const fileInput=document.getElementById('file-input');
-const uploadFileError=document.getElementById('upload-file-error');
+const dropzone=document.getElementById('fsa-dropzone');
+const fileInput=document.getElementById('fsa-file-input');
+const uploadFileError=document.getElementById('fsa-upload-file-error');
 const ACCEPTED_TYPES=['image/jpeg','image/png','image/webp'];
 const MAX_FILE_BYTES=10*1024*1024;
 let uploadedImg=null;
@@ -906,12 +908,12 @@ function handleFile(file){
     const img=new Image();
     img.onload=()=>{
       uploadedImg=img;
-      document.getElementById('dropzone-empty').style.display='none';
-      const prev=document.getElementById('dropzone-preview');
+      document.getElementById('fsa-dropzone-empty').style.display='none';
+      const prev=document.getElementById('fsa-dropzone-preview');
       prev.src=ev.target.result;
       prev.style.display='block';
-      document.getElementById('u-step2').classList.add('active');
-      const btn=document.getElementById('btn-analyze-upload');
+      document.getElementById('fsa-u-step2').classList.add('active');
+      const btn=document.getElementById('fsa-btn-analyze-upload');
       btn.disabled=false;
       btn.classList.add('ready');
     };
@@ -935,12 +937,12 @@ const DETECTION_ERROR_MESSAGES={
   'model-load-failed':'The face-detection engine could not load — check your connection (or any content/ad blocker) and try again, or use the Measurements tab for a manual result.'
 };
 
-document.getElementById('btn-analyze-upload').addEventListener('click', async ()=>{
+document.getElementById('fsa-btn-analyze-upload').addEventListener('click', async ()=>{
   if(!uploadedImg) return;
-  document.getElementById('u-step3').classList.add('active');
-  const errBox=document.getElementById('upload-error');
+  document.getElementById('fsa-u-step3').classList.add('active');
+  const errBox=document.getElementById('fsa-upload-error');
   errBox.style.display='none';
-  const btn=document.getElementById('btn-analyze-upload');
+  const btn=document.getElementById('fsa-btn-analyze-upload');
   btn.disabled=true;
   btn.textContent='🤖 Analyzing...';
 
@@ -958,16 +960,16 @@ document.getElementById('btn-analyze-upload').addEventListener('click', async ()
 
 /* ---------- SELFIE TAB ---------- */
 let camStream=null, camStage='idle'; // idle -> live -> captured
-const camVideo=document.getElementById('cam-video');
-const camCanvas=document.getElementById('cam-canvas');
-const camShot=document.getElementById('cam-shot');
-const camPlaceholder=document.getElementById('cam-placeholder');
-const ovalGuide=document.getElementById('oval-guide');
-const camBtn=document.getElementById('btn-cam-action');
-const camError=document.getElementById('cam-error');
+const camVideo=document.getElementById('fsa-cam-video');
+const camCanvas=document.getElementById('fsa-cam-canvas');
+const camShot=document.getElementById('fsa-cam-shot');
+const camPlaceholder=document.getElementById('fsa-cam-placeholder');
+const ovalGuide=document.getElementById('fsa-oval-guide');
+const camBtn=document.getElementById('fsa-btn-cam-action');
+const camError=document.getElementById('fsa-cam-error');
 
 if(!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-  document.getElementById('cam-insecure-warn').style.display='block';
+  document.getElementById('fsa-cam-insecure-warn').style.display='block';
   camBtn.disabled=true;
 }
 
@@ -999,7 +1001,7 @@ camBtn.addEventListener('click', async ()=>{
       ovalGuide.style.display='block';
       camBtn.textContent='📸 Take Selfie';
       camStage='live';
-      document.getElementById('s-step2').classList.add('active');
+      document.getElementById('fsa-s-step2').classList.add('active');
     }catch(err){
       camError.style.display='block';
       camError.textContent='Camera access blocked. Allow camera permission for this page (if this tool is embedded in an iframe, the parent page must add allow="camera" to the <iframe> tag), or use the Upload Photo tab instead.';
@@ -1015,7 +1017,7 @@ camBtn.addEventListener('click', async ()=>{
     if(camStream){ camStream.getTracks().forEach(t=>t.stop()); camStream=null; }
     camBtn.textContent='🤖 Analyze Selfie';
     camStage='captured';
-    document.getElementById('s-step3').classList.add('active');
+    document.getElementById('fsa-s-step3').classList.add('active');
   } else if(camStage==='captured'){
     camBtn.textContent='🤖 Analyzing...';
     camBtn.disabled=true;
@@ -1041,9 +1043,10 @@ function resetSelfiePanel(){
   camShot.style.display='none';
   ovalGuide.style.display='none';
   camPlaceholder.style.display='flex';
-  document.getElementById('s-step2').classList.remove('active');
-  document.getElementById('s-step3').classList.remove('active');
+  document.getElementById('fsa-s-step2').classList.remove('active');
+  document.getElementById('fsa-s-step3').classList.remove('active');
 }
+})();
 </script>
 </body>
 </html>
