@@ -4,17 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Face Shape Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800&display=swap" rel="stylesheet">
 <style>
+  /* Palette pulled from stylexmagazine.com's live theme CSS:
+     :root{--accent-color:#ff2c54;--second-color:#5960ff} (used across
+     nav/pagination/hover states), near-black body copy (#0c0d0e), and
+     Poppins as the site's Google-Fonts typeface. --legend-gold below is
+     the site's own logo color, kept only for the forehead measurement
+     legend so the 4-color measurement coding stays distinguishable. */
   :root{
-    --cream:#F5F1EA;
+    --cream:#F3F5F8;
     --white:#FFFFFF;
-    --ink:#211B14;
-    --muted:#75695A;
-    --border:#E7DFD0;
-    --amber:#C6852E;
-    --amber-light:#FBEED9;
-    --purple-deep:#3E1670;
-    --purple-mid:#6B2FB3;
+    --ink:#0C0D0E;
+    --muted:#69727D;
+    --border:#E1E4E8;
+    --accent:#FF2C54;
+    --accent-light:#FFE3E9;
+    --second:#5960FF;
+    --legend-gold:#C6852E;
     --green:#2F7A4F;
     --red:#B23A2E;
     --radius:16px;
@@ -22,7 +31,7 @@
   *{box-sizing:border-box;}
   body{
     margin:0;
-    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Poppins','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
     background:var(--cream);
     color:var(--ink);
     padding:24px 12px 60px;
@@ -31,7 +40,7 @@
   .card{
     background:var(--white);
     border-radius:24px;
-    box-shadow:0 2px 24px rgba(62,22,112,0.08);
+    box-shadow:0 2px 24px rgba(12,13,14,0.08);
     overflow:hidden;
     border:1px solid var(--border);
   }
@@ -43,8 +52,8 @@
     border-bottom:3px solid transparent;transition:all .15s;
   }
   .tab .ico{display:block;font-size:20px;margin-bottom:6px;}
-  .tab.active{background:var(--white);color:var(--ink);border-bottom-color:var(--amber);}
-  .tab:hover:not(.active){background:#efe9dd;}
+  .tab.active{background:var(--white);color:var(--ink);border-bottom-color:var(--accent);}
+  .tab:hover:not(.active){background:#E8EBEF;}
 
   .panel{padding:28px 24px 30px;display:none;}
   .panel.visible{display:block;}
@@ -57,35 +66,35 @@
     display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
     transition:all .2s;
   }
-  .step.active .step-num{background:var(--amber);color:#fff;}
+  .step.active .step-num{background:var(--accent);color:#fff;}
   .step-label{font-size:13px;font-weight:700;color:var(--muted);}
-  .step.active .step-label{color:var(--amber);}
+  .step.active .step-label{color:var(--accent);}
   .step-line{width:60px;height:1px;background:var(--border);}
 
   /* FORM ELEMENTS */
   label.field-label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin:20px 0 8px;}
   .dot{width:9px;height:9px;border-radius:50%;flex:none;}
-  .dot.fh{background:var(--amber);}
+  .dot.fh{background:var(--legend-gold);}
   .dot.cb{background:var(--green);}
   .dot.jw{background:#3D5FA6;}
   .dot.fl{background:#A63D6E;}
   .input-wrap{position:relative;}
   input[type=number], input[type=text]{
     width:100%;padding:14px 60px 14px 16px;border-radius:10px;border:1px solid var(--border);
-    background:#F7F4EE;font-size:16px;color:var(--ink);
+    background:#F5F7FA;font-size:16px;color:var(--ink);
   }
-  input:focus{outline:2px solid var(--amber);outline-offset:1px;}
+  input:focus{outline:2px solid var(--accent);outline-offset:1px;}
   input.invalid{outline:2px solid var(--red);outline-offset:1px;}
   .field-error{font-size:12.5px;color:var(--red);margin-top:6px;display:none;}
   .unit-badge{
     position:absolute;right:10px;top:50%;transform:translateY(-50%);
-    background:var(--amber-light);color:var(--amber);font-weight:700;font-size:12px;
+    background:var(--accent-light);color:var(--accent);font-weight:700;font-size:12px;
     padding:4px 10px;border-radius:6px;
   }
   .hint{font-size:12.5px;color:var(--muted);margin-top:6px;}
   .unit-toggle{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
   .unit-toggle-label{font-weight:700;font-size:15px;}
-  .seg{display:flex;background:#efe9dd;border-radius:20px;padding:3px;}
+  .seg{display:flex;background:#E8EBEF;border-radius:20px;padding:3px;}
   .seg button{
     border:none;background:transparent;padding:8px 18px;border-radius:18px;font-weight:700;
     font-size:14px;color:var(--muted);cursor:pointer;
@@ -98,14 +107,14 @@
     flex:1;padding:16px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);
     font-weight:700;font-size:15px;cursor:pointer;
   }
-  .gender-btn.selected{border-color:var(--amber);background:var(--amber-light);}
+  .gender-btn.selected{border-color:var(--accent);background:var(--accent-light);}
 
   .primary-btn{
     width:100%;padding:18px;border:none;border-radius:12px;font-size:17px;font-weight:800;
-    background:var(--border);color:#a89f8f;cursor:not-allowed;transition:all .15s;
+    background:var(--border);color:#9aa1a9;cursor:not-allowed;transition:all .15s;
   }
   .primary-btn.ready{background:var(--ink);color:#fff;cursor:pointer;}
-  .primary-btn.ready:hover{background:#3a3025;}
+  .primary-btn.ready:hover{background:#1A1B1E;}
   .primary-btn:disabled{opacity:.7;}
   .privacy-note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px;}
 
@@ -117,17 +126,17 @@
   /* UPLOAD / SELFIE */
   .dropzone{
     border:2px dashed var(--border);border-radius:16px;padding:44px 16px;text-align:center;
-    cursor:pointer;background:#FAF8F3;transition:all .15s;
+    cursor:pointer;background:#F7F8FA;transition:all .15s;
   }
-  .dropzone.drag{border-color:var(--amber);background:var(--amber-light);}
+  .dropzone.drag{border-color:var(--accent);background:var(--accent-light);}
   .dropzone .big-emoji{font-size:34px;margin-bottom:12px;}
   .dropzone h3{margin:0 0 6px;font-size:19px;}
   .dropzone p{margin:0;color:var(--muted);font-size:13px;}
   .dropzone img.preview{max-width:100%;max-height:260px;border-radius:12px;}
   input[type=file]{display:none;}
 
-  .tips-box{background:#F7F4EE;border-radius:14px;padding:16px 18px;margin:20px 0;}
-  .tips-box .tt{font-weight:800;font-size:12.5px;letter-spacing:.04em;color:var(--amber);margin-bottom:10px;}
+  .tips-box{background:#F5F7FA;border-radius:14px;padding:16px 18px;margin:20px 0;}
+  .tips-box .tt{font-weight:800;font-size:12.5px;letter-spacing:.04em;color:var(--accent);margin-bottom:10px;}
   .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:14px;}
   .tips-grid div{display:flex;gap:8px;align-items:flex-start;}
 
@@ -146,13 +155,13 @@
   }
   .cam-btn:disabled{opacity:.6;cursor:not-allowed;}
   .cam-error{background:#FBEAE8;color:var(--red);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-top:14px;}
-  .cam-warn{background:var(--amber-light);color:var(--amber);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px;}
+  .cam-warn{background:var(--accent-light);color:var(--accent);border-radius:10px;padding:12px 14px;font-size:13.5px;margin-bottom:14px;}
 
   /* RESULTS */
   .back-link{background:none;border:none;color:var(--muted);font-weight:700;font-size:13.5px;
     cursor:pointer;padding:0 0 16px;display:inline-flex;align-items:center;gap:6px;}
   .hero{
-    background:linear-gradient(135deg,var(--purple-deep),var(--purple-mid));
+    background:linear-gradient(135deg,var(--second),var(--accent));
     border-radius:18px;padding:26px 24px 24px;color:#fff;position:relative;overflow:hidden;
   }
   .hero::after{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;
@@ -172,7 +181,7 @@
   .stat-card .val{font-weight:800;font-size:15px;line-height:1.3;}
   .stat-card .lbl{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin-top:6px;}
 
-  .note-box{background:var(--amber-light);border-left:3px solid var(--amber);border-radius:10px;
+  .note-box{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:10px;
     padding:14px 16px;font-size:13.5px;line-height:1.5;margin:16px 0;}
   .note-box b{display:block;font-size:12px;letter-spacing:.03em;margin-bottom:4px;}
   .note-box .sub{color:var(--muted);margin-top:6px;font-size:12.5px;}
@@ -181,7 +190,7 @@
   .ratio-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;}
   .ratio-card .big{font-size:24px;font-weight:800;}
   .ratio-card .lbl{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.03em;margin:6px 0 10px;}
-  .pill{display:inline-block;background:var(--amber-light);color:var(--amber);font-size:11.5px;
+  .pill{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:11.5px;
     font-weight:700;padding:3px 10px;border-radius:20px;}
 
   .section-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 18px 8px;margin:16px 0;}
@@ -195,7 +204,7 @@
   .radar-wrap{display:flex;justify-content:center;margin:6px 0 4px;}
   .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
   .match-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
-  .match-card.winner{border-color:var(--purple-mid);background:#F7F2FC;}
+  .match-card.winner{border-color:var(--accent);background:#FFF1F3;}
   .match-top{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;margin-bottom:6px;}
   .match-top .name{display:flex;align-items:center;gap:8px;}
   .swatch{width:10px;height:10px;border-radius:50%;}
@@ -251,10 +260,10 @@
 
       <div class="measure-layout">
         <svg class="diagram" viewBox="0 0 260 320">
-          <ellipse cx="130" cy="160" rx="95" ry="140" fill="#F7F4EE" stroke="var(--border)" stroke-width="2"/>
-          <line x1="45" y1="70" x2="215" y2="70" stroke="var(--amber)" stroke-width="2" stroke-dasharray="4 3"/>
-          <circle cx="45" cy="70" r="4" fill="var(--amber)"/><circle cx="215" cy="70" r="4" fill="var(--amber)"/>
-          <text x="130" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="var(--amber)">FOREHEAD</text>
+          <ellipse cx="130" cy="160" rx="95" ry="140" fill="#F5F7FA" stroke="var(--border)" stroke-width="2"/>
+          <line x1="45" y1="70" x2="215" y2="70" stroke="var(--legend-gold)" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="45" cy="70" r="4" fill="var(--legend-gold)"/><circle cx="215" cy="70" r="4" fill="var(--legend-gold)"/>
+          <text x="130" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="var(--legend-gold)">FOREHEAD</text>
           <line x1="30" y1="150" x2="230" y2="150" stroke="var(--green)" stroke-width="2" stroke-dasharray="4 3"/>
           <circle cx="30" cy="150" r="4" fill="var(--green)"/><circle cx="230" cy="150" r="4" fill="var(--green)"/>
           <text x="130" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="var(--green)">CHEEKBONES</text>
@@ -324,7 +333,7 @@
         <div id="dropzone-empty">
           <div class="big-emoji">🖼️</div>
           <h3>Drop your photo here, or click to browse</h3>
-          <p>JPG, PNG, WEBP · Max 10MB · <b style="color:var(--amber);">Front-facing with hair pulled back = best results</b></p>
+          <p>JPG, PNG, WEBP · Max 10MB · <b style="color:var(--accent);">Front-facing with hair pulled back = best results</b></p>
         </div>
         <img id="dropzone-preview" class="preview" style="display:none;" alt="Uploaded photo preview">
       </div>
@@ -414,7 +423,7 @@
    ============================================================ */
 
 const SHAPES = {
-  Oval:    {fh:0.90, jw:0.82, fl:1.50, rarity:28, color:'#6B2FB3',
+  Oval:    {fh:0.90, jw:0.82, fl:1.50, rarity:28, color:'#FF2C54',
     desc:"The most versatile face shape! Slightly longer than wide, cheekbones are the widest point. Almost any style suits you perfectly."},
   Round:   {fh:0.93, jw:0.90, fl:1.05, rarity:15, color:'#C6852E',
     desc:"Width and length sit close together, with cheekbones as the widest point and a softly curved jaw and hairline."},
@@ -663,7 +672,7 @@ function radarSVG(scores){
   });
   let dots=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="'+SHAPES[p.name].color+'"/>').join('');
   return '<svg viewBox="0 0 300 300" width="260" height="260">'+grids+axes+
-    '<polygon points="'+poly+'" fill="#6B2FB3" fill-opacity="0.18" stroke="#6B2FB3" stroke-width="2"/>'+
+    '<polygon points="'+poly+'" fill="#FF2C54" fill-opacity="0.18" stroke="#FF2C54" stroke-width="2"/>'+
     dots+labels+'</svg>';
 }
 
