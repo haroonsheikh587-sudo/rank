@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regex Tester | BrightlyFuture Tools</title>
+<meta name="description" content="Test regular expressions with real-time match highlighting and a regex cheatsheet — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.regex-input-wrap { display: flex; align-items: center; background: var(--dark2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.25rem; }
+.regex-input-wrap .slash { padding: 0.85rem 0.75rem; color: var(--pri-light); font-family: 'Fira Code',monospace; font-size: 1.1rem; background: rgba(124,58,237,0.1); }
+.regex-input-wrap input { flex: 1; background: transparent; border: none; color: var(--text); padding: 0.85rem 0.5rem; font-family: 'Fira Code',monospace; font-size: 1rem; outline: none; }
+.regex-input-wrap .flags-input { width: 60px; border-left: 1px solid var(--border); background: rgba(124,58,237,0.1); color: var(--pri-light); padding: 0.85rem 0.75rem; font-family: 'Fira Code',monospace; font-size: 1rem; outline: none; border: none; }
+.match-highlight { background: rgba(124,58,237,0.35); border-radius: 3px; color: var(--white); }
+.test-area-wrap { position: relative; }
+.test-area { width: 100%; min-height: 150px; background: var(--dark2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 1rem; font-family: 'Fira Code',monospace; font-size: 0.9rem; outline: none; resize: vertical; line-height: 1.7; transition: border-color .2s; }
+.test-area:focus { border-color: var(--pri); }
+.highlighted-overlay { position: absolute; top: 0; left: 0; width: 100%; min-height: 150px; padding: 1rem; font-family: 'Fira Code',monospace; font-size: 0.9rem; line-height: 1.7; pointer-events: none; color: transparent; white-space: pre-wrap; word-break: break-word; border-radius: 10px; }
+.match-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 1rem; font-family: 'Fira Code',monospace; font-size: 0.85rem; }
+.match-card .match-index { color: var(--pri-light); font-weight: 700; margin-right: 0.5rem; }
+.match-card .match-pos { color: var(--muted); font-size: 0.75rem; margin-left: 0.5rem; }
+.cheat-section h4 { font-size: 0.8rem; color: var(--pri-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; margin-top: 1rem; }
+.cheat-row { display: flex; gap: 0.5rem; align-items: baseline; font-size: 0.825rem; margin-bottom: 0.3rem; cursor: pointer; padding: 0.2rem 0; }
+.cheat-row:hover { color: var(--white); }
+.cheat-code { font-family: 'Fira Code',monospace; color: var(--pri-light); min-width: 80px; font-size: 0.8rem; }
+.cheat-desc { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🔍</div>
+  <h1>Regex Tester</h1>
+  <p>Test regular expressions with live match highlighting, group capture, and an instant cheatsheet reference.</p>
+</div>
+
+<div class="tool-workspace">
+  <div style="display:grid;grid-template-columns:1fr 280px;gap:1.25rem;align-items:start;" id="mainGrid">
+    <div>
+      <div class="tool-box">
+        <label style="display:block;margin-bottom:0.5rem;font-size:0.85rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Regular Expression</label>
+        <div class="regex-input-wrap">
+          <span class="slash">/</span>
+          <input type="text" id="regexInput" placeholder="[a-z]+" oninput="testRegex()" value="[a-zA-Z]+">
+          <span class="slash">/</span>
+          <input class="flags-input" type="text" id="flagsInput" placeholder="gi" value="gi" oninput="testRegex()" maxlength="6">
+        </div>
+
+        <div id="regexStatus" style="font-size:0.85rem;margin-bottom:1rem;color:var(--green);">✅ Valid regex — 0 matches</div>
+
+        <div class="mb">
+          <label>Test String</label>
+          <div class="test-area-wrap">
+            <div class="highlighted-overlay" id="overlay"></div>
+            <textarea class="test-area" id="testInput" oninput="testRegex()" placeholder="Type your test string here…">BrightlyFuture offers AI Solutions, PHP Development, and Custom API integrations for businesses in 2025.</textarea>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+          <button class="btn btn-secondary" onclick="copyMatches()">📋 Copy Matches</button>
+        </div>
+
+        <!-- Matches -->
+        <div id="matchSection" style="margin-top:1.5rem;display:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+            <h3 style="font-size:0.95rem;">Matches <span id="matchCountBadge" style="background:var(--pri);color:#fff;padding:0.15rem 0.6rem;border-radius:999px;font-size:0.75rem;margin-left:0.5rem;"></span></h3>
+          </div>
+          <div id="matchList" style="display:flex;flex-direction:column;gap:0.4rem;max-height:260px;overflow-y:auto;"></div>
+        </div>
+
+        <!-- Groups -->
+        <div id="groupSection" style="margin-top:1.25rem;display:none;">
+          <h3 style="font-size:0.95rem;margin-bottom:0.75rem;">Capture Groups</h3>
+          <div id="groupList" style="display:flex;flex-direction:column;gap:0.4rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cheatsheet -->
+    <div class="tool-box" style="font-size:0.85rem;">
+      <h3 style="font-size:0.95rem;margin-bottom:0.25rem;">Regex Cheatsheet</h3>
+      <p style="font-size:0.75rem;color:var(--muted);margin-bottom:0.5rem;">Click to insert into regex</p>
+      <div class="cheat-section">
+        <h4>Characters</h4>
+        <div class="cheat-row" onclick="insert('.')"><span class="cheat-code">.</span><span class="cheat-desc">Any character</span></div>
+        <div class="cheat-row" onclick="insert('\\d')"><span class="cheat-code">\d</span><span class="cheat-desc">Digit [0-9]</span></div>
+        <div class="cheat-row" onclick="insert('\\w')"><span class="cheat-code">\w</span><span class="cheat-desc">Word char [a-zA-Z0-9_]</span></div>
+        <div class="cheat-row" onclick="insert('\\s')"><span class="cheat-code">\s</span><span class="cheat-desc">Whitespace</span></div>
+        <div class="cheat-row" onclick="insert('\\D')"><span class="cheat-code">\D</span><span class="cheat-desc">Non-digit</span></div>
+        <div class="cheat-row" onclick="insert('\\W')"><span class="cheat-code">\W</span><span class="cheat-desc">Non-word char</span></div>
+        <h4>Anchors</h4>
+        <div class="cheat-row" onclick="insert('^')"><span class="cheat-code">^</span><span class="cheat-desc">Start of string</span></div>
+        <div class="cheat-row" onclick="insert('$')"><span class="cheat-code">$</span><span class="cheat-desc">End of string</span></div>
+        <div class="cheat-row" onclick="insert('\\b')"><span class="cheat-code">\b</span><span class="cheat-desc">Word boundary</span></div>
+        <h4>Quantifiers</h4>
+        <div class="cheat-row" onclick="insert('*')"><span class="cheat-code">*</span><span class="cheat-desc">0 or more</span></div>
+        <div class="cheat-row" onclick="insert('+')"><span class="cheat-code">+</span><span class="cheat-desc">1 or more</span></div>
+        <div class="cheat-row" onclick="insert('?')"><span class="cheat-code">?</span><span class="cheat-desc">0 or 1</span></div>
+        <div class="cheat-row" onclick="insert('{2,5}')"><span class="cheat-code">{n,m}</span><span class="cheat-desc">Between n and m</span></div>
+        <h4>Groups</h4>
+        <div class="cheat-row" onclick="insert('()')"><span class="cheat-code">()</span><span class="cheat-desc">Capture group</span></div>
+        <div class="cheat-row" onclick="insert('(?:)')"><span class="cheat-code">(?:)</span><span class="cheat-desc">Non-capture group</span></div>
+        <div class="cheat-row" onclick="insert('[a-z]')"><span class="cheat-code">[a-z]</span><span class="cheat-desc">Character class</span></div>
+        <div class="cheat-row" onclick="insert('[^a-z]')"><span class="cheat-code">[^a-z]</span><span class="cheat-desc">Negated class</span></div>
+        <h4>Common Patterns</h4>
+        <div class="cheat-row" onclick="insertFull('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')"><span class="cheat-code">Email</span><span class="cheat-desc">Email address</span></div>
+        <div class="cheat-row" onclick="insertFull('https?:\\/\\/[^\\s]+')"><span class="cheat-code">URL</span><span class="cheat-desc">HTTP/S URL</span></div>
+        <div class="cheat-row" onclick="insertFull('^[0-9]{1,3}(\\.[0-9]{1,3}){3}$')"><span class="cheat-code">IPv4</span><span class="cheat-desc">IP address</span></div>
+        <div class="cheat-row" onclick="insertFull('^\\+?[0-9\\s\\-()]{7,20}$')"><span class="cheat-code">Phone</span><span class="cheat-desc">Phone number</span></div>
+        <div class="cheat-row" onclick="insertFull('^[A-Z]{1,2}[0-9][0-9A-Z]?\\s?[0-9][A-Z]{2}$')"><span class="cheat-code">UK Post</span><span class="cheat-desc">UK Postcode</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Inserted!</div>
+
+<script>
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function testRegex() {
+  const pattern = document.getElementById('regexInput').value;
+  const flags = document.getElementById('flagsInput').value;
+  const text = document.getElementById('testInput').value;
+  const status = document.getElementById('regexStatus');
+
+  if (!pattern) {
+    document.getElementById('overlay').innerHTML = '';
+    status.textContent = 'Enter a regex pattern above…';
+    status.style.color = 'var(--muted)';
+    document.getElementById('matchSection').style.display = 'none';
+    return;
+  }
+
+  let regex;
+  try {
+    regex = new RegExp(pattern, flags.replace('g','') + 'g');
+    // validate flags
+    new RegExp(pattern, flags);
+  } catch(e) {
+    status.textContent = '❌ ' + e.message;
+    status.style.color = 'var(--red)';
+    document.getElementById('overlay').innerHTML = '';
+    document.getElementById('matchSection').style.display = 'none';
+    return;
+  }
+
+  const matches = [...text.matchAll(regex)];
+  status.textContent = `✅ Valid — ${matches.length} match${matches.length !== 1 ? 'es' : ''} found`;
+  status.style.color = matches.length > 0 ? 'var(--green)' : 'var(--yellow)';
+
+  // Highlight overlay
+  let highlighted = '';
+  let lastIdx = 0;
+  matches.forEach(m => {
+    highlighted += esc(text.slice(lastIdx, m.index));
+    highlighted += `<mark class="match-highlight">${esc(m[0])}</mark>`;
+    lastIdx = m.index + m[0].length;
+  });
+  highlighted += esc(text.slice(lastIdx));
+  document.getElementById('overlay').innerHTML = highlighted;
+
+  // Match list
+  const ml = document.getElementById('matchList');
+  ml.innerHTML = matches.slice(0,50).map((m, i) =>
+    `<div class="match-card"><span class="match-index">#${i+1}</span><strong>${esc(m[0])}</strong><span class="match-pos">at index ${m.index}</span></div>`
+  ).join('');
+  document.getElementById('matchCountBadge').textContent = matches.length;
+  document.getElementById('matchSection').style.display = matches.length > 0 ? '' : 'none';
+
+  // Groups
+  const hasGroups = pattern.includes('(') && !pattern.includes('(?:');
+  const gs = document.getElementById('groupSection');
+  if (hasGroups && matches.length > 0 && matches[0].length > 1) {
+    const gl = document.getElementById('groupList');
+    gl.innerHTML = matches.slice(0,10).map((m, mi) =>
+      m.slice(1).map((g, gi) => `<div class="match-card"><span class="match-index">M${mi+1} G${gi+1}</span>${esc(g || 'undefined')}</div>`).join('')
+    ).join('');
+    gs.style.display = '';
+  } else {
+    gs.style.display = 'none';
+  }
+}
+
+function insert(str) {
+  const input = document.getElementById('regexInput');
+  const start = input.selectionStart;
+  const val = input.value;
+  input.value = val.slice(0, start) + str + val.slice(input.selectionEnd);
+  input.selectionStart = input.selectionEnd = start + str.length;
+  input.focus();
+  testRegex();
+  showToast('Inserted!');
+}
+
+function insertFull(str) {
+  document.getElementById('regexInput').value = str;
+  document.getElementById('flagsInput').value = 'gi';
+  testRegex();
+  showToast('Pattern loaded!');
+}
+
+function copyMatches() {
+  const pattern = document.getElementById('regexInput').value;
+  const flags = document.getElementById('flagsInput').value;
+  const text = document.getElementById('testInput').value;
+  try {
+    const matches = [...text.matchAll(new RegExp(pattern, flags.replace('g','') + 'g'))].map(m => m[0]);
+    navigator.clipboard.writeText(matches.join('\n')).then(() => showToast('Matches copied!'));
+  } catch(e) {}
+}
+
+function clearAll() {
+  document.getElementById('regexInput').value = '';
+  document.getElementById('testInput').value = '';
+  document.getElementById('overlay').innerHTML = '';
+  document.getElementById('matchSection').style.display = 'none';
+  document.getElementById('groupSection').style.display = 'none';
+  document.getElementById('regexStatus').textContent = 'Enter a regex pattern above…';
+  document.getElementById('regexStatus').style.color = 'var(--muted)';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+// Sync textarea scroll with overlay
+document.getElementById('testInput').addEventListener('scroll', function() {
+  document.getElementById('overlay').scrollTop = this.scrollTop;
+});
+
+// Grid responsive
+if (window.innerWidth < 700) document.getElementById('mainGrid').style.gridTemplateColumns = '1fr';
+
+testRegex();
+</script>
+</body>
+</html>

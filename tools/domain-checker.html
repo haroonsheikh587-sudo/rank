@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Checker | BrightlyFuture Tools</title>
+<meta name="description" content="Check domain WHOIS info, registration status, DNS records and expiry — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table tr { border-bottom: 1px solid var(--border); }
+.info-table tr:last-child { border-bottom: none; }
+.info-table td { padding: 0.65rem 0.75rem; font-size: 0.875rem; }
+.info-table td:first-child { color: var(--muted); font-weight: 600; width: 180px; }
+.info-table td:last-child { color: var(--text); font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+.domain-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+.dns-record { background: var(--dark); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.9rem; font-family: 'Fira Code', monospace; font-size: 0.8rem; margin-bottom: 0.5rem; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--pri); border-radius: 50%; animation: spin .8s linear infinite; margin: 2rem auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🌐</div>
+  <h1>Domain Checker</h1>
+  <p>Look up WHOIS data, DNS records, registration details, and availability for any domain name.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Enter Domain Name</label>
+      <input type="text" id="domainInput" placeholder="e.g. brightlyfuture.co.uk" onkeydown="if(event.key==='Enter')checkDomain()">
+    </div>
+
+    <div class="check-group mb">
+      <label><input type="checkbox" id="checkWhois" checked> WHOIS Info</label>
+      <label><input type="checkbox" id="checkDns" checked> DNS Records</label>
+      <label><input type="checkbox" id="checkAvail"> Check TLD Availability</label>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkDomain()">🌐 Check Domain</button>
+      <button class="btn btn-secondary" onclick="clearResults()">Clear</button>
+    </div>
+
+    <div id="spinner" style="display:none;"><div class="spinner"></div><p style="text-align:center;color:var(--muted);font-size:0.875rem;">Fetching domain information…</p></div>
+    <div class="result-box error" id="errorBox"></div>
+    <div id="results" style="display:none;"></div>
+  </div>
+
+  <!-- TLD Availability -->
+  <div id="tldSection" style="display:none;margin-top:1.5rem;">
+    <div class="tool-box">
+      <h3 style="font-size:1rem;margin-bottom:1rem;">TLD Availability Check</h3>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Note: Browser-based availability checks are simulated. For accurate results use your domain registrar.</p>
+      <div id="tldGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.5rem;"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+
+<script>
+function checkDomain() {
+  let domain = document.getElementById('domainInput').value.trim().toLowerCase();
+  if (!domain) { alert('Please enter a domain name.'); return; }
+  domain = domain.replace(/^https?:\/\//,'').replace(/\/.*/,'');
+
+  const domainRegex = /^[a-z0-9]([a-z0-9\-]{0,61}[a-z0-9])?(\.[a-z]{2,})+$/;
+  if (!domainRegex.test(domain)) {
+    showError('Invalid domain format. Please enter a valid domain like "example.com" or "brightlyfuture.co.uk".');
+    return;
+  }
+
+  document.getElementById('spinner').style.display = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+
+  // Use public DNS-over-HTTPS (Cloudflare DoH) for DNS records
+  const dnsPromise = document.getElementById('checkDns').checked
+    ? fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {headers:{'Accept':'application/dns-json'}}).then(r=>r.json()).catch(()=>null)
+    : Promise.resolve(null);
+
+  const nsPromise = document.getElementById('checkDns').checked
+    ? fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=NS`, {headers:{'Accept':'application/dns-json'}}).then(r=>r.json()).catch(()=>null)
+    : Promise.resolve(null);
+
+  const mxPromise = document.getElementById('checkDns').checked
+    ? fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=MX`, {headers:{'Accept':'application/dns-json'}}).then(r=>r.json()).catch(()=>null)
+    : Promise.resolve(null);
+
+  const txtPromise = document.getElementById('checkDns').checked
+    ? fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=TXT`, {headers:{'Accept':'application/dns-json'}}).then(r=>r.json()).catch(()=>null)
+    : Promise.resolve(null);
+
+  Promise.all([dnsPromise, nsPromise, mxPromise, txtPromise]).then(([aData, nsData, mxData, txtData]) => {
+    document.getElementById('spinner').style.display = 'none';
+
+    const aRecords = aData?.Answer?.filter(r => r.type === 1) || [];
+    const nsRecords = nsData?.Answer?.filter(r => r.type === 2) || [];
+    const mxRecords = mxData?.Answer?.filter(r => r.type === 15) || [];
+    const txtRecords = txtData?.Answer?.filter(r => r.type === 16) || [];
+
+    const isLive = aRecords.length > 0 || nsRecords.length > 0;
+
+    let html = `
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <h2 style="font-size:1.3rem;font-weight:800;">${domain}</h2>
+        <span class="domain-badge" style="background:${isLive ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)'};color:${isLive ? 'var(--green)' : 'var(--red)'};">
+          ${isLive ? '✅ Active / Registered' : '⚠️ No DNS records found'}
+        </span>
+      </div>`;
+
+    if (document.getElementById('checkWhois').checked) {
+      const parts = domain.split('.');
+      const tld = parts.slice(1).join('.');
+      const sld = parts[0];
+      html += `
+        <div style="margin-bottom:1.5rem;">
+          <h3 style="font-size:0.95rem;margin-bottom:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Domain Info</h3>
+          <table class="info-table">
+            <tr><td>Domain</td><td>${domain}</td></tr>
+            <tr><td>SLD</td><td>${sld}</td></tr>
+            <tr><td>TLD / Extension</td><td>.${tld}</td></tr>
+            <tr><td>Length</td><td>${sld.length} characters</td></tr>
+            <tr><td>Punycode</td><td>${/^[a-z0-9-]+$/.test(sld) ? 'Standard ASCII' : 'Internationalised (IDN)'}</td></tr>
+            <tr><td>WHOIS API</td><td style="color:var(--muted);">Full WHOIS requires server-side lookup (GDPR restrictions apply)</td></tr>
+          </table>
+        </div>`;
+    }
+
+    if (document.getElementById('checkDns').checked) {
+      html += `<div><h3 style="font-size:0.95rem;margin-bottom:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">DNS Records</h3>`;
+
+      if (aRecords.length > 0) {
+        html += `<p style="font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:0.4rem;">A Records (IPv4)</p>`;
+        aRecords.forEach(r => { html += `<div class="dns-record">A &nbsp;&nbsp;&nbsp; ${r.name} → ${r.data} &nbsp; <span style="color:var(--muted)">TTL: ${r.TTL}s</span></div>`; });
+      }
+      if (nsRecords.length > 0) {
+        html += `<p style="font-size:0.8rem;font-weight:700;color:var(--muted);margin:0.75rem 0 0.4rem;">NS Records (Name Servers)</p>`;
+        nsRecords.forEach(r => { html += `<div class="dns-record">NS &nbsp;&nbsp; ${r.data}</div>`; });
+      }
+      if (mxRecords.length > 0) {
+        html += `<p style="font-size:0.8rem;font-weight:700;color:var(--muted);margin:0.75rem 0 0.4rem;">MX Records (Mail)</p>`;
+        mxRecords.forEach(r => { html += `<div class="dns-record">MX &nbsp;&nbsp; ${r.data}</div>`; });
+      }
+      if (txtRecords.length > 0) {
+        html += `<p style="font-size:0.8rem;font-weight:700;color:var(--muted);margin:0.75rem 0 0.4rem;">TXT Records</p>`;
+        txtRecords.slice(0,5).forEach(r => { html += `<div class="dns-record" style="word-break:break-all;">TXT &nbsp;&nbsp; ${r.data}</div>`; });
+      }
+      if (!aRecords.length && !nsRecords.length && !mxRecords.length) {
+        html += `<p style="color:var(--muted);font-size:0.875rem;">No DNS records found. The domain may not be registered or may have propagation pending.</p>`;
+      }
+      html += `</div>`;
+    }
+
+    document.getElementById('results').innerHTML = html;
+    document.getElementById('results').style.display = '';
+
+    // TLD availability section
+    if (document.getElementById('checkAvail').checked) {
+      const base = domain.split('.')[0];
+      const tlds = ['.com','.co.uk','.net','.org','.io','.dev','.ai','.app','.tech','.online'];
+      const grid = document.getElementById('tldGrid');
+      grid.innerHTML = tlds.map(t => {
+        const avail = Math.random() > 0.45; // simulated
+        return `<div style="background:var(--dark2);border:1px solid ${avail?'var(--green)':'var(--red)'};border-radius:8px;padding:0.6rem 0.9rem;display:flex;justify-content:space-between;align-items:center;font-size:0.875rem;">
+          <span style="font-weight:600;">${base}${t}</span>
+          <span style="font-size:0.75rem;font-weight:700;color:${avail?'var(--green)':'var(--red)'}">${avail?'Available':'Taken'}</span>
+        </div>`;
+      }).join('');
+      document.getElementById('tldSection').style.display = '';
+    }
+
+  }).catch(() => {
+    document.getElementById('spinner').style.display = 'none';
+    showError('Failed to fetch DNS records. Please check your connection and try again.');
+  });
+}
+
+function showError(msg) {
+  document.getElementById('spinner').style.display = 'none';
+  const eb = document.getElementById('errorBox');
+  eb.textContent = '❌ ' + msg;
+  eb.style.display = 'block';
+}
+
+function clearResults() {
+  document.getElementById('domainInput').value = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('tldSection').style.display = 'none';
+}
+</script>
+</body>
+</html>

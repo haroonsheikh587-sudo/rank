@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Encoder & Decoder | BrightlyFuture Tools</title>
+<meta name="description" content="Encode and decode HTML special characters to entities and back — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🏷️</div>
+  <h1>HTML Encoder / Decoder</h1>
+  <p>Convert special HTML characters to their entity equivalents and back. Essential for safe HTML rendering and data display.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Input</label>
+      <textarea id="inputText" style="min-height:160px;font-family:'Fira Code',monospace;font-size:0.9rem;" placeholder="Enter text with HTML characters or entities…" oninput="autoConvert()"></textarea>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Mode</label>
+        <select id="mode" onchange="autoConvert()">
+          <option value="encode">Encode → HTML Entities</option>
+          <option value="decode">Decode → Plain Text</option>
+        </select>
+      </div>
+      <div>
+        <label>Encoding Depth</label>
+        <select id="depth" onchange="autoConvert()">
+          <option value="basic">Basic (&lt; &gt; &amp; &quot; &#39;)</option>
+          <option value="extended">Extended (all non-ASCII)</option>
+          <option value="numeric">Numeric Entities (&#x26;)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="convert()">⚡ Convert</button>
+      <button class="btn btn-secondary" onclick="swapInputOutput()">⇅ Swap</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div id="outputWrap" style="display:none;margin-top:1.5rem;">
+      <label>Output</label>
+      <div class="result-box visible success" id="outputBox" style="display:block;font-family:'Fira Code',monospace;font-size:0.9rem;"></div>
+
+      <div class="stats-row" style="margin-top:1rem;">
+        <div class="stat-chip"><div class="val" id="inLen">0</div><div class="lbl">Input Chars</div></div>
+        <div class="stat-chip"><div class="val" id="outLen">0</div><div class="lbl">Output Chars</div></div>
+        <div class="stat-chip"><div class="val" id="replCount">0</div><div class="lbl">Replacements</div></div>
+      </div>
+
+      <div class="btn-group" style="margin-top:1rem;">
+        <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy Output</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reference table -->
+  <div class="tool-box" style="margin-top:1.5rem;">
+    <h3 style="font-size:0.95rem;margin-bottom:1rem;">Common HTML Entities</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+        <thead><tr>
+          <th style="text-align:left;color:var(--muted);font-size:0.75rem;text-transform:uppercase;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);">Character</th>
+          <th style="text-align:left;color:var(--muted);font-size:0.75rem;text-transform:uppercase;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);">Entity Name</th>
+          <th style="text-align:left;color:var(--muted);font-size:0.75rem;text-transform:uppercase;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);">Numeric</th>
+          <th style="text-align:left;color:var(--muted);font-size:0.75rem;text-transform:uppercase;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);">Description</th>
+        </tr></thead>
+        <tbody id="entityTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const ENTITIES = [
+  ['&','&amp;','&#38;','Ampersand'],
+  ['<','&lt;','&#60;','Less than'],
+  ['>','&gt;','&#62;','Greater than'],
+  ['"','&quot;','&#34;','Double quote'],
+  ["'",'&apos;','&#39;','Single quote / apostrophe'],
+  ['©','&copy;','&#169;','Copyright'],
+  ['®','&reg;','&#174;','Registered trademark'],
+  ['™','&trade;','&#8482;','Trademark'],
+  ['€','&euro;','&#8364;','Euro sign'],
+  ['£','&pound;','&#163;','Pound sign'],
+  ['¥','&yen;','&#165;','Yen sign'],
+  ['°','&deg;','&#176;','Degree sign'],
+  ['·','&middot;','&#183;','Middle dot'],
+  ['—','&mdash;','&#8212;','Em dash'],
+  ['–','&ndash;','&#8211;','En dash'],
+  [' ','&nbsp;','&#160;','Non-breaking space'],
+  ['…','&hellip;','&#8230;','Ellipsis'],
+  ['×','&times;','&#215;','Multiplication'],
+  ['÷','&divide;','&#247;','Division'],
+  ['←','&larr;','&#8592;','Left arrow'],
+  ['→','&rarr;','&#8594;','Right arrow'],
+  ['↑','&uarr;','&#8593;','Up arrow'],
+  ['↓','&darr;','&#8595;','Down arrow'],
+];
+
+// Populate table
+const tb = document.getElementById('entityTable');
+ENTITIES.forEach(([ch, name, num, desc]) => {
+  tb.innerHTML += `<tr style="border-bottom:1px solid rgba(124,58,237,0.1);">
+    <td style="padding:0.5rem 0.75rem;font-size:1.1rem;">${ch === '&' ? '&amp;' : ch}</td>
+    <td style="padding:0.5rem 0.75rem;font-family:'Fira Code',monospace;color:var(--pri-light);">${name.replace(/&/g,'&amp;')}</td>
+    <td style="padding:0.5rem 0.75rem;font-family:'Fira Code',monospace;color:var(--cyan);">${num.replace(/&/g,'&amp;')}</td>
+    <td style="padding:0.5rem 0.75rem;color:var(--muted);">${desc}</td>
+  </tr>`;
+});
+
+let lastOutput = '';
+
+function encode(text, depth) {
+  let count = 0;
+  const basic = text
+    .replace(/&/g, () => { count++; return '&amp;'; })
+    .replace(/</g, () => { count++; return '&lt;'; })
+    .replace(/>/g, () => { count++; return '&gt;'; })
+    .replace(/"/g, () => { count++; return '&quot;'; })
+    .replace(/'/g, () => { count++; return '&#39;'; });
+
+  if (depth === 'extended') {
+    return {out: basic.replace(/[^\x00-\x7F]/g, c => { count++; return '&' + (c.codePointAt(0)) + ';'; }), count};
+  }
+  if (depth === 'numeric') {
+    return {out: text.replace(/[&<>"']/g, c => { count++; return '&#' + c.charCodeAt(0) + ';'; }).replace(/[^\x00-\x7F]/g, c => { count++; return '&#' + c.codePointAt(0) + ';'; }), count};
+  }
+  return {out: basic, count};
+}
+
+function decode(text) {
+  const ta = document.createElement('textarea');
+  ta.innerHTML = text;
+  return {out: ta.value, count: (text.match(/&[a-z#][a-z0-9]*;/gi) || []).length};
+}
+
+function convert() {
+  const input = document.getElementById('inputText').value;
+  if (!input) { alert('Please enter some text.'); return; }
+  const mode = document.getElementById('mode').value;
+  const depth = document.getElementById('depth').value;
+
+  const result = mode === 'encode' ? encode(input, depth) : decode(input);
+  lastOutput = result.out;
+
+  document.getElementById('outputBox').textContent = result.out;
+  document.getElementById('inLen').textContent = input.length;
+  document.getElementById('outLen').textContent = result.out.length;
+  document.getElementById('replCount').textContent = result.count;
+  document.getElementById('outputWrap').style.display = '';
+}
+
+function autoConvert() {
+  if (document.getElementById('inputText').value) convert();
+}
+
+function swapInputOutput() {
+  if (lastOutput) {
+    document.getElementById('inputText').value = lastOutput;
+    const m = document.getElementById('mode');
+    m.value = m.value === 'encode' ? 'decode' : 'encode';
+    convert();
+  }
+}
+
+function copyOutput() {
+  navigator.clipboard.writeText(lastOutput).then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputWrap').style.display = 'none';
+}
+</script>
+</body>
+</html>

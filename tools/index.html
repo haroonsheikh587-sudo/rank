@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Digital Tools | BrightlyFuture</title>
+<meta name="description" content="Free AI-powered and developer tools by BrightlyFuture — encode, decode, validate, generate, and analyse with no sign-up needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.tools-grid .tool-card[data-hidden="true"] { display: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="#">APIs</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="hero-badge">🛠️ Free Developer &amp; AI Tools</span>
+  <h1>Next-Gen Digital<br>Tools Hub</h1>
+  <p>Powerful free utilities built for developers, marketers, and creators. No sign-up required.</p>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search tools…" oninput="filterTools()">
+  </div>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="setFilter('all',this)">All Tools</button>
+    <button class="filter-tab" onclick="setFilter('ai',this)">AI Generation</button>
+    <button class="filter-tab" onclick="setFilter('converter',this)">Converters</button>
+    <button class="filter-tab" onclick="setFilter('security',this)">Security</button>
+    <button class="filter-tab" onclick="setFilter('text',this)">Text &amp; SEO</button>
+    <button class="filter-tab" onclick="setFilter('dev',this)">Developer</button>
+  </div>
+</section>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 2rem;">
+  <div class="featured">
+    <div>
+      <span class="featured-badge">⭐ Featured Tool</span>
+      <h2>AI Blog Generator</h2>
+      <p>Generate full SEO-optimised blog posts in seconds. Powered by smart templates tuned for digital-services content.</p>
+    </div>
+    <a href="ai-blog-generator.html" class="featured-btn">Try It Free →</a>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">All Free Tools</h2>
+  <p class="section-sub">Handpicked utilities to supercharge your workflow — no account needed.</p>
+
+  <div class="tools-grid" id="toolsGrid">
+
+    <div class="tool-card" data-cat="text" onclick="location.href='blog-analyzer.html'">
+      <div class="tool-icon">📝</div>
+      <span class="tool-cat">Text &amp; SEO</span>
+      <div class="tool-name">Blog Analyzer</div>
+      <div class="tool-desc">Analyse readability, word count, keyword density, sentence length, and SEO score of any blog post.</div>
+      <div class="tool-actions">
+        <a href="blog-analyzer.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="security" onclick="location.href='password-generator.html'">
+      <div class="tool-icon">🔐</div>
+      <span class="tool-cat">Security</span>
+      <div class="tool-name">Password Generator</div>
+      <div class="tool-desc">Generate cryptographically strong passwords with custom length, symbols, numbers, and entropy score.</div>
+      <div class="tool-actions">
+        <a href="password-generator.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="text" onclick="location.href='text-transformer.html'">
+      <div class="tool-icon">✏️</div>
+      <span class="tool-cat">Text &amp; SEO</span>
+      <div class="tool-name">Text Transformer</div>
+      <div class="tool-desc">Convert text to uppercase, lowercase, title case, camelCase, snake_case, slug, and more instantly.</div>
+      <div class="tool-actions">
+        <a href="text-transformer.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="ai" onclick="location.href='ai-blog-generator.html'">
+      <div class="tool-icon">🤖</div>
+      <span class="tool-cat">AI Generation</span>
+      <div class="tool-name">AI Blog Generator</div>
+      <div class="tool-desc">Generate structured, SEO-ready blog drafts complete with headings, meta description, and body copy.</div>
+      <div class="tool-actions">
+        <a href="ai-blog-generator.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="converter" onclick="location.href='base64-decoder.html'">
+      <div class="tool-icon">🔓</div>
+      <span class="tool-cat">Converter</span>
+      <div class="tool-name">Base64 Decoder</div>
+      <div class="tool-desc">Decode Base64 strings back to plain text or binary. Supports URL-safe Base64 variants instantly.</div>
+      <div class="tool-actions">
+        <a href="base64-decoder.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="converter" onclick="location.href='base64-encoder.html'">
+      <div class="tool-icon">🔒</div>
+      <span class="tool-cat">Converter</span>
+      <div class="tool-name">Base64 Encoder</div>
+      <div class="tool-desc">Encode any text or data to Base64 format. Perfect for APIs, tokens, and data transmission.</div>
+      <div class="tool-actions">
+        <a href="base64-encoder.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="dev" onclick="location.href='json-validator.html'">
+      <div class="tool-icon">{ }</div>
+      <span class="tool-cat">Developer</span>
+      <div class="tool-name">JSON Validator &amp; Formatter</div>
+      <div class="tool-desc">Validate, format, and minify JSON. Highlights errors with line numbers and auto-fixes common issues.</div>
+      <div class="tool-actions">
+        <a href="json-validator.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="converter" onclick="location.href='xml-to-csv.html'">
+      <div class="tool-icon">📊</div>
+      <span class="tool-cat">Converter</span>
+      <div class="tool-name">XML to CSV Converter</div>
+      <div class="tool-desc">Convert XML data to CSV format for spreadsheets and databases. Handles nested elements intelligently.</div>
+      <div class="tool-actions">
+        <a href="xml-to-csv.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="text" onclick="location.href='smart-text-editor.html'">
+      <div class="tool-icon">📋</div>
+      <span class="tool-cat">Text &amp; SEO</span>
+      <div class="tool-name">Smart Text Editor</div>
+      <div class="tool-desc">Live word count, character count, reading time, paragraph count, and keyword frequency analyser.</div>
+      <div class="tool-actions">
+        <a href="smart-text-editor.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="security" onclick="location.href='domain-checker.html'">
+      <div class="tool-icon">🌐</div>
+      <span class="tool-cat">Security</span>
+      <div class="tool-name">Domain Checker</div>
+      <div class="tool-desc">Check domain WHOIS info, registration status, expiry date, registrar, and DNS name servers instantly.</div>
+      <div class="tool-actions">
+        <a href="domain-checker.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="security" onclick="location.href='ssl-checker.html'">
+      <div class="tool-icon">🛡️</div>
+      <span class="tool-cat">Security</span>
+      <div class="tool-name">SSL Certificate Checker</div>
+      <div class="tool-desc">Verify SSL/TLS certificate validity, expiry date, issuer, and HTTPS configuration for any domain.</div>
+      <div class="tool-actions">
+        <a href="ssl-checker.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="dev" onclick="location.href='regex-tester.html'">
+      <div class="tool-icon">🔍</div>
+      <span class="tool-cat">Developer</span>
+      <div class="tool-name">Regex Tester</div>
+      <div class="tool-desc">Test regular expressions with real-time highlighting, match groups, and a reference cheatsheet.</div>
+      <div class="tool-actions">
+        <a href="regex-tester.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="converter" onclick="location.href='html-encoder.html'">
+      <div class="tool-icon">🏷️</div>
+      <span class="tool-cat">Converter</span>
+      <div class="tool-name">HTML Encoder / Decoder</div>
+      <div class="tool-desc">Encode special HTML characters to entities and decode entities back to readable characters.</div>
+      <div class="tool-actions">
+        <a href="html-encoder.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="dev" onclick="location.href='color-converter.html'">
+      <div class="tool-icon">🎨</div>
+      <span class="tool-cat">Developer</span>
+      <div class="tool-name">Color Converter</div>
+      <div class="tool-desc">Convert colours between HEX, RGB, HSL, and HSV formats instantly with a live colour preview.</div>
+      <div class="tool-actions">
+        <a href="color-converter.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="converter" onclick="location.href='url-encoder.html'">
+      <div class="tool-icon">🔗</div>
+      <span class="tool-cat">Converter</span>
+      <div class="tool-name">URL Encoder / Decoder</div>
+      <div class="tool-desc">Encode and decode URLs and query strings for safe use in links, APIs, and browser addresses.</div>
+      <div class="tool-actions">
+        <a href="url-encoder.html" class="btn-try">Try Tool</a>
+        <button class="btn-outline" onclick="event.stopPropagation()">Info</button>
+      </div>
+    </div>
+
+  </div>
+
+  <p id="noResults" style="display:none;color:var(--muted);text-align:center;padding:3rem;">No tools match your search. Try a different keyword.</p>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links">
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="index.html">Free Tools</a>
+    <a href="#">Contact</a>
+    <a href="#">Privacy Policy</a>
+  </div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture. All rights reserved. | brightlyfuture.co.uk</p>
+</footer>
+
+<script>
+let activeFilter = 'all';
+
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterTools();
+}
+
+function filterTools() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('.tool-card').forEach(card => {
+    const cat = card.dataset.cat;
+    const text = card.innerText.toLowerCase();
+    const catMatch = activeFilter === 'all' || cat === activeFilter;
+    const textMatch = !q || text.includes(q);
+    const show = catMatch && textMatch;
+    card.dataset.hidden = !show;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>

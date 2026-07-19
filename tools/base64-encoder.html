@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 Encoder | BrightlyFuture Tools</title>
+<meta name="description" content="Encode text or data to Base64 format for APIs, tokens, and data transmission — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+  <h1>Base64 Encoder</h1>
+  <p>Encode any text, JSON, or data string to Base64 format — perfect for API auth headers, tokens, and data URLs.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Plain Text Input</label>
+      <textarea id="plainInput" placeholder="Type or paste text to encode…" style="min-height:160px;" oninput="autoEncode()"></textarea>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Encoding Variant</label>
+        <select id="variant" onchange="autoEncode()">
+          <option value="standard">Standard Base64</option>
+          <option value="urlsafe">URL-Safe Base64 (-_ instead of +/)</option>
+        </select>
+      </div>
+      <div>
+        <label>Line Wrapping</label>
+        <select id="lineWrap" onchange="autoEncode()">
+          <option value="none">No wrapping</option>
+          <option value="76">76 chars (MIME)</option>
+          <option value="64">64 chars (PEM)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="check-group mb">
+      <label><input type="checkbox" id="stripPadding" onchange="autoEncode()"> Strip padding (=)</label>
+      <label><input type="checkbox" id="addDataUrl"> Wrap as data URL</label>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="encode()">🔒 Encode</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      <a href="base64-decoder.html" class="btn btn-secondary">⇄ Switch to Decoder</a>
+    </div>
+
+    <div class="result-box" id="result"></div>
+
+    <div class="stats-row" id="statsRow" style="display:none;">
+      <div class="stat-chip"><div class="val" id="inputLen">0</div><div class="lbl">Input Chars</div></div>
+      <div class="stat-chip"><div class="val" id="outputLen">0</div><div class="lbl">Output Chars</div></div>
+      <div class="stat-chip"><div class="val" id="overhead">—</div><div class="lbl">Size Overhead</div></div>
+    </div>
+
+    <div class="btn-group" id="actionBtns" style="display:none;">
+      <button class="btn btn-secondary" onclick="copyResult()">📋 Copy Encoded</button>
+    </div>
+  </div>
+
+  <!-- Quick presets -->
+  <div class="tool-box" style="margin-top:1.5rem;">
+    <h3 style="font-size:0.95rem;margin-bottom:1rem;color:var(--muted);">Quick Examples — Click to Load</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.4rem 0.8rem;" onclick="loadExample('Hello, World!')">Hello World</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.4rem 0.8rem;" onclick="loadExample('{&quot;user&quot;:&quot;admin&quot;,&quot;role&quot;:&quot;superuser&quot;}')">JSON Object</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.4rem 0.8rem;" onclick="loadExample('username:password')">Basic Auth</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.4rem 0.8rem;" onclick="loadExample('https://brightlyfuture.co.uk/tools/')">URL</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.4rem 0.8rem;" onclick="loadExample('SELECT * FROM users WHERE id = 1;')">SQL Query</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let lastEncoded = '';
+
+function encode() {
+  const input = document.getElementById('plainInput').value;
+  if (!input) { alert('Please enter some text to encode.'); return; }
+
+  try {
+    let encoded = btoa(unescape(encodeURIComponent(input)));
+
+    if (document.getElementById('variant').value === 'urlsafe') {
+      encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_');
+    }
+    if (document.getElementById('stripPadding').checked) {
+      encoded = encoded.replace(/=+$/, '');
+    }
+
+    const wrap = document.getElementById('lineWrap').value;
+    if (wrap !== 'none') {
+      const n = parseInt(wrap);
+      encoded = encoded.match(new RegExp(`.{1,${n}}`, 'g')).join('\n');
+    }
+
+    if (document.getElementById('addDataUrl').checked) {
+      encoded = 'data:text/plain;base64,' + encoded;
+    }
+
+    lastEncoded = encoded;
+    const result = document.getElementById('result');
+    result.textContent = encoded;
+    result.className = 'result-box visible success';
+
+    const inLen = input.length;
+    const outLen = encoded.replace(/\n/g, '').length;
+    document.getElementById('inputLen').textContent = inLen;
+    document.getElementById('outputLen').textContent = outLen;
+    document.getElementById('overhead').textContent = '+' + Math.round(((outLen / inLen) - 1) * 100) + '%';
+    document.getElementById('statsRow').style.display = 'flex';
+    document.getElementById('actionBtns').style.display = 'flex';
+  } catch(e) {
+    const result = document.getElementById('result');
+    result.textContent = '❌ Encoding failed: ' + e.message;
+    result.className = 'result-box visible error';
+  }
+}
+
+function autoEncode() {
+  if (document.getElementById('plainInput').value) encode();
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(lastEncoded).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function loadExample(text) {
+  document.getElementById('plainInput').value = text.replace(/&quot;/g, '"');
+  encode();
+}
+
+function clearAll() {
+  document.getElementById('plainInput').value = '';
+  document.getElementById('result').className = 'result-box';
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('actionBtns').style.display = 'none';
+}
+</script>
+</body>
+</html>

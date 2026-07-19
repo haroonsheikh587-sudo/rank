@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 Decoder | BrightlyFuture Tools</title>
+<meta name="description" content="Decode Base64 strings back to plain text or binary data instantly — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🔓</div>
+  <h1>Base64 Decoder</h1>
+  <p>Decode any Base64 string back to plain text, JSON, HTML, or binary data instantly in your browser.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Base64 Input</label>
+      <textarea id="b64Input" placeholder="Paste your Base64 encoded string here…" style="min-height:160px;" oninput="livePreview()"></textarea>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Encoding Variant</label>
+        <select id="variant">
+          <option value="standard">Standard Base64</option>
+          <option value="urlsafe">URL-Safe Base64 (-_ instead of +/)</option>
+        </select>
+      </div>
+      <div>
+        <label>Output Format</label>
+        <select id="outputFmt">
+          <option value="text">Plain Text</option>
+          <option value="json">Pretty JSON</option>
+          <option value="hex">Hex Dump</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="decode()">🔓 Decode</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      <a href="base64-encoder.html" class="btn btn-secondary">⇄ Switch to Encoder</a>
+    </div>
+
+    <div id="liveNote" style="font-size:0.8rem;color:var(--muted);margin-top:0.75rem;"></div>
+
+    <div class="result-box" id="result"></div>
+
+    <div class="stats-row" id="statsRow" style="display:none;">
+      <div class="stat-chip"><div class="val" id="inputLen">0</div><div class="lbl">Input Length</div></div>
+      <div class="stat-chip"><div class="val" id="outputLen">0</div><div class="lbl">Output Length</div></div>
+      <div class="stat-chip"><div class="val" id="compressionRatio">—</div><div class="lbl">Ratio</div></div>
+    </div>
+
+    <div class="btn-group" id="actionBtns" style="display:none;">
+      <button class="btn btn-secondary" onclick="copyResult()">📋 Copy Result</button>
+      <button class="btn btn-secondary" onclick="downloadResult()">⬇ Download</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let lastDecoded = '';
+
+function livePreview() {
+  const raw = document.getElementById('b64Input').value.trim();
+  const note = document.getElementById('liveNote');
+  if (!raw) { note.textContent = ''; return; }
+  const isValid = /^[A-Za-z0-9+/\-_=\s]*$/.test(raw);
+  note.textContent = isValid ? '✅ Looks like valid Base64' : '⚠️ Input contains non-Base64 characters';
+  note.style.color = isValid ? 'var(--green)' : 'var(--yellow)';
+}
+
+function decode() {
+  let raw = document.getElementById('b64Input').value.trim();
+  if (!raw) { alert('Please enter a Base64 string.'); return; }
+
+  const variant = document.getElementById('variant').value;
+  if (variant === 'urlsafe') {
+    raw = raw.replace(/-/g, '+').replace(/_/g, '/');
+  }
+  // Pad
+  while (raw.length % 4 !== 0) raw += '=';
+
+  const result = document.getElementById('result');
+  try {
+    const decoded = atob(raw);
+    lastDecoded = decoded;
+
+    const fmt = document.getElementById('outputFmt').value;
+    let display = '';
+    if (fmt === 'json') {
+      try { display = JSON.stringify(JSON.parse(decoded), null, 2); }
+      catch { display = decoded; }
+    } else if (fmt === 'hex') {
+      display = Array.from(decoded).map(c => c.charCodeAt(0).toString(16).padStart(2,'0')).join(' ');
+    } else {
+      display = decoded;
+    }
+
+    result.textContent = display;
+    result.className = 'result-box visible success';
+
+    document.getElementById('inputLen').textContent = raw.replace(/=+$/, '').length;
+    document.getElementById('outputLen').textContent = decoded.length;
+    document.getElementById('compressionRatio').textContent = ((decoded.length / raw.length) * 100).toFixed(0) + '%';
+    document.getElementById('statsRow').style.display = 'flex';
+    document.getElementById('actionBtns').style.display = 'flex';
+  } catch (e) {
+    result.textContent = '❌ Error: Invalid Base64 string. Please check your input and try again.\n\nTip: Make sure the string doesn\'t contain invalid characters or incorrect padding.';
+    result.className = 'result-box visible error';
+    document.getElementById('statsRow').style.display = 'none';
+    document.getElementById('actionBtns').style.display = 'none';
+  }
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(lastDecoded).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function downloadResult() {
+  const blob = new Blob([lastDecoded], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'decoded.txt';
+  a.click();
+}
+
+function clearAll() {
+  document.getElementById('b64Input').value = '';
+  document.getElementById('result').className = 'result-box';
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('actionBtns').style.display = 'none';
+  document.getElementById('liveNote').textContent = '';
+}
+</script>
+</body>
+</html>

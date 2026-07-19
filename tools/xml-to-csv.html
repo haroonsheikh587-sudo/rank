@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XML to CSV Converter | BrightlyFuture Tools</title>
+<meta name="description" content="Convert XML data to CSV format for spreadsheets and databases — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.preview-table-wrap { overflow-x: auto; margin-top: 1.5rem; }
+.preview-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.preview-table th { background: rgba(124,58,237,0.2); color: var(--pri-light); font-weight: 700; padding: 0.6rem 0.9rem; text-align: left; border: 1px solid var(--border); white-space: nowrap; }
+.preview-table td { padding: 0.5rem 0.9rem; border: 1px solid var(--border); color: var(--text); }
+.preview-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">📊</div>
+  <h1>XML to CSV Converter</h1>
+  <p>Paste XML and get a clean CSV file ready for Excel, Google Sheets, or any database. Handles nested elements.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>XML Input</label>
+      <textarea id="xmlInput" placeholder="Paste your XML here…" style="min-height:200px;font-family:'Fira Code',monospace;font-size:0.875rem;"></textarea>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>CSV Delimiter</label>
+        <select id="delimiter">
+          <option value=",">Comma (,)</option>
+          <option value=";">Semicolon (;)</option>
+          <option value="&#9;">Tab</option>
+          <option value="|">Pipe (|)</option>
+        </select>
+      </div>
+      <div>
+        <label>Text Quoting</label>
+        <select id="quoting">
+          <option value="auto">Auto (quote if needed)</option>
+          <option value="all">Always quote</option>
+          <option value="none">Never quote</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="check-group mb">
+      <label><input type="checkbox" id="includeAttrs" checked> Include XML attributes</label>
+      <label><input type="checkbox" id="flattenNested" checked> Flatten nested elements</label>
+      <label><input type="checkbox" id="includeHeader" checked> Include header row</label>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="convertXML()">📊 Convert to CSV</button>
+      <button class="btn btn-secondary" onclick="loadSample()">Load Sample</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div class="result-box error" id="errorBox"></div>
+
+    <div id="outputSection" style="display:none;">
+      <div class="stats-row" style="margin-top:1.5rem;">
+        <div class="stat-chip"><div class="val" id="rowCount">0</div><div class="lbl">Rows</div></div>
+        <div class="stat-chip"><div class="val" id="colCount">0</div><div class="lbl">Columns</div></div>
+        <div class="stat-chip"><div class="val" id="cellCount">0</div><div class="lbl">Cells</div></div>
+      </div>
+
+      <div class="preview-table-wrap" id="previewWrap"></div>
+
+      <div style="margin-top:1.25rem;">
+        <label>CSV Output</label>
+        <div class="result-box visible success" id="csvOutput" style="display:block;"></div>
+      </div>
+
+      <div class="btn-group" style="margin-top:1rem;">
+        <button class="btn btn-primary" onclick="downloadCSV()">⬇ Download CSV</button>
+        <button class="btn btn-secondary" onclick="copyCSV()">📋 Copy CSV</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Done!</div>
+
+<script>
+let lastCSV = '';
+
+function convertXML() {
+  const xmlStr = document.getElementById('xmlInput').value.trim();
+  if (!xmlStr) { alert('Please enter XML first.'); return; }
+
+  const errorBox = document.getElementById('errorBox');
+  try {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlStr, 'application/xml');
+    const parseError = xmlDoc.querySelector('parsererror');
+    if (parseError) throw new Error('Invalid XML: ' + parseError.textContent.split('\n')[0]);
+
+    const root = xmlDoc.documentElement;
+    const children = Array.from(root.children);
+    if (children.length === 0) throw new Error('No child elements found under the root element.');
+
+    const includeAttrs = document.getElementById('includeAttrs').checked;
+    const flatten = document.getElementById('flattenNested').checked;
+    const includeHeader = document.getElementById('includeHeader').checked;
+    const delim = document.getElementById('delimiter').value;
+    const quoting = document.getElementById('quoting').value;
+
+    // Collect all keys
+    const allKeys = new Set();
+    const rows = [];
+
+    children.forEach(child => {
+      const row = {};
+      if (includeAttrs) {
+        Array.from(child.attributes).forEach(a => { row['@' + a.name] = a.value; allKeys.add('@' + a.name); });
+      }
+      collectProps(child, row, allKeys, flatten, '');
+      rows.push(row);
+    });
+
+    const headers = Array.from(allKeys);
+    const csvLines = [];
+    if (includeHeader) csvLines.push(headers.map(h => quoteCell(h, delim, quoting)).join(delim));
+    rows.forEach(row => {
+      csvLines.push(headers.map(h => quoteCell(row[h] ?? '', delim, quoting)).join(delim));
+    });
+
+    lastCSV = csvLines.join('\n');
+    document.getElementById('csvOutput').textContent = lastCSV;
+    document.getElementById('rowCount').textContent = rows.length;
+    document.getElementById('colCount').textContent = headers.length;
+    document.getElementById('cellCount').textContent = rows.length * headers.length;
+
+    // Preview table
+    const maxPreviewRows = Math.min(rows.length, 10);
+    let tableHTML = '<table class="preview-table"><thead><tr>' + headers.map(h => `<th>${escHtml(h)}</th>`).join('') + '</tr></thead><tbody>';
+    for (let i = 0; i < maxPreviewRows; i++) {
+      tableHTML += '<tr>' + headers.map(h => `<td>${escHtml(rows[i][h] ?? '')}</td>`).join('') + '</tr>';
+    }
+    tableHTML += '</tbody></table>';
+    if (rows.length > 10) tableHTML += `<p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">Showing 10 of ${rows.length} rows. Download CSV for all data.</p>`;
+    document.getElementById('previewWrap').innerHTML = tableHTML;
+
+    errorBox.style.display = 'none';
+    document.getElementById('outputSection').style.display = '';
+  } catch(e) {
+    errorBox.textContent = '❌ ' + e.message;
+    errorBox.style.display = 'block';
+    document.getElementById('outputSection').style.display = 'none';
+  }
+}
+
+function collectProps(el, row, allKeys, flatten, prefix) {
+  const children = Array.from(el.children);
+  if (children.length === 0) {
+    const key = prefix || el.tagName;
+    row[key] = el.textContent.trim();
+    allKeys.add(key);
+  } else if (flatten) {
+    children.forEach(child => {
+      const key = prefix ? prefix + '.' + child.tagName : child.tagName;
+      collectProps(child, row, allKeys, flatten, key);
+    });
+  } else {
+    const key = prefix || el.tagName;
+    row[key] = el.textContent.replace(/\s+/g, ' ').trim();
+    allKeys.add(key);
+  }
+}
+
+function quoteCell(val, delim, mode) {
+  val = String(val);
+  const needsQuote = val.includes(delim) || val.includes('"') || val.includes('\n');
+  const escaped = val.replace(/"/g, '""');
+  if (mode === 'all' || (mode === 'auto' && needsQuote)) return '"' + escaped + '"';
+  return val;
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function downloadCSV() {
+  const blob = new Blob([lastCSV], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'converted.csv'; a.click();
+}
+
+function copyCSV() {
+  navigator.clipboard.writeText(lastCSV).then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function loadSample() {
+  document.getElementById('xmlInput').value = `<?xml version="1.0"?>
+<services>
+  <service id="1">
+    <name>AI Solutions</name>
+    <category>Artificial Intelligence</category>
+    <price>999</price>
+    <active>true</active>
+  </service>
+  <service id="2">
+    <name>PHP Development</name>
+    <category>Web Development</category>
+    <price>799</price>
+    <active>true</active>
+  </service>
+  <service id="3">
+    <name>Custom API</name>
+    <category>Integration</category>
+    <price>1299</price>
+    <active>false</active>
+  </service>
+</services>`;
+}
+
+function clearAll() {
+  document.getElementById('xmlInput').value = '';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('outputSection').style.display = 'none';
+}
+</script>
+</body>
+</html>

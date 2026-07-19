@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URL Encoder & Decoder | BrightlyFuture Tools</title>
+<meta name="description" content="Encode and decode URLs and query strings for safe use in links and APIs — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.param-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin-top: 0.75rem; }
+.param-table th { text-align: left; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+.param-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(124,58,237,0.08); font-family: 'Fira Code', monospace; font-size: 0.8rem; }
+.param-table td:first-child { color: var(--pri-light); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🔗</div>
+  <h1>URL Encoder / Decoder</h1>
+  <p>Encode special characters in URLs for safe transmission, or decode percent-encoded URLs back to readable text.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Input</label>
+      <textarea id="urlInput" style="min-height:140px;font-family:'Fira Code',monospace;font-size:0.9rem;" placeholder="Enter a URL, query string, or text to encode/decode…" oninput="autoConvert()"></textarea>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Mode</label>
+        <select id="mode" onchange="autoConvert()">
+          <option value="encode">Encode URL</option>
+          <option value="decode">Decode URL</option>
+          <option value="encode-component">Encode Component</option>
+          <option value="decode-component">Decode Component</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="convert()">⚡ Convert</button>
+      <button class="btn btn-secondary" onclick="swapIO()">⇅ Swap</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div id="outputWrap" style="display:none;margin-top:1.5rem;">
+      <label>Output</label>
+      <div class="result-box visible success" id="outputBox" style="display:block;font-family:'Fira Code',monospace;font-size:0.9rem;word-break:break-all;"></div>
+
+      <div class="stats-row" style="margin-top:1rem;">
+        <div class="stat-chip"><div class="val" id="inLen">0</div><div class="lbl">Input Chars</div></div>
+        <div class="stat-chip"><div class="val" id="outLen">0</div><div class="lbl">Output Chars</div></div>
+        <div class="stat-chip"><div class="val" id="encodedCount">0</div><div class="lbl">Encoded Chars</div></div>
+      </div>
+
+      <div class="btn-group" style="margin-top:1rem;">
+        <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- URL Parser -->
+  <div class="tool-box" style="margin-top:1.5rem;">
+    <h3 style="font-size:0.95rem;margin-bottom:0.75rem;">URL Parser</h3>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Enter a full URL below to parse it into its components and query parameters.</p>
+    <div class="mb">
+      <input type="text" id="parseUrl" placeholder="https://brightlyfuture.co.uk/tools?q=search&page=1#section" oninput="parseURL()">
+    </div>
+    <div id="parsedResult" style="display:none;">
+      <table class="param-table">
+        <thead><tr><th>Component</th><th>Value</th></tr></thead>
+        <tbody id="parsedBody"></tbody>
+      </table>
+      <div id="paramsSection" style="margin-top:1rem;display:none;">
+        <p style="font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem;">Query Parameters</p>
+        <table class="param-table">
+          <thead><tr><th>Key</th><th>Value (decoded)</th></tr></thead>
+          <tbody id="paramsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick presets -->
+  <div class="tool-box" style="margin-top:1.5rem;">
+    <h3 style="font-size:0.95rem;margin-bottom:1rem;">Quick Examples</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+      <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="loadEx('Hello World & More! Über cool = 100%')">Special chars</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="loadEx('name=John Doe&email=john@example.com&role=admin')">Query string</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="loadEx('https://example.com/search?q=regex tester&lang=en&page=2')">Full URL</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="loadExDecode('Hello%20World%20%26%20More%21%20%C3%9Cber%20cool%20%3D%20100%25')">Decode example</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let lastOutput = '';
+
+function convert() {
+  const input = document.getElementById('urlInput').value;
+  if (!input) { alert('Please enter a URL or text.'); return; }
+  const mode = document.getElementById('mode').value;
+  let output = '', count = 0;
+
+  try {
+    switch(mode) {
+      case 'encode': output = encodeURI(input); break;
+      case 'decode': output = decodeURI(input); break;
+      case 'encode-component': output = encodeURIComponent(input); break;
+      case 'decode-component': output = decodeURIComponent(input); break;
+    }
+    count = (output.match(/%[0-9A-F]{2}/g) || []).length;
+  } catch(e) {
+    document.getElementById('outputBox').textContent = '❌ Error: ' + e.message;
+    document.getElementById('outputBox').className = 'result-box visible error';
+    document.getElementById('outputWrap').style.display = '';
+    return;
+  }
+
+  lastOutput = output;
+  document.getElementById('outputBox').textContent = output;
+  document.getElementById('outputBox').className = 'result-box visible success';
+  document.getElementById('inLen').textContent = input.length;
+  document.getElementById('outLen').textContent = output.length;
+  document.getElementById('encodedCount').textContent = count;
+  document.getElementById('outputWrap').style.display = '';
+}
+
+function autoConvert() { if (document.getElementById('urlInput').value) convert(); }
+
+function swapIO() {
+  if (lastOutput) {
+    document.getElementById('urlInput').value = lastOutput;
+    const m = document.getElementById('mode');
+    const flip = {encode:'decode','decode':'encode','encode-component':'decode-component','decode-component':'encode-component'};
+    m.value = flip[m.value] || m.value;
+    convert();
+  }
+}
+
+function parseURL() {
+  const raw = document.getElementById('parseUrl').value.trim();
+  if (!raw) { document.getElementById('parsedResult').style.display = 'none'; return; }
+  try {
+    const url = new URL(raw.startsWith('http') ? raw : 'https://' + raw);
+    const rows = [
+      ['Protocol', url.protocol],
+      ['Hostname', url.hostname],
+      ['Port', url.port || '(default)'],
+      ['Pathname', url.pathname],
+      ['Hash / Fragment', url.hash || '(none)'],
+      ['Full Origin', url.origin],
+    ];
+    document.getElementById('parsedBody').innerHTML = rows.map(([k,v]) =>
+      `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+
+    const params = [...url.searchParams.entries()];
+    if (params.length > 0) {
+      document.getElementById('paramsBody').innerHTML = params.map(([k,v]) =>
+        `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+      document.getElementById('paramsSection').style.display = '';
+    } else {
+      document.getElementById('paramsSection').style.display = 'none';
+    }
+    document.getElementById('parsedResult').style.display = '';
+  } catch(e) {
+    document.getElementById('parsedResult').style.display = 'none';
+  }
+}
+
+function copyOutput() {
+  navigator.clipboard.writeText(lastOutput).then(() => showToast());
+}
+function loadEx(text) {
+  document.getElementById('urlInput').value = text;
+  document.getElementById('mode').value = 'encode-component';
+  convert();
+}
+function loadExDecode(text) {
+  document.getElementById('urlInput').value = text;
+  document.getElementById('mode').value = 'decode-component';
+  convert();
+}
+function clearAll() {
+  document.getElementById('urlInput').value = '';
+  document.getElementById('outputWrap').style.display = 'none';
+}
+function showToast(msg='Copied!') {
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);
+}
+</script>
+</body>
+</html>

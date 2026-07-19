@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Validator & Formatter | BrightlyFuture Tools</title>
+<meta name="description" content="Validate, format, and minify JSON with error highlighting and line numbers — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.editor-wrap { position: relative; }
+.line-numbers {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 48px; background: rgba(0,0,0,0.3); border-right: 1px solid var(--border);
+  padding: 0.85rem 0.5rem; font-family: 'Fira Code', monospace;
+  font-size: 0.875rem; line-height: 1.6; color: var(--muted);
+  text-align: right; pointer-events: none; overflow: hidden;
+  border-radius: 10px 0 0 10px; white-space: pre;
+}
+.editor-wrap textarea {
+  padding-left: 60px !important;
+  font-family: 'Fira Code', monospace !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  min-height: 260px;
+}
+.json-key { color: #7dd3fc; }
+.json-str { color: #86efac; }
+.json-num { color: #fbbf24; }
+.json-bool { color: #f472b6; }
+.json-null { color: #94a3b8; }
+#htmlResult {
+  background: var(--dark2); border: 1px solid var(--green);
+  border-radius: 10px; padding: 1.25rem; margin-top: 1.5rem;
+  font-family: 'Fira Code', monospace; font-size: 0.875rem;
+  line-height: 1.6; overflow-x: auto; white-space: pre;
+  max-height: 400px; overflow-y: auto; display: none;
+}
+.status-bar {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-top: 0.75rem; padding: 0.6rem 1rem;
+  background: var(--dark2); border-radius: 8px; font-size: 0.85rem;
+}
+.status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">{ }</div>
+  <h1>JSON Validator &amp; Formatter</h1>
+  <p>Validate, beautify, and minify JSON in real time. Get exact error location with line numbers and helpful messages.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>JSON Input</label>
+      <div class="editor-wrap">
+        <div class="line-numbers" id="lineNums">1</div>
+        <textarea id="jsonInput" placeholder='Paste your JSON here, e.g. {"name":"BrightlyFuture","type":"agency"}' oninput="updateLineNums();liveValidate()"></textarea>
+      </div>
+      <div class="status-bar" id="statusBar">
+        <div class="status-dot" id="statusDot" style="background:var(--muted)"></div>
+        <span id="statusText" style="color:var(--muted)">Waiting for input…</span>
+      </div>
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Indent Size</label>
+        <select id="indentSize">
+          <option value="2">2 Spaces</option>
+          <option value="4">4 Spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </div>
+      <div>
+        <label>Sort Keys</label>
+        <select id="sortKeys">
+          <option value="no">Original Order</option>
+          <option value="asc">A → Z</option>
+          <option value="desc">Z → A</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="formatJSON()">✨ Format / Beautify</button>
+      <button class="btn btn-secondary" onclick="minifyJSON()">📦 Minify</button>
+      <button class="btn btn-secondary" onclick="loadSample()">Load Sample</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div id="htmlResult"></div>
+    <div class="result-box error" id="errorBox"></div>
+
+    <div class="stats-row" id="statsRow" style="display:none;margin-top:1rem;">
+      <div class="stat-chip"><div class="val" id="keyCount">0</div><div class="lbl">Keys</div></div>
+      <div class="stat-chip"><div class="val" id="depthVal">0</div><div class="lbl">Depth</div></div>
+      <div class="stat-chip"><div class="val" id="sizeVal">0</div><div class="lbl">Size (bytes)</div></div>
+      <div class="stat-chip"><div class="val" id="arrCount">0</div><div class="lbl">Arrays</div></div>
+    </div>
+
+    <div class="btn-group" id="actionBtns" style="display:none;">
+      <button class="btn btn-secondary" onclick="copyResult()">📋 Copy Result</button>
+      <button class="btn btn-secondary" onclick="downloadJSON()">⬇ Download JSON</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let lastFormatted = '';
+
+function updateLineNums() {
+  const ta = document.getElementById('jsonInput');
+  const lines = ta.value.split('\n').length;
+  document.getElementById('lineNums').textContent = Array.from({length: lines}, (_, i) => i + 1).join('\n');
+}
+
+function liveValidate() {
+  const raw = document.getElementById('jsonInput').value.trim();
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  if (!raw) { dot.style.background = 'var(--muted)'; txt.style.color = 'var(--muted)'; txt.textContent = 'Waiting for input…'; return; }
+  try {
+    JSON.parse(raw);
+    dot.style.background = 'var(--green)'; txt.style.color = 'var(--green)'; txt.textContent = '✅ Valid JSON';
+  } catch(e) {
+    dot.style.background = 'var(--red)'; txt.style.color = 'var(--red)'; txt.textContent = '❌ ' + e.message;
+  }
+}
+
+function getIndent() {
+  const v = document.getElementById('indentSize').value;
+  return v === 'tab' ? '\t' : ' '.repeat(parseInt(v));
+}
+
+function sortObj(obj) {
+  const mode = document.getElementById('sortKeys').value;
+  if (mode === 'no' || typeof obj !== 'object' || obj === null || Array.isArray(obj)) return obj;
+  const keys = Object.keys(obj).sort(mode === 'desc' ? (a,b) => b.localeCompare(a) : undefined);
+  const sorted = {};
+  keys.forEach(k => { sorted[k] = sortObj(obj[k]); });
+  return sorted;
+}
+
+function countKeys(obj, depth = 0) {
+  let keys = 0, maxDepth = depth, arrays = 0;
+  if (typeof obj === 'object' && obj !== null) {
+    if (Array.isArray(obj)) { arrays++; obj.forEach(v => { const r = countKeys(v, depth+1); keys += r.keys; maxDepth = Math.max(maxDepth, r.depth); arrays += r.arrays; }); }
+    else { const ks = Object.keys(obj); keys += ks.length; ks.forEach(k => { const r = countKeys(obj[k], depth+1); keys += r.keys; maxDepth = Math.max(maxDepth, r.depth); arrays += r.arrays; }); }
+  }
+  return {keys, depth: maxDepth, arrays};
+}
+
+function syntaxHighlight(json) {
+  return json
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+      let cls = 'json-num';
+      if (/^"/.test(match)) { cls = /:$/.test(match) ? 'json-key' : 'json-str'; }
+      else if (/true|false/.test(match)) cls = 'json-bool';
+      else if (/null/.test(match)) cls = 'json-null';
+      return `<span class="${cls}">${match}</span>`;
+    });
+}
+
+function formatJSON() {
+  const raw = document.getElementById('jsonInput').value.trim();
+  if (!raw) { alert('Please enter JSON first.'); return; }
+  try {
+    let parsed = JSON.parse(raw);
+    parsed = sortObj(parsed);
+    const formatted = JSON.stringify(parsed, null, getIndent());
+    lastFormatted = formatted;
+    const el = document.getElementById('htmlResult');
+    el.innerHTML = syntaxHighlight(formatted.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')) ;
+    // re-do with actual highlight
+    el.innerHTML = syntaxHighlight(formatted);
+    el.style.display = 'block';
+    document.getElementById('errorBox').style.display = 'none';
+
+    const stats = countKeys(parsed);
+    document.getElementById('keyCount').textContent = stats.keys;
+    document.getElementById('depthVal').textContent = stats.depth;
+    document.getElementById('sizeVal').textContent = new Blob([formatted]).size;
+    document.getElementById('arrCount').textContent = stats.arrays;
+    document.getElementById('statsRow').style.display = 'flex';
+    document.getElementById('actionBtns').style.display = 'flex';
+  } catch(e) {
+    const eb = document.getElementById('errorBox');
+    eb.textContent = '❌ JSON Error: ' + e.message + '\n\nCommon fixes:\n• Add missing commas between key-value pairs\n• Ensure all strings are wrapped in double quotes\n• Remove trailing commas\n• Check for unmatched brackets';
+    eb.style.display = 'block';
+    document.getElementById('htmlResult').style.display = 'none';
+  }
+}
+
+function minifyJSON() {
+  const raw = document.getElementById('jsonInput').value.trim();
+  if (!raw) { alert('Please enter JSON first.'); return; }
+  try {
+    const minified = JSON.stringify(JSON.parse(raw));
+    lastFormatted = minified;
+    const el = document.getElementById('htmlResult');
+    el.innerHTML = syntaxHighlight(minified);
+    el.style.display = 'block';
+    document.getElementById('errorBox').style.display = 'none';
+    document.getElementById('actionBtns').style.display = 'flex';
+  } catch(e) {
+    document.getElementById('errorBox').textContent = '❌ ' + e.message;
+    document.getElementById('errorBox').style.display = 'block';
+  }
+}
+
+function copyResult() {
+  navigator.clipboard.writeText(lastFormatted).then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function downloadJSON() {
+  const blob = new Blob([lastFormatted], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'formatted.json'; a.click();
+}
+
+function loadSample() {
+  document.getElementById('jsonInput').value = JSON.stringify({
+    "company": "BrightlyFuture",
+    "domain": "brightlyfuture.co.uk",
+    "services": ["AI Solutions", "PHP Development", "Custom APIs", "Web Design"],
+    "founded": 2020,
+    "active": true,
+    "contact": { "email": "hello@brightlyfuture.co.uk", "phone": null }
+  }, null, 2);
+  updateLineNums(); liveValidate();
+}
+
+function clearAll() {
+  document.getElementById('jsonInput').value = '';
+  document.getElementById('htmlResult').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('actionBtns').style.display = 'none';
+  updateLineNums(); liveValidate();
+}
+
+updateLineNums();
+</script>
+</body>
+</html>

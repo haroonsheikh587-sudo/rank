@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Analyzer | BrightlyFuture Tools</title>
+<meta name="description" content="Analyse your blog post for readability, word count, SEO score, keyword density, and more — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.score-circle {
+  width: 96px; height: 96px; border-radius: 50%;
+  border: 4px solid var(--pri); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; margin: 0 auto 1.5rem;
+}
+.score-circle .score-val { font-size: 2rem; font-weight: 800; color: var(--pri-light); line-height: 1; }
+.score-circle .score-lbl { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
+.issue-list { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.issue-list li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.875rem; }
+.badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+.badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+.badge-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+.kw-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.kw-table th { text-align: left; color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+.kw-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(124,58,237,0.1); }
+.kw-bar { height: 6px; border-radius: 3px; background: var(--pri); display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">📝</div>
+  <h1>Blog Analyzer</h1>
+  <p>Paste your blog post and get an instant SEO &amp; readability report — word count, keyword density, sentence length, and more.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Paste Your Blog Post</label>
+      <textarea id="blogText" placeholder="Paste your full blog post here…" style="min-height:220px;"></textarea>
+    </div>
+    <div class="mb">
+      <label>Focus Keyword (optional)</label>
+      <input type="text" id="focusKw" placeholder="e.g. digital marketing">
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="analyzeBlog()">🔍 Analyse Blog</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+  </div>
+
+  <div id="results" style="display:none;margin-top:1.5rem;">
+    <!-- SEO Score -->
+    <div class="tool-box" style="margin-bottom:1.25rem;">
+      <h3 style="margin-bottom:1rem;font-size:1.1rem;">Overall SEO Score</h3>
+      <div class="score-circle" id="scoreCircle">
+        <span class="score-val" id="scoreVal">0</span>
+        <span class="score-lbl">/ 100</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-chip"><div class="val" id="wordCount">0</div><div class="lbl">Words</div></div>
+        <div class="stat-chip"><div class="val" id="charCount">0</div><div class="lbl">Characters</div></div>
+        <div class="stat-chip"><div class="val" id="sentenceCount">0</div><div class="lbl">Sentences</div></div>
+        <div class="stat-chip"><div class="val" id="paraCount">0</div><div class="lbl">Paragraphs</div></div>
+        <div class="stat-chip"><div class="val" id="readTime">0</div><div class="lbl">Min Read</div></div>
+      </div>
+    </div>
+
+    <!-- Readability -->
+    <div class="tool-box" style="margin-bottom:1.25rem;">
+      <h3 style="margin-bottom:1rem;font-size:1.1rem;">Readability</h3>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <span style="font-size:0.875rem;color:var(--muted);">Flesch Reading Ease</span>
+        <span id="fleschScore" style="font-weight:700;color:var(--pri-light);">—</span>
+      </div>
+      <div class="strength-bar"><div class="strength-fill" id="fleschBar" style="width:0%;background:var(--green);"></div></div>
+      <p id="fleschLabel" style="font-size:0.8rem;color:var(--muted);margin-top:0.4rem;"></p>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1rem;margin-bottom:0.5rem;">
+        <span style="font-size:0.875rem;color:var(--muted);">Average Sentence Length</span>
+        <span id="avgSentLen" style="font-weight:700;color:var(--pri-light);">—</span>
+      </div>
+      <ul class="issue-list" id="readabilityIssues"></ul>
+    </div>
+
+    <!-- Keyword Density -->
+    <div class="tool-box" id="kwBox" style="margin-bottom:1.25rem;display:none;">
+      <h3 style="margin-bottom:1rem;font-size:1.1rem;">Keyword Analysis</h3>
+      <div id="kwDensityInfo" style="font-size:0.875rem;color:var(--muted);margin-bottom:1rem;"></div>
+      <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.5px;">Top Keywords</h4>
+      <table class="kw-table">
+        <thead><tr><th>Keyword</th><th>Count</th><th>Density</th><th>Bar</th></tr></thead>
+        <tbody id="kwTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Issues & Tips -->
+    <div class="tool-box">
+      <h3 style="margin-bottom:1rem;font-size:1.1rem;">Issues &amp; Suggestions</h3>
+      <ul class="issue-list" id="issueList"></ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links">
+    <a href="index.html">All Tools</a>
+    <a href="#">Contact</a>
+    <a href="#">Privacy</a>
+  </div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+function analyzeBlog() {
+  const text = document.getElementById('blogText').value.trim();
+  if (!text) { alert('Please paste your blog post first.'); return; }
+
+  const focusKw = document.getElementById('focusKw').value.trim().toLowerCase();
+  const words = text.match(/\b\w+\b/g) || [];
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 3);
+  const paragraphs = text.split(/\n\n+/).filter(p => p.trim().length > 0);
+  const wc = words.length;
+  const sc = sentences.length;
+  const pc = Math.max(paragraphs.length, 1);
+
+  document.getElementById('wordCount').textContent = wc;
+  document.getElementById('charCount').textContent = text.length;
+  document.getElementById('sentenceCount').textContent = sc;
+  document.getElementById('paraCount').textContent = pc;
+  document.getElementById('readTime').textContent = Math.max(1, Math.round(wc / 200));
+
+  // Avg sentence length
+  const avgLen = sc > 0 ? Math.round(wc / sc) : 0;
+  document.getElementById('avgSentLen').textContent = avgLen + ' words';
+
+  // Flesch score (simplified estimate)
+  const avgWordLen = words.reduce((a, w) => a + w.length, 0) / Math.max(wc, 1);
+  let flesch = Math.round(206.835 - 1.015 * (wc / Math.max(sc, 1)) - 84.6 * (avgWordLen / 6));
+  flesch = Math.max(0, Math.min(100, flesch));
+  document.getElementById('fleschScore').textContent = flesch;
+  document.getElementById('fleschBar').style.width = flesch + '%';
+  const fleschLabels = flesch >= 70 ? 'Easy to read — great for general audiences.' : flesch >= 50 ? 'Fairly difficult — consider simplifying sentences.' : 'Difficult — try shorter sentences and simpler words.';
+  document.getElementById('fleschLabel').textContent = fleschLabels;
+
+  // Keyword frequency
+  const freq = {};
+  words.forEach(w => { const lw = w.toLowerCase(); if (lw.length > 3) freq[lw] = (freq[lw] || 0) + 1; });
+  const sorted = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 12);
+  const kwBox = document.getElementById('kwBox');
+  kwBox.style.display = '';
+  const tbody = document.getElementById('kwTableBody');
+  tbody.innerHTML = '';
+  const maxFreq = sorted[0]?.[1] || 1;
+  sorted.forEach(([kw, cnt]) => {
+    const density = ((cnt / wc) * 100).toFixed(1);
+    const barW = Math.round((cnt / maxFreq) * 100);
+    tbody.innerHTML += `<tr><td style="font-weight:600;">${kw}</td><td>${cnt}</td><td>${density}%</td><td><span class="kw-bar" style="width:${barW}px;max-width:80px;"></span></td></tr>`;
+  });
+
+  // Focus keyword analysis
+  if (focusKw) {
+    const fkCount = (text.toLowerCase().match(new RegExp('\\b' + focusKw.replace(/\s+/g,'\\s+') + '\\b', 'g')) || []).length;
+    const fkDensity = ((fkCount / Math.max(wc, 1)) * 100).toFixed(1);
+    document.getElementById('kwDensityInfo').innerHTML = `Focus keyword "<strong style="color:var(--pri-light);">${focusKw}</strong>" appears <strong>${fkCount}</strong> times — density: <strong>${fkDensity}%</strong>`;
+  } else {
+    document.getElementById('kwDensityInfo').textContent = 'Enter a focus keyword above to see targeted analysis.';
+  }
+
+  // Issues
+  const issues = [];
+  if (wc < 300) issues.push(['red','❌','Content is very short (' + wc + ' words). Aim for 600+ words for SEO.']);
+  else if (wc < 600) issues.push(['yellow','⚠️','Content is short (' + wc + ' words). 1,000+ words ranks better.']);
+  else issues.push(['green','✅','Good content length (' + wc + ' words).']);
+
+  if (avgLen > 25) issues.push(['red','❌','Average sentence length (' + avgLen + ' words) is too long. Aim for under 20.']);
+  else if (avgLen > 18) issues.push(['yellow','⚠️','Average sentence length is ' + avgLen + ' words — slightly long.']);
+  else issues.push(['green','✅','Good average sentence length (' + avgLen + ' words).']);
+
+  if (flesch < 50) issues.push(['red','❌','Readability score is low (' + flesch + '). Simplify your writing.']);
+  else if (flesch < 60) issues.push(['yellow','⚠️','Readability could be improved (score: ' + flesch + ').']);
+  else issues.push(['green','✅','Good readability score (' + flesch + ').']);
+
+  if (focusKw) {
+    const fkCount = (text.toLowerCase().match(new RegExp('\\b' + focusKw.replace(/\s+/g,'\\s+') + '\\b', 'g')) || []).length;
+    const fkD = (fkCount / Math.max(wc, 1)) * 100;
+    if (fkCount === 0) issues.push(['red','❌','Focus keyword not found in content.']);
+    else if (fkD < 0.5) issues.push(['yellow','⚠️','Focus keyword density is low (' + fkD.toFixed(1) + '%). Aim for 0.5–2.5%.']);
+    else if (fkD > 3) issues.push(['red','❌','Focus keyword density is too high (' + fkD.toFixed(1) + '%) — risk of keyword stuffing.']);
+    else issues.push(['green','✅','Focus keyword density is healthy (' + fkD.toFixed(1) + '%).']);
+  }
+
+  const ul = document.getElementById('issueList');
+  ul.innerHTML = issues.map(([cls, ico, msg]) => `<li><span class="badge badge-${cls}">${ico}</span><span style="color:var(--text)">${msg}</span></li>`).join('');
+
+  // Score
+  let score = 50;
+  if (wc >= 600) score += 10; if (wc >= 1000) score += 10;
+  if (avgLen <= 20) score += 10; if (avgLen <= 15) score += 5;
+  if (flesch >= 60) score += 10; if (flesch >= 70) score += 5;
+  if (focusKw) {
+    const fkCount = (text.toLowerCase().match(new RegExp('\\b' + focusKw.replace(/\s+/g,'\\s+') + '\\b', 'g')) || []).length;
+    const fkD = (fkCount / Math.max(wc, 1)) * 100;
+    if (fkD >= 0.5 && fkD <= 3) score += 10;
+  }
+  score = Math.min(100, score);
+  document.getElementById('scoreVal').textContent = score;
+  const c = document.getElementById('scoreCircle');
+  c.style.borderColor = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--yellow)' : 'var(--red)';
+  document.getElementById('scoreVal').style.color = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--yellow)' : 'var(--red)';
+
+  // Readability issues
+  const ri = document.getElementById('readabilityIssues');
+  ri.innerHTML = '';
+  if (avgLen > 20) ri.innerHTML += `<li><span class="badge badge-yellow">⚠️</span> Some sentences are long. Break them up for better readability.</li>`;
+  const longSents = sentences.filter(s => s.trim().split(/\s+/).length > 30).length;
+  if (longSents > 0) ri.innerHTML += `<li><span class="badge badge-red">❌</span> ${longSents} sentence(s) exceed 30 words — readers may lose track.</li>`;
+  if (ri.innerHTML === '') ri.innerHTML = `<li><span class="badge badge-green">✅</span> Sentence structure looks good.</li>`;
+
+  document.getElementById('results').style.display = '';
+}
+
+function clearAll() {
+  document.getElementById('blogText').value = '';
+  document.getElementById('focusKw').value = '';
+  document.getElementById('results').style.display = 'none';
+}
+</script>
+</body>
+</html>

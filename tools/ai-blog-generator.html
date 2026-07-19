@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Blog Generator | BrightlyFuture Tools</title>
+<meta name="description" content="Generate structured, SEO-ready blog drafts with headings, meta description and body copy — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.output-blog { white-space: pre-wrap; line-height: 1.8; font-size: 0.9rem; }
+.progress-wrap { margin-top: 1.5rem; display: none; }
+.progress-bar { height: 8px; border-radius: 4px; background: var(--dark2); overflow: hidden; margin-bottom: 0.5rem; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--pri), var(--cyan)); transition: width .4s; }
+.tag-select { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tag { padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--dark2); color: var(--muted); transition: all .2s; }
+.tag.selected { background: var(--pri); border-color: var(--pri); color: #fff; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🤖</div>
+  <h1>AI Blog Generator</h1>
+  <p>Fill in the topic, tone, and keywords — get a complete structured blog post with SEO title, meta description, H2s, and body copy.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Blog Topic / Title Idea</label>
+      <input type="text" id="blogTopic" placeholder="e.g. How to Build a Custom API for Your Business">
+    </div>
+
+    <div class="tool-row mb">
+      <div>
+        <label>Target Audience</label>
+        <select id="audience">
+          <option>Small Business Owners</option>
+          <option>Developers</option>
+          <option>Marketing Professionals</option>
+          <option>Entrepreneurs</option>
+          <option>Enterprise IT Teams</option>
+          <option>General Public</option>
+        </select>
+      </div>
+      <div>
+        <label>Word Count Target</label>
+        <select id="wordTarget">
+          <option value="500">~500 words (Short)</option>
+          <option value="800" selected>~800 words (Medium)</option>
+          <option value="1200">~1200 words (Long-form)</option>
+          <option value="1800">~1800 words (Pillar)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb">
+      <label>Writing Tone</label>
+      <div class="tag-select" id="toneSelector">
+        <span class="tag selected" onclick="selectTone(this,'Professional')">Professional</span>
+        <span class="tag" onclick="selectTone(this,'Friendly')">Friendly</span>
+        <span class="tag" onclick="selectTone(this,'Technical')">Technical</span>
+        <span class="tag" onclick="selectTone(this,'Persuasive')">Persuasive</span>
+        <span class="tag" onclick="selectTone(this,'Conversational')">Conversational</span>
+        <span class="tag" onclick="selectTone(this,'Educational')">Educational</span>
+      </div>
+    </div>
+
+    <div class="mb">
+      <label>Focus Keywords (comma separated)</label>
+      <input type="text" id="focusKws" placeholder="e.g. custom API, PHP development, REST API">
+    </div>
+
+    <div class="mb">
+      <label>Number of H2 Sections</label>
+      <select id="numSections">
+        <option value="3">3 Sections</option>
+        <option value="4" selected>4 Sections</option>
+        <option value="5">5 Sections</option>
+        <option value="6">6 Sections</option>
+      </select>
+    </div>
+
+    <div class="check-group mb">
+      <label><input type="checkbox" id="inclIntro" checked> Introduction</label>
+      <label><input type="checkbox" id="inclMeta" checked> Meta Description</label>
+      <label><input type="checkbox" id="inclFaq"> FAQ Section</label>
+      <label><input type="checkbox" id="inclCta" checked> CTA / Conclusion</label>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="generateBtn" onclick="generateBlog()">🤖 Generate Blog Post</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <p id="progressLabel" style="font-size:0.8rem;color:var(--muted);text-align:center;">Generating…</p>
+    </div>
+  </div>
+
+  <div id="outputSection" style="display:none;margin-top:1.5rem;">
+    <div class="tool-box">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+        <h3 style="font-size:1rem;">Generated Blog Post</h3>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button class="btn btn-secondary" style="padding:0.4rem 0.9rem;font-size:0.8rem;" onclick="copyBlog()">📋 Copy</button>
+          <button class="btn btn-secondary" style="padding:0.4rem 0.9rem;font-size:0.8rem;" onclick="downloadBlog()">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="stats-row" style="margin-bottom:1.5rem;">
+        <div class="stat-chip"><div class="val" id="outWC">0</div><div class="lbl">Words</div></div>
+        <div class="stat-chip"><div class="val" id="outRT">0</div><div class="lbl">Read Min</div></div>
+        <div class="stat-chip"><div class="val" id="outSec">0</div><div class="lbl">Sections</div></div>
+      </div>
+
+      <div class="output-blog" id="blogOutput"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let selectedTone = 'Professional';
+let lastBlog = '';
+
+function selectTone(el, tone) {
+  selectedTone = tone;
+  document.querySelectorAll('#toneSelector .tag').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+const blogTemplates = {
+  intro: (topic, audience, kws, tone) => {
+    const toneMap = {Professional:'In today\'s competitive digital landscape,', Friendly:'Hey there! If you\'ve been wondering about', Technical:'From an architectural standpoint,', Persuasive:'Here\'s a truth most businesses ignore:', Conversational:'Let\'s be honest —', Educational:'Before we dive in, it\'s worth understanding that'};
+    const opener = toneMap[tone] || 'In this guide,';
+    return `${opener} ${topic} has become one of the most talked-about topics in the industry. Whether you're a ${audience.toLowerCase()} looking to gain a competitive edge or simply trying to understand how modern digital solutions work, this guide covers everything you need to know.
+
+${kws ? 'Key areas we\'ll explore include ' + kws.split(',').slice(0,3).map(k=>k.trim()).join(', ') + ' and much more.' : 'By the end of this post, you\'ll have a clear roadmap for taking action.'}`;
+  },
+
+  h2Section: (heading, content) => `\n## ${heading}\n\n${content}\n`,
+
+  conclusion: (topic, audience) => `\n## Conclusion\n\nIn summary, ${topic} is no longer optional for ${audience.toLowerCase()} — it's a necessity. The digital landscape moves fast, and the businesses that invest in the right solutions today will be the ones leading tomorrow.\n\nReady to take the next step? BrightlyFuture specialises in AI solutions, PHP development, custom APIs, and web design tailored to your exact needs.\n\n**[Get a free consultation →](https://brightlyfuture.co.uk)**`,
+
+  faq: (topic) => `\n## Frequently Asked Questions\n\n**Q: How long does it take to implement ${topic}?**\nA: Timelines vary depending on complexity, but most projects can be scoped and delivered within 4–12 weeks with the right team.\n\n**Q: How much does ${topic} cost?**\nA: Costs depend on your requirements. BrightlyFuture offers transparent pricing starting from discovery workshops. Contact us for a custom quote.\n\n**Q: Can I integrate this with my existing systems?**\nA: Absolutely. Our solutions are designed with interoperability in mind, using standard APIs and modern frameworks.\n\n**Q: Is technical expertise required on my end?**\nA: Not necessarily. We manage the technical complexity so you can focus on your business outcomes.`,
+};
+
+const sectionContent = [
+  (t,kws) => `Understanding the fundamentals of ${t} starts with asking the right questions. Many organisations jump straight to implementation without first establishing clear goals. Before anything else, map your current workflow and identify the specific pain points you're trying to solve.\n\nKey considerations at this stage include scalability requirements, integration with existing tech stacks, and team capabilities. ${kws ? 'Terms like ' + kws.split(',')[0]?.trim() + ' often come up here — and with good reason.' : ''}`,
+  (t,kws) => `Once you have a clear picture of your requirements, the next step is selecting the right approach. There is no one-size-fits-all solution. Depending on your budget, timeline, and technical maturity, you may choose between off-the-shelf platforms, custom-built solutions, or hybrid models.\n\n${kws ? 'Solutions centred around ' + kws.split(',').slice(0,2).map(k=>k.trim()).join(' and ') + ' tend to offer the best balance of flexibility and speed to market.' : 'Custom-built solutions, while more expensive upfront, often deliver superior ROI over time.'}`,
+  (t) => `Implementation is where strategy meets reality. Common pitfalls at this stage include scope creep, poor documentation, and inadequate testing. To avoid these, establish a phased rollout plan with clear milestones and sign-off points.\n\nBest practices include:\n\n• Start with an MVP (minimum viable product) to validate assumptions early\n• Involve end-users in testing from day one\n• Document everything — from architecture decisions to API contracts\n• Build monitoring and alerting in from the beginning, not as an afterthought`,
+  (t) => `Measuring success post-launch is just as important as the build itself. Define your KPIs before you go live. Common metrics include uptime, error rates, user adoption, and time savings per task.\n\nSchedule regular review cycles — monthly in the first quarter, then quarterly thereafter. This data drives continuous improvement and helps justify further investment in ${t}.`,
+  (t) => `Scaling and maintaining your solution requires a long-term mindset. Technologies evolve, business requirements shift, and user expectations grow. Build flexibility into your architecture from day one.\n\nCloud-native approaches, containerisation, and microservices architectures are popular choices for ${t} projects that need to scale without complete rewrites every few years.`,
+  (t) => `Security and compliance are non-negotiable in today's regulatory environment. Whether you're subject to GDPR, ISO 27001, or sector-specific requirements, your ${t} implementation must account for data protection, access controls, and audit logging from the outset.\n\nRegular penetration testing and security audits are recommended at least annually — more frequently for high-risk or high-traffic systems.`,
+];
+
+const sectionTitles = (topic) => [
+  `Understanding ${topic}: The Foundations`,
+  `Choosing the Right Approach for Your ${topic} Project`,
+  `Step-by-Step Implementation Guide`,
+  `Measuring ROI and Success Metrics`,
+  `Scaling Your Solution for Long-Term Growth`,
+  `Security, Compliance, and Best Practices`,
+];
+
+async function generateBlog() {
+  const topic = document.getElementById('blogTopic').value.trim();
+  if (!topic) { alert('Please enter a blog topic.'); return; }
+
+  const audience = document.getElementById('audience').value;
+  const kws = document.getElementById('focusKws').value.trim();
+  const numSec = parseInt(document.getElementById('numSections').value);
+  const inclIntro = document.getElementById('inclIntro').checked;
+  const inclMeta = document.getElementById('inclMeta').checked;
+  const inclFaq = document.getElementById('inclFaq').checked;
+  const inclCta = document.getElementById('inclCta').checked;
+
+  document.getElementById('progressWrap').style.display = '';
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('outputSection').style.display = 'none';
+
+  // Animated progress
+  let prog = 0;
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  const steps = ['Crafting outline…','Writing introduction…','Generating sections…','Adding SEO elements…','Finalising blog post…'];
+  let stepI = 0;
+
+  const interval = setInterval(() => {
+    prog = Math.min(prog + 2, 90);
+    fill.style.width = prog + '%';
+    if (prog % 18 === 0 && stepI < steps.length) { label.textContent = steps[stepI++]; }
+  }, 50);
+
+  await new Promise(r => setTimeout(r, 2500));
+  clearInterval(interval);
+  fill.style.width = '100%';
+  label.textContent = 'Done! ✅';
+
+  // Build blog
+  let blog = '';
+  const seotitle = `${topic}: A Complete Guide for ${audience} in ${new Date().getFullYear()}`;
+  blog += `SEO Title: ${seotitle}\n`;
+  if (inclMeta) {
+    const kwSnippet = kws ? kws.split(',')[0]?.trim() + ' and more' : topic.split(' ').slice(0,5).join(' ');
+    blog += `Meta Description: Discover everything you need to know about ${topic}. This comprehensive guide covers ${kwSnippet} — written for ${audience.toLowerCase()}.\n`;
+  }
+  blog += `\n# ${seotitle}\n\n`;
+  if (inclIntro) blog += blogTemplates.intro(topic, audience, kws, selectedTone) + '\n';
+
+  const titles = sectionTitles(topic);
+  for (let i = 0; i < Math.min(numSec, sectionContent.length); i++) {
+    blog += blogTemplates.h2Section(titles[i], sectionContent[i](topic, kws));
+  }
+
+  if (inclFaq) blog += blogTemplates.faq(topic);
+  if (inclCta) blog += blogTemplates.conclusion(topic, audience);
+
+  lastBlog = blog;
+  document.getElementById('blogOutput').textContent = blog;
+  const wc = blog.match(/\b\w+\b/g)?.length || 0;
+  document.getElementById('outWC').textContent = wc;
+  document.getElementById('outRT').textContent = Math.max(1, Math.round(wc / 200));
+  document.getElementById('outSec').textContent = numSec + (inclFaq ? 1 : 0) + (inclCta ? 1 : 0);
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('generateBtn').disabled = false;
+  document.getElementById('outputSection').style.display = '';
+}
+
+function copyBlog() {
+  navigator.clipboard.writeText(lastBlog).then(() => {
+    const t = document.getElementById('toast'); t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function downloadBlog() {
+  const topic = document.getElementById('blogTopic').value.trim().replace(/\s+/g,'-').toLowerCase() || 'blog-post';
+  const blob = new Blob([lastBlog], {type:'text/markdown'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = topic + '.md'; a.click();
+}
+
+function clearAll() {
+  document.getElementById('blogTopic').value = '';
+  document.getElementById('focusKws').value = '';
+  document.getElementById('outputSection').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'none';
+}
+</script>
+</body>
+</html>

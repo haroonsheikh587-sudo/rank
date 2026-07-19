@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Text Editor | BrightlyFuture Tools</title>
+<meta name="description" content="Live word count, character count, reading time, keyword frequency and more — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.editor-area {
+  width: 100%; min-height: 300px; background: var(--dark2);
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text); padding: 1.25rem; font-size: 1rem;
+  font-family: 'Inter', sans-serif; line-height: 1.8;
+  outline: none; resize: vertical; transition: border-color .2s;
+}
+.editor-area:focus { border-color: var(--pri); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+.stat-box { background: var(--dark2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; }
+.stat-box .val { font-size: 1.75rem; font-weight: 800; color: var(--pri-light); }
+.stat-box .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+.kw-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(124,58,237,0.1); font-size: 0.875rem; }
+.kw-row:last-child { border-bottom: none; }
+.kw-word { flex: 1; font-weight: 600; }
+.kw-cnt { width: 30px; text-align: right; color: var(--muted); }
+.kw-pct { width: 50px; text-align: right; color: var(--muted); font-size: 0.8rem; }
+.kw-bar2 { flex: 2; height: 6px; background: var(--dark); border-radius: 3px; overflow: hidden; }
+.kw-bar2-fill { height: 100%; border-radius: 3px; background: var(--pri); transition: width .4s; }
+.toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.tb-btn { background: var(--dark2); border: 1px solid var(--border); border-radius: 7px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all .2s; }
+.tb-btn:hover { border-color: var(--pri-light); color: var(--white); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">📋</div>
+  <h1>Smart Text Editor</h1>
+  <p>Write or paste text and get live stats — word count, reading time, keyword frequency, sentence analysis, and more.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="toolbar">
+      <button class="tb-btn" onclick="clearEditor()">Clear</button>
+      <button class="tb-btn" onclick="copyText()">Copy</button>
+      <button class="tb-btn" onclick="pasteText()">Paste</button>
+      <button class="tb-btn" onclick="removeExtraSpaces()">Trim Spaces</button>
+      <button class="tb-btn" onclick="removeLineBreaks()">Join Lines</button>
+      <button class="tb-btn" onclick="toUppercase()">UPPERCASE</button>
+      <button class="tb-btn" onclick="toLowercase()">lowercase</button>
+    </div>
+
+    <textarea class="editor-area" id="editorArea" placeholder="Start typing or paste your text here…" oninput="updateStats()"></textarea>
+
+    <div class="stats-grid">
+      <div class="stat-box"><div class="val" id="sWords">0</div><div class="lbl">Words</div></div>
+      <div class="stat-box"><div class="val" id="sChars">0</div><div class="lbl">Characters</div></div>
+      <div class="stat-box"><div class="val" id="sCharsNoSpace">0</div><div class="lbl">Chars (no spaces)</div></div>
+      <div class="stat-box"><div class="val" id="sSentences">0</div><div class="lbl">Sentences</div></div>
+      <div class="stat-box"><div class="val" id="sParagraphs">0</div><div class="lbl">Paragraphs</div></div>
+      <div class="stat-box"><div class="val" id="sLines">0</div><div class="lbl">Lines</div></div>
+      <div class="stat-box"><div class="val" id="sReadTime">0</div><div class="lbl">Read (min)</div></div>
+      <div class="stat-box"><div class="val" id="sSpeakTime">0</div><div class="lbl">Speak (min)</div></div>
+    </div>
+  </div>
+
+  <!-- Keyword Frequency -->
+  <div class="tool-box" style="margin-top:1.5rem;" id="kwSection">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h3 style="font-size:1rem;">Top Keywords</h3>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <label style="font-size:0.8rem;color:var(--muted);">Min length:</label>
+        <select id="minKwLen" onchange="updateStats()" style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:0.2rem 0.5rem;font-size:0.8rem;">
+          <option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option>
+        </select>
+      </div>
+    </div>
+    <div id="kwList"><p style="color:var(--muted);font-size:0.875rem;">Type some text to see keyword frequency…</p></div>
+  </div>
+
+  <!-- Find & Replace -->
+  <div class="tool-box" style="margin-top:1.5rem;">
+    <h3 style="font-size:1rem;margin-bottom:1rem;">Find &amp; Replace</h3>
+    <div class="tool-row mb">
+      <div>
+        <label>Find</label>
+        <input type="text" id="findText" placeholder="Search term…">
+      </div>
+      <div>
+        <label>Replace with</label>
+        <input type="text" id="replaceText" placeholder="Replacement…">
+      </div>
+    </div>
+    <div class="check-group mb">
+      <label><input type="checkbox" id="caseInsensitive" checked> Case insensitive</label>
+      <label><input type="checkbox" id="replaceAll" checked> Replace all</label>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="doFindReplace()">Find &amp; Replace</button>
+      <button class="btn btn-secondary" onclick="highlightCount()">Count Matches</button>
+    </div>
+    <div id="findResult" style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted);"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Done!</div>
+
+<script>
+const STOP_WORDS = new Set(['the','and','for','are','but','not','you','all','can','has','her','was','one','our','out','had','him','his','how','its','now','did','get','may','use','two','way','who','oil','sit','set']);
+
+function updateStats() {
+  const text = document.getElementById('editorArea').value;
+  const words = text.match(/\b\w+\b/g) || [];
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 2);
+  const paragraphs = text.split(/\n\n+/).filter(p => p.trim().length > 0);
+  const lines = text.split('\n').length;
+
+  document.getElementById('sWords').textContent = words.length;
+  document.getElementById('sChars').textContent = text.length;
+  document.getElementById('sCharsNoSpace').textContent = text.replace(/\s/g,'').length;
+  document.getElementById('sSentences').textContent = sentences.length;
+  document.getElementById('sParagraphs').textContent = Math.max(paragraphs.length, text.trim() ? 1 : 0);
+  document.getElementById('sLines').textContent = lines;
+  document.getElementById('sReadTime').textContent = Math.max(words.length > 0 ? 1 : 0, Math.round(words.length / 200));
+  document.getElementById('sSpeakTime').textContent = Math.max(words.length > 0 ? 1 : 0, Math.round(words.length / 130));
+
+  // Keywords
+  const minLen = parseInt(document.getElementById('minKwLen').value);
+  const freq = {};
+  words.forEach(w => {
+    const lw = w.toLowerCase();
+    if (lw.length >= minLen && !STOP_WORDS.has(lw)) freq[lw] = (freq[lw] || 0) + 1;
+  });
+  const sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,15);
+  const maxFreq = sorted[0]?.[1] || 1;
+  const kwList = document.getElementById('kwList');
+  if (sorted.length === 0) {
+    kwList.innerHTML = '<p style="color:var(--muted);font-size:0.875rem;">Type some text to see keyword frequency…</p>';
+    return;
+  }
+  kwList.innerHTML = sorted.map(([w,cnt]) =>
+    `<div class="kw-row">
+      <span class="kw-word">${w}</span>
+      <div class="kw-bar2"><div class="kw-bar2-fill" style="width:${Math.round(cnt/maxFreq*100)}%"></div></div>
+      <span class="kw-cnt">${cnt}×</span>
+      <span class="kw-pct">${((cnt/words.length)*100).toFixed(1)}%</span>
+    </div>`
+  ).join('');
+}
+
+function clearEditor() { document.getElementById('editorArea').value = ''; updateStats(); }
+function copyText() { navigator.clipboard.writeText(document.getElementById('editorArea').value).then(() => showToast('Copied!')); }
+async function pasteText() { const t = await navigator.clipboard.readText(); document.getElementById('editorArea').value += t; updateStats(); }
+function removeExtraSpaces() { document.getElementById('editorArea').value = document.getElementById('editorArea').value.replace(/\s+/g,' ').trim(); updateStats(); }
+function removeLineBreaks() { document.getElementById('editorArea').value = document.getElementById('editorArea').value.replace(/[\r\n]+/g,' ').trim(); updateStats(); }
+function toUppercase() { document.getElementById('editorArea').value = document.getElementById('editorArea').value.toUpperCase(); updateStats(); }
+function toLowercase() { document.getElementById('editorArea').value = document.getElementById('editorArea').value.toLowerCase(); updateStats(); }
+
+function doFindReplace() {
+  const find = document.getElementById('findText').value;
+  if (!find) { alert('Enter a search term.'); return; }
+  const replace = document.getElementById('replaceText').value;
+  const flags = (document.getElementById('caseInsensitive').checked ? 'i' : '') + (document.getElementById('replaceAll').checked ? 'g' : '');
+  const regex = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), flags);
+  const orig = document.getElementById('editorArea').value;
+  const result = orig.replace(regex, replace);
+  const count = (orig.match(regex) || []).length;
+  document.getElementById('editorArea').value = result;
+  document.getElementById('findResult').textContent = `Replaced ${count} occurrence(s).`;
+  updateStats();
+}
+
+function highlightCount() {
+  const find = document.getElementById('findText').value;
+  if (!find) { alert('Enter a search term.'); return; }
+  const flags = document.getElementById('caseInsensitive').checked ? 'gi' : 'g';
+  const regex = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), flags);
+  const count = (document.getElementById('editorArea').value.match(regex) || []).length;
+  document.getElementById('findResult').textContent = `Found ${count} match(es) for "${find}".`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>

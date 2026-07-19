@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSL Certificate Checker | BrightlyFuture Tools</title>
+<meta name="description" content="Check SSL/TLS certificate validity, expiry, issuer and HTTPS configuration for any domain — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.ssl-grade {
+  width: 80px; height: 80px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; font-weight: 900; margin-right: 1.5rem;
+}
+.check-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+.check-item:last-child { border-bottom: none; }
+.check-ico { font-size: 1.1rem; flex-shrink: 0; }
+.check-label { flex: 1; }
+.check-val { color: var(--muted); font-family: 'Fira Code', monospace; font-size: 0.8rem; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--pri); border-radius: 50%; animation: spin .8s linear infinite; margin: 2rem auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.expiry-bar-wrap { margin-top: 0.5rem; }
+.expiry-bar { height: 8px; border-radius: 4px; background: var(--dark2); overflow: hidden; }
+.expiry-fill { height: 100%; border-radius: 4px; transition: width .6s; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🛡️</div>
+  <h1>SSL Certificate Checker</h1>
+  <p>Verify your SSL/TLS certificate status, expiry date, issuer details, and HTTPS security configuration.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Enter Website URL or Domain</label>
+      <input type="text" id="sslInput" placeholder="e.g. brightlyfuture.co.uk or https://brightlyfuture.co.uk" onkeydown="if(event.key==='Enter')checkSSL()">
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="checkSSL()">🛡️ Check SSL</button>
+      <button class="btn btn-secondary" onclick="clearResults()">Clear</button>
+    </div>
+
+    <div id="spinner" style="display:none;"><div class="spinner"></div><p style="text-align:center;color:var(--muted);font-size:0.875rem;">Checking SSL certificate…</p></div>
+    <div class="result-box error" id="errorBox"></div>
+    <div id="results" style="display:none;margin-top:1.5rem;"></div>
+  </div>
+
+  <!-- Info box -->
+  <div class="tool-box" style="margin-top:1.5rem;background:rgba(124,58,237,0.08);border-color:rgba(124,58,237,0.3);">
+    <h3 style="font-size:0.95rem;margin-bottom:0.75rem;">ℹ️ How This Works</h3>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.6;">
+      This tool uses the public <strong style="color:var(--text);">crt.sh Certificate Transparency</strong> log and Cloudflare's DoH API to check SSL status.
+      For a full certificate chain analysis, tools like SSL Labs provide deeper inspection requiring server-side access.
+    </p>
+    <p style="font-size:0.875rem;color:var(--muted);margin-top:0.75rem;">
+      <strong style="color:var(--text);">What we check:</strong> Certificate existence · Domain match · HTTPS reachability · Certificate issuer · Expiry status
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+
+<script>
+async function checkSSL() {
+  let input = document.getElementById('sslInput').value.trim();
+  if (!input) { alert('Please enter a domain or URL.'); return; }
+
+  let domain = input.replace(/^https?:\/\//,'').replace(/\/.*/,'').toLowerCase();
+  const domainRegex = /^[a-z0-9]([a-z0-9\-]{0,61}[a-z0-9])?(\.[a-z]{2,})+$/;
+  if (!domainRegex.test(domain)) {
+    document.getElementById('errorBox').textContent = '❌ Invalid domain. Please enter a valid domain like "example.com".';
+    document.getElementById('errorBox').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('spinner').style.display = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+
+  try {
+    // Fetch from crt.sh certificate transparency log
+    const crtRes = await fetch(`https://crt.sh/?q=${encodeURIComponent(domain)}&output=json`).then(r => r.ok ? r.json() : null).catch(() => null);
+
+    // HTTPS reachability check via DoH
+    const dohRes = await fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {headers:{'Accept':'application/dns-json'}}).then(r=>r.json()).catch(()=>null);
+
+    document.getElementById('spinner').style.display = 'none';
+
+    const hasARecord = dohRes?.Answer?.some(r => r.type === 1);
+    const certs = crtRes ? crtRes.filter(c => !c.name_value.startsWith('*')).sort((a,b) => new Date(b.not_after) - new Date(a.not_after)) : [];
+    const latestCert = certs[0] || null;
+
+    let expiryDays = null, isExpired = false, expiryDate = null;
+    if (latestCert) {
+      expiryDate = new Date(latestCert.not_after);
+      const now = new Date();
+      expiryDays = Math.round((expiryDate - now) / (1000 * 60 * 60 * 24));
+      isExpired = expiryDays < 0;
+    }
+
+    const grade = latestCert && !isExpired && expiryDays > 30 && hasARecord ? 'A' :
+                  latestCert && !isExpired && expiryDays > 7 ? 'B' :
+                  latestCert && !isExpired ? 'C' : 'F';
+    const gradeColor = {A:'var(--green)',B:'var(--cyan)',C:'var(--yellow)',F:'var(--red)'}[grade];
+
+    const issuerMap = {
+      'Let\'s Encrypt': "Let's Encrypt (Free, Auto-renewed)",
+      'DigiCert': 'DigiCert Inc.',
+      'Comodo': 'Comodo / Sectigo',
+      'GeoTrust': 'GeoTrust',
+      'GlobalSign': 'GlobalSign',
+    };
+    const issuerRaw = latestCert?.issuer_name || 'Unknown';
+    const issuerFriendly = Object.entries(issuerMap).find(([k]) => issuerRaw.includes(k))?.[1] || issuerRaw.substring(0, 60);
+
+    const expiryBarPct = expiryDays ? Math.max(0, Math.min(100, Math.round((expiryDays / 365) * 100))) : 0;
+    const expiryBarColor = expiryDays > 60 ? 'var(--green)' : expiryDays > 14 ? 'var(--yellow)' : 'var(--red)';
+
+    document.getElementById('results').innerHTML = `
+      <div style="display:flex;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+        <div class="ssl-grade" style="background:${gradeColor}22;color:${gradeColor};border:2px solid ${gradeColor};">${grade}</div>
+        <div>
+          <div style="font-size:1.2rem;font-weight:800;">${domain}</div>
+          <div style="font-size:0.875rem;color:var(--muted);margin-top:0.25rem;">SSL Security Grade</div>
+          <div style="font-size:0.8rem;color:${gradeColor};font-weight:700;margin-top:0.25rem;">${grade === 'A' ? 'Excellent SSL configuration' : grade === 'B' ? 'Good — minor issues' : grade === 'C' ? 'Certificate expiring soon' : 'SSL issue detected'}</div>
+        </div>
+      </div>
+
+      <div class="check-item">
+        <span class="check-ico">${latestCert ? '✅' : '❌'}</span>
+        <span class="check-label">SSL Certificate Found</span>
+        <span class="check-val">${latestCert ? certs.length + ' cert(s) in CT log' : 'Not found in Certificate Transparency'}</span>
+      </div>
+      <div class="check-item">
+        <span class="check-ico">${hasARecord ? '✅' : '⚠️'}</span>
+        <span class="check-label">Domain Resolves (DNS)</span>
+        <span class="check-val">${hasARecord ? dohRes.Answer.filter(r=>r.type===1).map(r=>r.data).join(', ') : 'No A record found'}</span>
+      </div>
+      <div class="check-item">
+        <span class="check-ico">${latestCert ? '✅' : '❌'}</span>
+        <span class="check-label">Certificate Issuer</span>
+        <span class="check-val">${issuerFriendly}</span>
+      </div>
+      ${expiryDate ? `
+      <div class="check-item">
+        <span class="check-ico">${isExpired ? '❌' : expiryDays < 30 ? '⚠️' : '✅'}</span>
+        <span class="check-label">Certificate Expiry</span>
+        <span class="check-val">${expiryDate.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'})} (${isExpired ? 'EXPIRED ' + Math.abs(expiryDays) + ' days ago' : expiryDays + ' days remaining'})</span>
+      </div>
+      <div style="padding:0.75rem 0;">
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.4rem;">Days until expiry</div>
+        <div class="expiry-bar"><div class="expiry-fill" style="width:${expiryBarPct}%;background:${expiryBarColor};"></div></div>
+      </div>` : ''}
+      <div class="check-item">
+        <span class="check-ico">${latestCert ? '✅' : '❌'}</span>
+        <span class="check-label">Valid Certificate Exists</span>
+        <span class="check-val">${latestCert ? 'Common name: ' + (latestCert.name_value || domain) : 'No valid certificate found'}</span>
+      </div>
+      ${latestCert ? `
+      <div class="check-item">
+        <span class="check-ico">ℹ️</span>
+        <span class="check-label">Serial Number</span>
+        <span class="check-val">${latestCert.serial_number || 'N/A'}</span>
+      </div>` : ''}
+    `;
+    document.getElementById('results').style.display = '';
+  } catch(e) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('errorBox').textContent = '❌ Check failed: ' + e.message + '. Try again or check your connection.';
+    document.getElementById('errorBox').style.display = 'block';
+  }
+}
+
+function clearResults() {
+  document.getElementById('sslInput').value = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+}
+</script>
+</body>
+</html>

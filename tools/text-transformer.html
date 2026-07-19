@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Transformer | BrightlyFuture Tools</title>
+<meta name="description" content="Transform text between uppercase, lowercase, title case, camelCase, snake_case, slug, and more — free tool by BrightlyFuture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.transform-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem; margin-bottom: 1.5rem;
+}
+.tx-btn {
+  background: var(--dark2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.85rem 1rem;
+  text-align: left; cursor: pointer; transition: all .2s;
+  color: var(--text);
+}
+.tx-btn:hover, .tx-btn.active {
+  border-color: var(--pri); background: rgba(124,58,237,0.12); color: var(--white);
+}
+.tx-btn .tx-name { font-weight: 700; font-size: 0.9rem; }
+.tx-btn .tx-ex { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; font-family: 'Fira Code', monospace; }
+.output-area {
+  background: var(--dark2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.25rem; min-height: 120px;
+  font-family: 'Fira Code', monospace; font-size: 0.95rem;
+  line-height: 1.6; color: var(--text); white-space: pre-wrap;
+  word-break: break-all; margin-top: 1rem;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">BrightlyFuture</a>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">AI Solutions</a>
+    <a href="index.html" class="active">Free Tools</a>
+    <a href="#" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<div class="tool-page-hero">
+  <a href="index.html" class="back-link">← Back to All Tools</a>
+  <div style="font-size:2.5rem;margin-bottom:1rem;">✏️</div>
+  <h1>Text Transformer</h1>
+  <p>Instantly convert your text between dozens of formats — perfect for code, content, and copywriting workflows.</p>
+</div>
+
+<div class="tool-workspace">
+  <div class="tool-box">
+    <div class="mb">
+      <label>Input Text</label>
+      <textarea id="inputText" placeholder="Type or paste your text here…" style="min-height:120px;" oninput="autoTransform()"></textarea>
+    </div>
+
+    <label style="display:block;margin-bottom:0.75rem;font-size:0.85rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Choose Transformation</label>
+    <div class="transform-grid" id="transformGrid">
+      <button class="tx-btn active" data-fn="upper" onclick="selectTx(this,'upper')">
+        <div class="tx-name">UPPERCASE</div><div class="tx-ex">hello world → HELLO WORLD</div>
+      </button>
+      <button class="tx-btn" data-fn="lower" onclick="selectTx(this,'lower')">
+        <div class="tx-name">lowercase</div><div class="tx-ex">HELLO WORLD → hello world</div>
+      </button>
+      <button class="tx-btn" data-fn="title" onclick="selectTx(this,'title')">
+        <div class="tx-name">Title Case</div><div class="tx-ex">hello world → Hello World</div>
+      </button>
+      <button class="tx-btn" data-fn="sentence" onclick="selectTx(this,'sentence')">
+        <div class="tx-name">Sentence case</div><div class="tx-ex">hello world → Hello world</div>
+      </button>
+      <button class="tx-btn" data-fn="camel" onclick="selectTx(this,'camel')">
+        <div class="tx-name">camelCase</div><div class="tx-ex">hello world → helloWorld</div>
+      </button>
+      <button class="tx-btn" data-fn="pascal" onclick="selectTx(this,'pascal')">
+        <div class="tx-name">PascalCase</div><div class="tx-ex">hello world → HelloWorld</div>
+      </button>
+      <button class="tx-btn" data-fn="snake" onclick="selectTx(this,'snake')">
+        <div class="tx-name">snake_case</div><div class="tx-ex">hello world → hello_world</div>
+      </button>
+      <button class="tx-btn" data-fn="kebab" onclick="selectTx(this,'kebab')">
+        <div class="tx-name">kebab-case</div><div class="tx-ex">hello world → hello-world</div>
+      </button>
+      <button class="tx-btn" data-fn="slug" onclick="selectTx(this,'slug')">
+        <div class="tx-name">URL Slug</div><div class="tx-ex">Hello World! → hello-world</div>
+      </button>
+      <button class="tx-btn" data-fn="constant" onclick="selectTx(this,'constant')">
+        <div class="tx-name">CONSTANT_CASE</div><div class="tx-ex">hello world → HELLO_WORLD</div>
+      </button>
+      <button class="tx-btn" data-fn="dot" onclick="selectTx(this,'dot')">
+        <div class="tx-name">dot.case</div><div class="tx-ex">hello world → hello.world</div>
+      </button>
+      <button class="tx-btn" data-fn="reverse" onclick="selectTx(this,'reverse')">
+        <div class="tx-name">Reverse Text</div><div class="tx-ex">hello → olleh</div>
+      </button>
+      <button class="tx-btn" data-fn="alternate" onclick="selectTx(this,'alternate')">
+        <div class="tx-name">aLtErNaTiNg</div><div class="tx-ex">hello → hElLo</div>
+      </button>
+      <button class="tx-btn" data-fn="trim" onclick="selectTx(this,'trim')">
+        <div class="tx-name">Trim Whitespace</div><div class="tx-ex">Removes extra spaces</div>
+      </button>
+      <button class="tx-btn" data-fn="removePunct" onclick="selectTx(this,'removePunct')">
+        <div class="tx-name">Remove Punctuation</div><div class="tx-ex">hello, world! → hello world</div>
+      </button>
+      <button class="tx-btn" data-fn="linebreak" onclick="selectTx(this,'linebreak')">
+        <div class="tx-name">Remove Line Breaks</div><div class="tx-ex">Joins all lines into one</div>
+      </button>
+    </div>
+
+    <label style="display:block;margin-bottom:0.4rem;font-size:0.85rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Output</label>
+    <div class="output-area" id="outputArea">Your transformed text will appear here…</div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="copyOutput()">📋 Copy Output</button>
+      <button class="btn btn-secondary" onclick="swapText()">⇅ Swap Input/Output</button>
+      <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+    </div>
+
+    <div class="stats-row" style="margin-top:1.5rem;">
+      <div class="stat-chip"><div class="val" id="inWC">0</div><div class="lbl">Input Words</div></div>
+      <div class="stat-chip"><div class="val" id="inCC">0</div><div class="lbl">Input Chars</div></div>
+      <div class="stat-chip"><div class="val" id="outWC">0</div><div class="lbl">Output Words</div></div>
+      <div class="stat-chip"><div class="val" id="outCC">0</div><div class="lbl">Output Chars</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-brand">BrightlyFuture</div>
+  <p style="font-size:0.85rem;">Digital Services — AI · PHP · Custom Solutions · APIs</p>
+  <div class="foot-links"><a href="index.html">All Tools</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+  <p style="margin-top:1rem;">© 2025 BrightlyFuture | brightlyfuture.co.uk</p>
+</footer>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+let activeFn = 'upper';
+
+const transforms = {
+  upper: t => t.toUpperCase(),
+  lower: t => t.toLowerCase(),
+  title: t => t.replace(/\b\w/g, c => c.toUpperCase()),
+  sentence: t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(),
+  camel: t => t.trim().replace(/[-_\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, c => c.toLowerCase()),
+  pascal: t => t.trim().replace(/[-_\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, c => c.toUpperCase()),
+  snake: t => t.trim().replace(/[-\s]+/g, '_').replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase(),
+  kebab: t => t.trim().replace(/[_\s]+/g, '-').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
+  slug: t => t.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/^-+|-+$/g, ''),
+  constant: t => t.trim().replace(/[-\s]+/g, '_').replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase(),
+  dot: t => t.trim().replace(/[-_\s]+/g, '.').toLowerCase(),
+  reverse: t => t.split('').reverse().join(''),
+  alternate: t => t.split('').map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join(''),
+  trim: t => t.replace(/\s+/g, ' ').trim(),
+  removePunct: t => t.replace(/[^\w\s]/g, ''),
+  linebreak: t => t.replace(/[\r\n]+/g, ' ').trim(),
+};
+
+function selectTx(el, fn) {
+  activeFn = fn;
+  document.querySelectorAll('.tx-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  autoTransform();
+}
+
+function autoTransform() {
+  const input = document.getElementById('inputText').value;
+  const output = transforms[activeFn] ? transforms[activeFn](input) : input;
+  document.getElementById('outputArea').textContent = output || 'Your transformed text will appear here…';
+  const inW = input.match(/\b\w+\b/g) || [];
+  const outW = output.match(/\b\w+\b/g) || [];
+  document.getElementById('inWC').textContent = inW.length;
+  document.getElementById('inCC').textContent = input.length;
+  document.getElementById('outWC').textContent = outW.length;
+  document.getElementById('outCC').textContent = output.length;
+}
+
+function copyOutput() {
+  const out = document.getElementById('outputArea').textContent;
+  if (out === 'Your transformed text will appear here…') return;
+  navigator.clipboard.writeText(out).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+function swapText() {
+  const out = document.getElementById('outputArea').textContent;
+  if (out !== 'Your transformed text will appear here…') {
+    document.getElementById('inputText').value = out;
+    autoTransform();
+  }
+}
+
+function clearText() {
+  document.getElementById('inputText').value = '';
+  autoTransform();
+}
+</script>
+</body>
+</html>
