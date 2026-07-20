@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce Marketing Agency | SEO, PPC & CRO for Online Stores | Rank It Globally</title>
+<meta name="description" content="We help e-commerce brands rank product pages on Google, reduce wasted ad spend, and convert more of their existing traffic into paying customers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--purple:#5B4BF5;--purple-light:#EEF0FF;--purple-dark:#4438D4;--navy:#0D0D1A;--white:#FFFFFF;--body-bg:#FAFAFA;--section-bg:#F5F5FC;--text-dark:#0D0D1A;--text-body:#3D3D5C;--text-muted:#6A6888;--border:#E8E8F0;--radius:12px;--font:'Inter',system-ui,sans-serif}
+body{font-family:var(--font);background:var(--body-bg);color:var(--text-dark);line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:18px;height:18px}
+.logo-name{font-size:15px;font-weight:700;color:#fff;letter-spacing:0.02em}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:500}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--purple);color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:600!important}
+.hero{background:var(--navy);padding:96px 24px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(91,75,245,0.07) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.hero-glow{position:absolute;top:-80px;right:-40px;width:650px;height:650px;background:radial-gradient(ellipse,rgba(91,75,245,0.16) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.industry-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(91,75,245,0.15);border:1px solid rgba(91,75,245,0.3);border-radius:20px;padding:6px 16px;margin-bottom:24px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.badge-text{font-size:12px;font-weight:600;color:#A89FF5;letter-spacing:0.08em;text-transform:uppercase}
+.hero h1{font-size:52px;font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:20px}
+.hero h1 span{color:var(--purple)}
+.hero-sub{font-size:17px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:36px;max-width:500px}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap}
+.btn-primary:hover{background:var(--purple-dark)}
+.btn-secondary{color:rgba(255,255,255,0.7);font-size:14px;font-weight:500;text-decoration:none;padding:14px 4px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:24px 20px}
+.stat-num{font-size:36px;font-weight:900;color:var(--purple);letter-spacing:-0.03em;line-height:1}
+.stat-label{font-size:13px;color:rgba(255,255,255,0.55);margin-top:6px;line-height:1.4}
+.trust-bar{background:var(--white);border-bottom:1px solid var(--border);padding:20px 24px}
+.trust-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-muted)}
+.section{padding:80px 24px}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-alt{background:var(--section-bg)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.eyebrow-text{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple)}
+h2{font-size:40px;font-weight:900;letter-spacing:-0.025em;line-height:1.1;margin-bottom:16px}
+.section-lead{font-size:17px;color:var(--text-body);max-width:640px;line-height:1.65}
+.text-center{text-align:center}
+.section-lead.center{margin:0 auto 56px}
+.challenges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+.challenge-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px}
+.challenge-icon{font-size:28px;margin-bottom:14px}
+.challenge-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.challenge-card p{font-size:14px;color:var(--text-body);line-height:1.55}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+.service-block{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:border-color .2s,box-shadow .2s}
+.service-block:hover{border-color:rgba(91,75,245,0.35);box-shadow:0 4px 24px rgba(91,75,245,0.08)}
+.service-num{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--purple);text-transform:uppercase;margin-bottom:12px}
+.service-block h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-0.01em}
+.service-block p{font-size:14px;color:var(--text-body);line-height:1.6;margin-bottom:16px}
+.service-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:var(--purple-light);color:var(--purple);font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:52px;position:relative}
+.process-steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--purple),rgba(91,75,245,0.2));z-index:0}
+.process-step{text-align:center;position:relative;z-index:1;padding:0 12px}
+.step-circle{width:56px;height:56px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:20px;font-weight:800;color:#fff;border:4px solid var(--white)}
+.process-step h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.process-step p{font-size:12.5px;color:var(--text-muted);line-height:1.5}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
+.result-card{background:var(--navy);border-radius:var(--radius);padding:28px 20px;text-align:center}
+.result-num{font-size:40px;font-weight:900;color:var(--purple);letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
+.result-label{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4}
+.faq-list{margin-top:48px}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
+.faq-q{width:100%;background:none;border:none;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:700;text-align:left;cursor:pointer;gap:16px}
+.faq-a{padding:0 24px 20px;font-size:14px;color:var(--text-body);line-height:1.65}
+.cta-banner{background:var(--purple);padding:72px 24px;text-align:center}
+.cta-banner h2{font-size:38px;font-weight:900;color:#fff;letter-spacing:-0.025em;margin-bottom:16px}
+.cta-banner p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.btn-white{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--purple);padding:16px 32px;border-radius:10px;font-size:16px;font-weight:800;text-decoration:none}
+footer{background:var(--navy);padding:60px 24px 32px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-desc{font-size:13px;line-height:1.6;color:rgba(255,255,255,0.45);max-width:260px;margin-top:14px}
+.footer-col h4{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none}
+@media(max-width:900px){.hero-inner,.services-grid,.footer-grid{grid-template-columns:1fr}.challenges-grid,.results-grid{grid-template-columns:1fr 1fr}.process-steps{grid-template-columns:1fr;gap:24px}.process-steps::before{display:none}h2{font-size:30px}.hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#fff" stroke-width="1.3"/><ellipse cx="8" cy="8" rx="3" ry="6.5" stroke="#fff" stroke-width="1.3"/><line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#fff" stroke-width="1.3"/></svg></div><span class="logo-name">Rank It Globally</span></a>
+    <ul class="nav-links"><li><a href="/about-us">About</a></li><li><a href="/seo-services">Services</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/blog">Blog</a></li><li><a href="/free-audit" class="nav-cta">Get My Free Audit →</a></li></ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="industry-badge"><div class="badge-dot"></div><span class="badge-text">E-Commerce Marketing</span></div>
+      <h1>More revenue<br>from the traffic<br><span>you already have.</span></h1>
+      <p class="hero-sub">We help e-commerce brands rank product and category pages on Google, reduce wasted ad spend, and convert more visitors into buyers — without just throwing more money at Meta.</p>
+      <div class="hero-actions">
+        <a href="/free-audit" class="btn-primary">Get My Free Audit →</a>
+        <a href="/case-studies" class="btn-secondary">See client results ↗</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">43%</div><div class="stat-label">Of e-commerce traffic comes from organic search — the highest-intent channel</div></div>
+      <div class="stat-card"><div class="stat-num">3.8×</div><div class="stat-label">Average ROAS improvement after Google Shopping campaign restructure</div></div>
+      <div class="stat-card"><div class="stat-num">+31%</div><div class="stat-label">Average conversion rate lift from product page CRO optimization</div></div>
+      <div class="stat-card"><div class="stat-num">−28%</div><div class="stat-label">Average reduction in cost-per-acquisition after ad account restructure</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><span>👗</span> Fashion & Apparel</div>
+    <div class="trust-item"><span>🏠</span> Home & Lifestyle</div>
+    <div class="trust-item"><span>💄</span> Beauty & Wellness</div>
+    <div class="trust-item"><span>🍎</span> Food & Beverage</div>
+    <div class="trust-item"><span>🛠️</span> Tools & Hardware</div>
+    <div class="trust-item"><span>🐾</span> Pet Products</div>
+    <div class="trust-item"><span>🎮</span> Electronics</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">E-Commerce Growth Challenges</span></div>
+    <h2>Why most e-commerce stores plateau after launch</h2>
+    <p class="section-lead">Paid ads get you sales fast. But the math breaks down at scale — CAC rises, margins compress, and the moment you stop paying, revenue stops. Organic fixes this.</p>
+    <div class="challenges-grid">
+      <div class="challenge-card"><div class="challenge-icon">💸</div><h3>Paid ad dependency with rising CPCs</h3><p>Meta and Google CPCs have risen 20–30% year-over-year. Brands 100% dependent on paid acquisition are on a treadmill — running faster just to stay in place as margins erode.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">📦</div><h3>Product and category pages not ranking</h3><p>Most e-commerce sites have thin, manufacturer-copy product pages that Google ignores. Unique descriptions, structured data, and keyword optimization turn your catalog into a search asset.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">🛒</div><h3>High cart abandonment rate</h3><p>Average e-commerce cart abandonment is 70%. Most brands accept this. We optimize checkout flows, reduce friction points, and implement recovery sequences that recapture lost revenue.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">📊</div><h3>Google Shopping campaigns wasting budget</h3><p>Unstructured Shopping campaigns spend heavily on irrelevant queries and branded searches with low incremental value. We restructure to maximize ROAS on the terms that actually convert.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">🔍</div><h3>No content strategy for category pages</h3><p>Category pages are the highest-value SEO real estate in e-commerce. Without targeted copy, buying guides, and FAQ content, they're invisible to anyone searching above product level.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">📱</div><h3>Mobile checkout is broken</h3><p>Over 60% of e-commerce traffic is mobile, but mobile conversion rates average 30% lower than desktop. Slow load times, clunky forms, and poor UX on mobile are leaking revenue every day.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">What We Do For E-Commerce</span></div>
+    <h2>The full-funnel e-commerce growth system</h2>
+    <p class="section-lead">We combine organic search, paid acquisition, and conversion optimization into one system — so each channel strengthens the others.</p>
+    <div class="services-grid">
+      <div class="service-block"><div class="service-num">01 — E-Commerce SEO</div><h3>Product & Category Pages That Rank</h3><p>We write unique, keyword-optimized product descriptions and category page copy, implement product schema markup, and fix the technical issues (duplicate URLs, pagination, faceted navigation) that block e-commerce sites from ranking. Your catalog becomes an SEO asset.</p><div class="service-tags"><span class="tag">Product Page SEO</span><span class="tag">Category SEO</span><span class="tag">Product Schema</span><span class="tag">Technical Audit</span></div></div>
+      <div class="service-block"><div class="service-num">02 — Google Shopping & PPC</div><h3>Ads That Actually Convert</h3><p>We restructure Google Shopping campaigns to eliminate wasted spend, build Performance Max campaigns with proper asset segmentation, and create high-converting product landing pages. We also run branded keyword protection and competitor targeting where ROAS supports it.</p><div class="service-tags"><span class="tag">Google Shopping</span><span class="tag">Performance Max</span><span class="tag">Search Ads</span><span class="tag">ROAS Optimization</span></div></div>
+      <div class="service-block"><div class="service-num">03 — CRO</div><h3>Convert More of Your Existing Traffic</h3><p>We run a systematic CRO program on your highest-traffic pages: product page layout testing, add-to-cart optimization, checkout friction reduction, and mobile UX improvements. Getting more from your existing traffic is often cheaper than buying more of it.</p><div class="service-tags"><span class="tag">A/B Testing</span><span class="tag">Checkout Optimization</span><span class="tag">Mobile UX</span><span class="tag">Heat Mapping</span></div></div>
+      <div class="service-block"><div class="service-num">04 — Content Marketing</div><h3>Buying Guides That Rank & Pre-Sell</h3><p>We produce buying guides, comparison content, and educational articles that target shoppers at the research stage — before they're ready to buy. These pages rank for high-volume informational queries and funnel readers directly to your category and product pages.</p><div class="service-tags"><span class="tag">Buying Guides</span><span class="tag">Comparison Content</span><span class="tag">AI Overview Targeting</span><span class="tag">Internal Linking</span></div></div>
+      <div class="service-block"><div class="service-num">05 — Email & Retention</div><h3>Maximize Revenue from Every Customer</h3><p>We build automated email sequences: welcome series, abandoned cart recovery, post-purchase flows, and win-back campaigns. Increasing repeat purchase rate is the fastest path to profitable e-commerce — and email does it at near-zero marginal cost.</p><div class="service-tags"><span class="tag">Klaviyo / Email</span><span class="tag">Abandoned Cart</span><span class="tag">Post-Purchase</span><span class="tag">LTV Optimization</span></div></div>
+      <div class="service-block"><div class="service-num">06 — Social Commerce</div><h3>Meta & TikTok Ads That Scale</h3><p>We build Meta and TikTok campaigns with creative testing frameworks — not "set and forget" ad sets that burn budget. Our approach: test broadly, identify winning creatives fast, and scale them before saturation. Full-funnel from awareness to retargeting.</p><div class="service-tags"><span class="tag">Meta Ads</span><span class="tag">TikTok Ads</span><span class="tag">Creative Testing</span><span class="tag">Retargeting</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="text-center"><div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-text">Our Process</span></div><h2>From audit to profitable growth</h2><p class="section-lead center">We identify where you're leaking revenue before recommending where to invest more.</p></div>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-circle">1</div><h4>Revenue Audit</h4><p>Channel attribution, conversion rate by device, SEO gaps, and ad account wastage analysis</p></div>
+      <div class="process-step"><div class="step-circle">2</div><h4>Priority Fixes</h4><p>Quick wins first: highest-impact CRO changes, Shopping campaign restructure, SEO technical fixes</p></div>
+      <div class="process-step"><div class="step-circle">3</div><h4>Foundation</h4><p>Product/category page SEO, ad campaign rebuild, and email automation launched</p></div>
+      <div class="process-step"><div class="step-circle">4</div><h4>Grow</h4><p>Content production, link building, social ads, and CRO testing running at velocity</p></div>
+      <div class="process-step"><div class="step-circle">5</div><h4>Scale</h4><p>Compound organic + paid learnings. Expand to new channels as margin supports it</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="text-center"><div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-text">Results</span></div><h2>E-commerce marketing outcomes</h2></div>
+    <div class="results-grid">
+      <div class="result-card"><div class="result-num">+380%</div><div class="result-label">Average organic revenue growth from product and category SEO</div></div>
+      <div class="result-card"><div class="result-num">3.8×</div><div class="result-label">ROAS improvement after Google Shopping campaign restructure</div></div>
+      <div class="result-card"><div class="result-num">+31%</div><div class="result-label">Conversion rate improvement from product page CRO</div></div>
+      <div class="result-card"><div class="result-num">−28%</div><div class="result-label">CAC reduction as organic share of revenue grows</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner" style="max-width:760px">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">FAQ</span></div>
+    <h2>E-commerce marketing questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q">Do you work with Shopify, WooCommerce, or custom stores? <span>▾</span></button><div class="faq-a">Yes — all three. Shopify and WooCommerce are most common in our portfolio. We understand the SEO limitations and configuration options specific to each platform. For custom-built stores, we work directly with your development team to implement technical recommendations.</div></div>
+      <div class="faq-item"><button class="faq-q">How do you approach SEO for a store with thousands of products? <span>▾</span></button><div class="faq-a">We prioritize by revenue potential. We start with your highest-margin, best-selling category pages and product lines — the pages where organic ranking delivers the most bottom-line impact. We then build systematic templates that scale the approach across your full catalog over time.</div></div>
+      <div class="faq-item"><button class="faq-q">We're already spending on Google Shopping — can you improve ROAS? <span>▾</span></button><div class="faq-a">Almost always yes. Common issues we find: overly broad campaign structures, missing negative keyword lists, poor product feed optimization (wrong titles, missing attributes), and Performance Max campaigns with poor asset segmentation. A Shopping audit typically surfaces 20–40% wastage that can be redirected to better-converting product sets.</div></div>
+      <div class="faq-item"><button class="faq-q">How do you measure success beyond traffic and rankings? <span>▾</span></button><div class="faq-a">Revenue. We report on organic revenue, conversion rate by channel, ROAS by campaign, email revenue, and LTV trends — not vanity metrics. We integrate with GA4, your Shopify or WooCommerce analytics, and your ad platforms so all attribution is clean and the numbers tell a real story.</div></div>
+      <div class="faq-item"><button class="faq-q">What size e-commerce brand do you typically work with? <span>▾</span></button><div class="faq-a">We work with brands from $500K to $20M+ in annual revenue. Below $500K, the economics of a full-service engagement are harder to justify — we can advise on that. Above $20M, we work alongside internal teams. The sweet spot is brands that have proven product-market fit and want to build sustainable, profitable growth channels.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Ready to reduce your ad dependency and grow profitably?</h2>
+  <p>Get a free audit of your e-commerce growth channels — ad account wastage, SEO gaps, conversion leaks, and a prioritized fix list.</p>
+  <a href="/free-audit" class="btn-white">Get My Free E-Commerce Audit →</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><a href="/" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#fff" stroke-width="1.3"/><ellipse cx="8" cy="8" rx="3" ry="6.5" stroke="#fff" stroke-width="1.3"/><line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#fff" stroke-width="1.3"/></svg></div><span class="logo-name">Rank It Globally</span></a><p class="footer-desc">Digital marketing that drives real business outcomes — not vanity metrics.</p></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="/about-us">About Us</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/contact-us">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="/seo-services">SEO Services</a></li><li><a href="/social-media-marketing">Social Media</a></li><li><a href="/ppc-management">PPC / Google Ads</a></li><li><a href="/ecommerce-development">E-Commerce Dev</a></li><li><a href="/free-audit">Free Audit</a></li></ul></div>
+      <div class="footer-col"><h4>Industries</h4><ul><li><a href="/industries/law-firm-marketing">Law Firms</a></li><li><a href="/industries/dental-medical-marketing">Dental &amp; Medical</a></li><li><a href="/industries/tech-startup-marketing">Tech Startups</a></li><li><a href="/industries/real-estate-marketing">Real Estate</a></li><li><a href="/industries/ecommerce-marketing">E-Commerce</a></li><li><a href="/industries/home-services-marketing">Home Services</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Rank It Globally. All rights reserved.</p><div class="footer-legal"><a href="/privacy-policy">Privacy Policy</a><a href="/terms-of-service">Terms of Service</a></div></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Marketing Agency | SEO & Digital Marketing for Realtors | Rank It Globally</title>
+<meta name="description" content="We help real estate agents, brokers, and property companies rank on Google for buyer and seller searches — and turn that traffic into signed clients.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--purple:#5B4BF5;--purple-light:#EEF0FF;--purple-dark:#4438D4;--navy:#0D0D1A;--white:#FFFFFF;--body-bg:#FAFAFA;--section-bg:#F5F5FC;--text-dark:#0D0D1A;--text-body:#3D3D5C;--text-muted:#6A6888;--border:#E8E8F0;--radius:12px;--font:'Inter',system-ui,sans-serif}
+body{font-family:var(--font);background:var(--body-bg);color:var(--text-dark);line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:18px;height:18px}
+.logo-name{font-size:15px;font-weight:700;color:#fff;letter-spacing:0.02em}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:500}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--purple);color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:600!important}
+.hero{background:var(--navy);padding:96px 24px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(91,75,245,0.07) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.hero-glow{position:absolute;top:-60px;left:-40px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(91,75,245,0.16) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.industry-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(91,75,245,0.15);border:1px solid rgba(91,75,245,0.3);border-radius:20px;padding:6px 16px;margin-bottom:24px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.badge-text{font-size:12px;font-weight:600;color:#A89FF5;letter-spacing:0.08em;text-transform:uppercase}
+.hero h1{font-size:52px;font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:20px}
+.hero h1 span{color:var(--purple)}
+.hero-sub{font-size:17px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:36px;max-width:500px}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap}
+.btn-primary:hover{background:var(--purple-dark)}
+.btn-secondary{color:rgba(255,255,255,0.7);font-size:14px;font-weight:500;text-decoration:none;padding:14px 4px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:24px 20px}
+.stat-num{font-size:36px;font-weight:900;color:var(--purple);letter-spacing:-0.03em;line-height:1}
+.stat-label{font-size:13px;color:rgba(255,255,255,0.55);margin-top:6px;line-height:1.4}
+.trust-bar{background:var(--white);border-bottom:1px solid var(--border);padding:20px 24px}
+.trust-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-muted)}
+.section{padding:80px 24px}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-alt{background:var(--section-bg)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.eyebrow-text{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple)}
+h2{font-size:40px;font-weight:900;letter-spacing:-0.025em;line-height:1.1;margin-bottom:16px}
+.section-lead{font-size:17px;color:var(--text-body);max-width:640px;line-height:1.65}
+.text-center{text-align:center}
+.section-lead.center{margin:0 auto 56px}
+.challenges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+.challenge-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px}
+.challenge-icon{font-size:28px;margin-bottom:14px}
+.challenge-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.challenge-card p{font-size:14px;color:var(--text-body);line-height:1.55}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+.service-block{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:border-color .2s,box-shadow .2s}
+.service-block:hover{border-color:rgba(91,75,245,0.35);box-shadow:0 4px 24px rgba(91,75,245,0.08)}
+.service-num{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--purple);text-transform:uppercase;margin-bottom:12px}
+.service-block h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-0.01em}
+.service-block p{font-size:14px;color:var(--text-body);line-height:1.6;margin-bottom:16px}
+.service-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:var(--purple-light);color:var(--purple);font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:52px;position:relative}
+.process-steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--purple),rgba(91,75,245,0.2));z-index:0}
+.process-step{text-align:center;position:relative;z-index:1;padding:0 12px}
+.step-circle{width:56px;height:56px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:20px;font-weight:800;color:#fff;border:4px solid var(--white)}
+.process-step h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.process-step p{font-size:12.5px;color:var(--text-muted);line-height:1.5}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
+.result-card{background:var(--navy);border-radius:var(--radius);padding:28px 20px;text-align:center}
+.result-num{font-size:40px;font-weight:900;color:var(--purple);letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
+.result-label{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4}
+.faq-list{margin-top:48px}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
+.faq-q{width:100%;background:none;border:none;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:700;text-align:left;cursor:pointer;gap:16px}
+.faq-a{padding:0 24px 20px;font-size:14px;color:var(--text-body);line-height:1.65}
+.cta-banner{background:var(--purple);padding:72px 24px;text-align:center}
+.cta-banner h2{font-size:38px;font-weight:900;color:#fff;letter-spacing:-0.025em;margin-bottom:16px}
+.cta-banner p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.btn-white{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--purple);padding:16px 32px;border-radius:10px;font-size:16px;font-weight:800;text-decoration:none}
+footer{background:var(--navy);padding:60px 24px 32px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-desc{font-size:13px;line-height:1.6;color:rgba(255,255,255,0.45);max-width:260px;margin-top:14px}
+.footer-col h4{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none}
+@media(max-width:900px){.hero-inner,.services-grid,.footer-grid{grid-template-columns:1fr}.challenges-grid,.results-grid{grid-template-columns:1fr 1fr}.process-steps{grid-template-columns:1fr;gap:24px}.process-steps::before{display:none}h2{font-size:30px}.hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#fff" stroke-width="1.3"/><ellipse cx="8" cy="8" rx="3" ry="6.5" stroke="#fff" stroke-width="1.3"/><line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#fff" stroke-width="1.3"/></svg></div><span class="logo-name">Rank It Globally</span></a>
+    <ul class="nav-links"><li><a href="/about-us">About</a></li><li><a href="/seo-services">Services</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/blog">Blog</a></li><li><a href="/free-audit" class="nav-cta">Get My Free Audit →</a></li></ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="industry-badge"><div class="badge-dot"></div><span class="badge-text">Real Estate Marketing</span></div>
+      <h1>Rank when<br>buyers and sellers<br><span>are searching.</span></h1>
+      <p class="hero-sub">We build local search visibility for real estate agents, brokerages, and property companies — so you capture buyer and seller leads at the exact moment they're ready to move.</p>
+      <div class="hero-actions">
+        <a href="/free-audit" class="btn-primary">Get My Free Audit →</a>
+        <a href="/case-studies" class="btn-secondary">See client results ↗</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">97%</div><div class="stat-label">Of home buyers use the internet during their home search process</div></div>
+      <div class="stat-card"><div class="stat-num">4.2×</div><div class="stat-label">More inbound leads with top-3 Google ranking for target neighborhood</div></div>
+      <div class="stat-card"><div class="stat-num">6mo</div><div class="stat-label">Average time to rank for competitive real estate market terms</div></div>
+      <div class="stat-card"><div class="stat-num">GBP</div><div class="stat-label">Google Business Profile is the #1 local ranking factor for real estate agents</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><span>🏠</span> Residential Agents</div>
+    <div class="trust-item"><span>🏢</span> Commercial Brokers</div>
+    <div class="trust-item"><span>🏗️</span> Property Developers</div>
+    <div class="trust-item"><span>🏡</span> Property Management</div>
+    <div class="trust-item"><span>🔑</span> Luxury Real Estate</div>
+    <div class="trust-item"><span>📊</span> Real Estate Investors</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">Real Estate Marketing Challenges</span></div>
+    <h2>Why most real estate websites generate no leads</h2>
+    <p class="section-lead">Real estate is hyper-local and intensely competitive online. The agents and brokerages winning leads from Google have invested in systems — not just a nice website.</p>
+    <div class="challenges-grid">
+      <div class="challenge-card"><div class="challenge-icon">🗺️</div><h3>"Homes for sale in [neighborhood]" is a goldmine most miss</h3><p>Hyper-local neighborhood searches have high buying intent and lower competition than city-level terms. Most agents have one generic website and miss all of it.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">🐢</div><h3>IDX-heavy websites are slow and poorly indexed</h3><p>MLS IDX feeds generate thousands of pages Google often can't properly crawl or index. Without technical SEO, your listings are invisible to search engines regardless of the property count.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">📍</div><h3>GBP profiles are incomplete or unclaimed</h3><p>Most real estate agents have an unclaimed or half-finished Google Business Profile. This is the fastest local ranking lever available — and most agents aren't using it.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">🏆</div><h3>Zillow and Realtor.com dominate organic</h3><p>The portals own the generic terms. But neighborhood-specific, agent-expertise, and local market content are where independent agents and boutique brokerages can outrank them.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">📝</div><h3>No neighborhood content strategy</h3><p>Buyers researching "best neighborhoods in [city]" or "moving to [suburb]" are high-value prospects. Without dedicated neighborhood guides, you're invisible to this audience.</p></div>
+      <div class="challenge-card"><div class="challenge-icon">🤝</div><h3>Referral-only is a growth ceiling</h3><p>Referral networks are valuable — but finite. Agents who build search visibility generate inbound leads that don't require maintaining every relationship or attending every networking event.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">What We Do For Real Estate</span></div>
+    <h2>Search visibility that generates buyer and seller leads</h2>
+    <p class="section-lead">Every strategy we build is designed to put you in front of buyers and sellers at the moment they start their search — not after they've already chosen an agent.</p>
+    <div class="services-grid">
+      <div class="service-block"><div class="service-num">01 — Local SEO</div><h3>Rank for Every Neighborhood You Serve</h3><p>We build a neighborhood-by-neighborhood SEO strategy: dedicated landing pages for each area, optimized GBP for your office(s), and local citations across real estate directories. You show up when someone searches "homes for sale in [neighborhood you serve]."</p><div class="service-tags"><span class="tag">Neighborhood Pages</span><span class="tag">GBP Optimization</span><span class="tag">Real Estate Citations</span><span class="tag">Local Schema</span></div></div>
+      <div class="service-block"><div class="service-num">02 — Content Strategy</div><h3>Neighborhood Guides That Rank & Convert</h3><p>We write comprehensive, keyword-optimized neighborhood guides — schools, lifestyle, market trends, local amenities — that rank for "moving to [suburb]" and similar buyer-intent searches. These establish you as the local expert before a prospect ever picks up the phone.</p><div class="service-tags"><span class="tag">Neighborhood Guides</span><span class="tag">Market Reports</span><span class="tag">Buyer/Seller Guides</span><span class="tag">AI Overview Content</span></div></div>
+      <div class="service-block"><div class="service-num">03 — Technical SEO</div><h3>IDX & Site Architecture Fixed</h3><p>We resolve the technical issues that kill real estate SEO: IDX crawl budget waste, duplicate content from listing feeds, slow load times from heavy image galleries, and mobile usability failures. Google needs to be able to index your site for any of this to work.</p><div class="service-tags"><span class="tag">IDX SEO</span><span class="tag">Page Speed</span><span class="tag">Crawl Budget</span><span class="tag">Schema Markup</span></div></div>
+      <div class="service-block"><div class="service-num">04 — PPC & Social Ads</div><h3>Paid Campaigns That Generate Listings</h3><p>We run Google Ads targeting buyer and seller intent searches ("sell my home [city]", "homes for sale under [price]"), plus Facebook and Instagram campaigns targeting in-market audiences — homeowners, recent movers, and active property searchers in your market.</p><div class="service-tags"><span class="tag">Google Ads</span><span class="tag">Facebook Ads</span><span class="tag">Seller Lead Campaigns</span><span class="tag">Retargeting</span></div></div>
+      <div class="service-block"><div class="service-num">05 — Social Media</div><h3>Market Authority Through Consistent Content</h3><p>We create social content that builds market authority: local market updates, just sold posts, buyer/seller tips, neighborhood spotlights, and video walkthroughs — designed to keep you top-of-mind for the 95% of prospects not ready to transact yet.</p><div class="service-tags"><span class="tag">Instagram</span><span class="tag">Facebook</span><span class="tag">Market Updates</span><span class="tag">Video Content</span></div></div>
+      <div class="service-block"><div class="service-num">06 — Website & CRO</div><h3>Convert Visitors Into Consultation Requests</h3><p>We optimize your website's lead capture: home valuation tools, neighborhood search features, contact forms with the right friction, and mobile click-to-call placement — so the visitors you earn from organic and paid channels actually convert into qualified leads.</p><div class="service-tags"><span class="tag">Home Valuation CTA</span><span class="tag">Lead Capture Forms</span><span class="tag">Mobile CRO</span><span class="tag">Landing Pages</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="text-center"><div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-text">Our Process</span></div><h2>From invisible to inbound leads</h2><p class="section-lead center">We start with a complete audit of your local market presence — no generic strategies.</p></div>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-circle">1</div><h4>Market Audit</h4><p>Local rankings, GBP health, competitor landscape, and neighborhood opportunity map</p></div>
+      <div class="process-step"><div class="step-circle">2</div><h4>Strategy</h4><p>Neighborhood target list, keyword map, and content calendar built around your market</p></div>
+      <div class="process-step"><div class="step-circle">3</div><h4>Foundation</h4><p>GBP optimization, technical fixes, and first batch of neighborhood pages launched</p></div>
+      <div class="process-step"><div class="step-circle">4</div><h4>Grow</h4><p>Consistent content, review generation, paid campaigns, and backlink building</p></div>
+      <div class="process-step"><div class="step-circle">5</div><h4>Dominate</h4><p>Expand market coverage, add more neighborhoods, and deepen authority across the region</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="text-center"><div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-text">Results</span></div><h2>Real estate marketing outcomes</h2></div>
+    <div class="results-grid">
+      <div class="result-card"><div class="result-num">340%</div><div class="result-label">Average organic traffic growth for real estate clients in year one</div></div>
+      <div class="result-card"><div class="result-num">4.2×</div><div class="result-label">More inbound buyer and seller inquiries after full strategy implementation</div></div>
+      <div class="result-card"><div class="result-num">Top 3</div><div class="result-label">Map Pack placement for agents in target neighborhoods and city searches</div></div>
+      <div class="result-card"><div class="result-num">45d</div><div class="result-label">Average time to first GBP ranking improvement after optimization</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner" style="max-width:760px">
+    <div class="eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">FAQ</span></div>
+    <h2>Real estate marketing questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q">Can you outrank Zillow and Realtor.com? <span>▾</span></button><div class="faq-a">For generic terms like "homes for sale [major city]" — unlikely, and that's not what we target. Where you can outrank them is hyper-local: specific neighborhoods, suburbs, price ranges, and lifestyle queries. Buyers searching "family-friendly neighborhoods in [specific suburb]" or "homes for sale under $400k in [area]" are where independent agents win — and that's exactly what we build for.</div></div>
+      <div class="faq-item"><button class="faq-q">Do you work with individual agents or only brokerages? <span>▾</span></button><div class="faq-a">Both. Individual agents typically start with a focused local strategy — GBP, 5–8 neighborhood pages, and a review campaign. Brokerages often need a multi-agent, multi-location system with more content production. We scope each engagement to your size and goals.</div></div>
+      <div class="faq-item"><button class="faq-q">How long before I see new leads from organic search? <span>▾</span></button><div class="faq-a">GBP optimization typically produces visible ranking improvement within 30–60 days. Organic ranking for neighborhood-specific search terms usually takes 3–5 months in moderately competitive markets, 6–9 months in high-competition urban markets. We prioritize GBP and paid campaigns as bridges while organic builds.</div></div>
+      <div class="faq-item"><button class="faq-q">Can you help with IDX integration SEO? <span>▾</span></button><div class="faq-a">Yes — IDX technical SEO is a common issue on real estate sites. We diagnose and resolve crawl budget problems from IDX feeds, prevent duplicate content issues, and ensure your listing pages contribute positively to your domain's SEO rather than diluting it.</div></div>
+      <div class="faq-item"><button class="faq-q">Do you run Facebook ads for real estate lead generation? <span>▾</span></button><div class="faq-a">Yes. Facebook and Instagram are effective for real estate seller lead campaigns, just-listed promotions, and retargeting website visitors who didn't convert. We build campaigns that are compliant with Meta's housing ad policies (which restrict certain targeting options) and focused on the highest-value leads for your business.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Ready to generate buyer and seller leads from Google?</h2>
+  <p>Get a free audit of your real estate online presence — including GBP ranking, neighborhood content gaps, and competitor analysis in your market.</p>
+  <a href="/free-audit" class="btn-white">Get My Free Real Estate Audit →</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><a href="/" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#fff" stroke-width="1.3"/><ellipse cx="8" cy="8" rx="3" ry="6.5" stroke="#fff" stroke-width="1.3"/><line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#fff" stroke-width="1.3"/></svg></div><span class="logo-name">Rank It Globally</span></a><p class="footer-desc">Digital marketing that drives real business outcomes — not vanity metrics.</p></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="/about-us">About Us</a></li><li><a href="/case-studies">Case Studies</a></li><li><a href="/contact-us">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="/seo-services">SEO Services</a></li><li><a href="/social-media-marketing">Social Media</a></li><li><a href="/ppc-management">PPC / Google Ads</a></li><li><a href="/free-audit">Free Audit</a></li></ul></div>
+      <div class="footer-col"><h4>Industries</h4><ul><li><a href="/industries/law-firm-marketing">Law Firms</a></li><li><a href="/industries/dental-medical-marketing">Dental &amp; Medical</a></li><li><a href="/industries/tech-startup-marketing">Tech Startups</a></li><li><a href="/industries/real-estate-marketing">Real Estate</a></li><li><a href="/industries/ecommerce-marketing">E-Commerce</a></li><li><a href="/industries/home-services-marketing">Home Services</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Rank It Globally. All rights reserved.</p><div class="footer-legal"><a href="/privacy-policy">Privacy Policy</a><a href="/terms-of-service">Terms of Service</a></div></div>
+  </div>
+</footer>
+</body>
+</html>
