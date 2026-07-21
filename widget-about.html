@@ -1,0 +1,260 @@
+<!-- BrightlyFuture — About Page Widget -->
+<style>
+.bfw-about{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:#1E1040;line-height:1.65;background:#F0ECFF}
+.bfw-about *{box-sizing:border-box;margin:0;padding:0}
+.bfw-about a{text-decoration:none;color:#7C3AED}
+.bfw-about a:hover{color:#5B21B6}
+.bfw-about .wrap{max-width:1060px;margin:0 auto;padding:0 1.5rem}
+
+/* HERO */
+.bfw-about .hero{padding:4rem 1.5rem 3.5rem;text-align:center;background:radial-gradient(ellipse 75% 55% at 50% 0%,rgba(109,40,217,0.11) 0%,transparent 65%),#F0ECFF;position:relative}
+.bfw-about .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(109,40,217,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.bfw-about .hero-inner{position:relative}
+.bfw-about .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(109,40,217,0.1);border:1px solid rgba(109,40,217,0.25);border-radius:999px;padding:.25rem .9rem;font-size:.72rem;font-weight:700;color:#7C3AED;text-transform:uppercase;letter-spacing:1px;margin-bottom:1.25rem}
+.bfw-about .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-1.2px;line-height:1.1;margin-bottom:1rem;color:#1E1040}
+.bfw-about .hero h1 em{font-style:normal;background:linear-gradient(135deg,#7C3AED,#5B21B6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bfw-about .hero p{font-size:1.05rem;color:#5E538A;max-width:580px;margin:0 auto 2.25rem;line-height:1.8}
+.bfw-about .hero-btns{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap}
+.bfw-about .btn-p{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:700;background:#7C3AED;color:#fff;box-shadow:0 4px 20px rgba(109,40,217,0.28);transition:background .2s,transform .15s}
+.bfw-about .btn-p:hover{background:#5B21B6;transform:translateY(-2px);color:#fff}
+.bfw-about .btn-o{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:600;background:#fff;color:#1E1040;border:1px solid rgba(109,40,217,0.2);transition:all .2s}
+.bfw-about .btn-o:hover{border-color:#7C3AED;color:#7C3AED}
+
+/* STORY */
+.bfw-about .story{padding:3.5rem 1.5rem;background:#F0ECFF}
+.bfw-about .story-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:3.5rem;align-items:start}
+.bfw-about .story-text .stag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#7C3AED;margin-bottom:.7rem}
+.bfw-about .story-text .stag::before{content:'';width:14px;height:2px;background:#7C3AED;border-radius:1px}
+.bfw-about .story-text h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.7px;line-height:1.15;margin-bottom:1.25rem;color:#1E1040}
+.bfw-about .story-text p{font-size:.95rem;color:#5E538A;line-height:1.8;margin-bottom:1rem}
+.bfw-about .story-text p:last-child{margin-bottom:0}
+.bfw-about .story-text strong{color:#1E1040;font-weight:700}
+
+/* STORY STATS SIDEBAR */
+.bfw-about .story-stats{display:flex;flex-direction:column;gap:1px;background:rgba(109,40,217,0.15);border-radius:16px;overflow:hidden}
+.bfw-about .ss{background:#E8E2FF;padding:1.4rem 1.5rem;text-align:center}
+.bfw-about .ss-val{font-size:2rem;font-weight:800;color:#7C3AED;letter-spacing:-1.5px;line-height:1}
+.bfw-about .ss-label{font-size:.78rem;color:#5E538A;margin-top:.3rem;line-height:1.4}
+
+/* VALUES */
+.bfw-about .values{padding:3.5rem 1.5rem;background:#EDE9FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15)}
+.bfw-about .values-inner{max-width:1060px;margin:0 auto}
+.bfw-about .sec-head{margin-bottom:2.5rem}
+.bfw-about .sec-head .stag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#7C3AED;margin-bottom:.7rem}
+.bfw-about .sec-head .stag::before{content:'';width:14px;height:2px;background:#7C3AED;border-radius:1px}
+.bfw-about .sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.7px;line-height:1.15;margin-bottom:.65rem;color:#1E1040}
+.bfw-about .sec-head p{font-size:.95rem;color:#5E538A;max-width:520px;line-height:1.7}
+.bfw-about .val-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.bfw-about .val-card{background:#fff;border:1px solid rgba(109,40,217,0.18);border-radius:16px;padding:1.75rem 1.5rem;box-shadow:0 1px 6px rgba(109,40,217,0.07);transition:border-color .22s,box-shadow .22s}
+.bfw-about .val-card:hover{border-color:#7C3AED;box-shadow:0 6px 22px rgba(109,40,217,0.13)}
+.bfw-about .val-icon{font-size:1.75rem;margin-bottom:1rem}
+.bfw-about .val-name{font-size:.95rem;font-weight:800;color:#1E1040;margin-bottom:.5rem}
+.bfw-about .val-desc{font-size:.82rem;color:#5E538A;line-height:1.65}
+
+/* DIFFERENTIATORS */
+.bfw-about .why{padding:3.5rem 1.5rem}
+.bfw-about .why-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+.bfw-about .why-text h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.7px;line-height:1.15;margin-bottom:.75rem;color:#1E1040}
+.bfw-about .why-text p{font-size:.95rem;color:#5E538A;line-height:1.8;margin-bottom:1.5rem}
+.bfw-about .why-text .stag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#7C3AED;margin-bottom:.7rem}
+.bfw-about .why-text .stag::before{content:'';width:14px;height:2px;background:#7C3AED;border-radius:1px}
+.bfw-about .diff-list{display:flex;flex-direction:column;gap:.75rem}
+.bfw-about .diff-item{background:#fff;border:1px solid rgba(109,40,217,0.15);border-radius:14px;padding:1.2rem 1.4rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:0 1px 6px rgba(109,40,217,0.06);transition:border-color .2s}
+.bfw-about .diff-item:hover{border-color:rgba(109,40,217,0.35)}
+.bfw-about .diff-icon{width:36px;height:36px;border-radius:10px;background:rgba(109,40,217,0.08);border:1px solid rgba(109,40,217,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.bfw-about .diff-title{font-size:.9rem;font-weight:700;color:#1E1040;margin-bottom:.25rem}
+.bfw-about .diff-desc{font-size:.8rem;color:#5E538A;line-height:1.6}
+
+/* STATS STRIP */
+.bfw-about .stats{padding:2rem 1.5rem;background:#E8E2FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15)}
+.bfw-about .stats-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(109,40,217,0.15);border-radius:12px;overflow:hidden;max-width:1060px;margin:0 auto}
+.bfw-about .sc{background:#E8E2FF;padding:1.4rem;text-align:center}
+.bfw-about .sv{font-size:1.8rem;font-weight:800;color:#7C3AED;letter-spacing:-1px}
+.bfw-about .sl{font-size:.75rem;color:#5E538A;margin-top:.2rem;line-height:1.4}
+
+/* CTA */
+.bfw-about .cta{padding:4rem 1.5rem;background:linear-gradient(135deg,rgba(109,40,217,0.1),rgba(91,33,182,0.06));border-top:1px solid rgba(109,40,217,0.2)}
+.bfw-about .cta-inner{max-width:680px;margin:0 auto;text-align:center}
+.bfw-about .cta h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;letter-spacing:-.7px;margin-bottom:1rem;color:#1E1040;line-height:1.15}
+.bfw-about .cta p{font-size:.95rem;color:#5E538A;margin-bottom:2rem;line-height:1.75}
+.bfw-about .cta-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .bfw-about .val-grid{grid-template-columns:1fr 1fr}
+  .bfw-about .why-inner{grid-template-columns:1fr}
+  .bfw-about .story-inner{grid-template-columns:1fr}
+  .bfw-about .story-stats{flex-direction:row}
+  .bfw-about .stats-g{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .bfw-about .val-grid{grid-template-columns:1fr}
+  .bfw-about .story-stats{flex-direction:column}
+  .bfw-about .stats-g{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="bfw-about">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="badge">About BrightlyFuture</div>
+      <h1>We Build the Digital<br><em>Infrastructure That Grows Businesses</em></h1>
+      <p>BrightlyFuture is a UK-based technology agency specialising in AI automation, PHP development, custom APIs, and conversion-focused web design. We work closely with ambitious businesses who want technology that actually performs.</p>
+      <div class="hero-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Work With Us →</a>
+        <a href="https://brightlyfuture.co.uk/services" class="btn-o">Our Services</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="story">
+    <div class="story-inner">
+      <div class="story-text">
+        <div class="stag">Our Story</div>
+        <h2>Built on the Belief That Good Technology Should Be Accessible to Every Business</h2>
+        <p>BrightlyFuture was founded with a straightforward idea: <strong>small and mid-sized UK businesses deserve the same quality of digital technology as large enterprises</strong> — without the agency markups, the offshore handoffs, or the black-box contracts.</p>
+        <p>We started by helping local businesses get properly online — clean websites, fast load times, honest SEO. As our clients grew, so did their needs. They needed automation to handle repetitive tasks, APIs to connect their tools, and AI to process data at scale. We grew with them.</p>
+        <p>Today we run a lean, senior team based entirely in the UK. Every project is handled by the same people who scoped it. There are no junior hand-offs, no project managers playing telephone between you and a developer. <strong>You work directly with the people building your product.</strong></p>
+        <p>We measure success simply: does the work we delivered make your business more productive, more profitable, or both? If the answer is yes, we've done our job.</p>
+      </div>
+      <div class="story-stats">
+        <div class="ss">
+          <div class="ss-val">10+</div>
+          <div class="ss-label">Years building digital products for UK businesses</div>
+        </div>
+        <div class="ss">
+          <div class="ss-val">150+</div>
+          <div class="ss-label">Projects delivered across web, API &amp; AI</div>
+        </div>
+        <div class="ss">
+          <div class="ss-val">98%</div>
+          <div class="ss-label">Client retention rate year on year</div>
+        </div>
+        <div class="ss">
+          <div class="ss-val">100%</div>
+          <div class="ss-label">UK-based team — no outsourcing, ever</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <div class="values">
+    <div class="values-inner">
+      <div class="sec-head">
+        <div class="stag">What We Stand For</div>
+        <h2>Our Core Values</h2>
+        <p>Everything we build and every decision we make is guided by four principles we take seriously.</p>
+      </div>
+      <div class="val-grid">
+        <div class="val-card">
+          <div class="val-icon">🎯</div>
+          <div class="val-name">Honesty Over Sales</div>
+          <p class="val-desc">We tell you what you actually need, not what maximises our invoice. If a simpler solution solves your problem, we'll recommend it — even if it costs us a larger project.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🏗️</div>
+          <div class="val-name">Quality Without Compromise</div>
+          <p class="val-desc">Every line of code we ship is production-grade. We don't cut corners to hit deadlines — we plan properly so we don't have to.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🤝</div>
+          <div class="val-name">Partnership, Not Transactions</div>
+          <p class="val-desc">We think long-term. Our best client relationships have run for years, not weeks. We invest in understanding your business so our advice gets better over time.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🔓</div>
+          <div class="val-name">No Lock-In. Ever.</div>
+          <p class="val-desc">You own everything we build — full source code, documentation, and all IP transfers to you on completion. We keep clients because we're good, not because leaving would be painful.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY US -->
+  <div class="why">
+    <div class="why-inner">
+      <div class="why-text">
+        <div class="stag">Why BrightlyFuture</div>
+        <h2>A Different Kind of Digital Agency</h2>
+        <p>The UK is full of digital agencies. Most are built around acquiring new clients, not retaining existing ones. We're built the other way around — the majority of our work comes from clients who've worked with us before, or from their referrals.</p>
+        <p>Here's what makes working with us different in practice.</p>
+      </div>
+      <div class="diff-list">
+        <div class="diff-item">
+          <div class="diff-icon">👤</div>
+          <div>
+            <div class="diff-title">Senior-Only Team</div>
+            <p class="diff-desc">Every project is handled by experienced senior developers. No juniors learning on your budget, no hand-offs to someone who wasn't on the call.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">💷</div>
+          <div>
+            <div class="diff-title">Fixed-Price Projects</div>
+            <p class="diff-desc">We quote a price before we start and we stick to it. No surprise invoices, no scope-creep arguments, no day-rate ambiguity.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">📄</div>
+          <div>
+            <div class="diff-title">Full Documentation Handover</div>
+            <p class="diff-desc">Every project ships with architecture diagrams, code documentation, and deployment guides. You can hand it to any developer and they'll understand it.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">🇬🇧</div>
+          <div>
+            <div class="diff-title">Genuinely UK-Based</div>
+            <p class="diff-desc">Not "UK-headquartered with offshore delivery." We mean our entire team is here — same time zone, same working culture, direct communication.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">⚡</div>
+          <div>
+            <div class="diff-title">Across the Full Stack</div>
+            <p class="diff-desc">AI, PHP, APIs, web design — under one roof. No briefing separate specialists or managing multiple agency relationships for one product.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats">
+    <div class="stats-g">
+      <div class="sc">
+        <div class="sv">10+</div>
+        <div class="sl">Years in business</div>
+      </div>
+      <div class="sc">
+        <div class="sv">150+</div>
+        <div class="sl">Projects delivered</div>
+      </div>
+      <div class="sc">
+        <div class="sv">98%</div>
+        <div class="sl">Client retention rate</div>
+      </div>
+      <div class="sc">
+        <div class="sv">4</div>
+        <div class="sl">Core services, one team</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-inner">
+      <h2>Ready to Work With a Team You Can Actually Trust?</h2>
+      <p>Get in touch for a free discovery call. We'll listen to what you're trying to achieve, be straight about whether we can help, and give you a clear proposal if we can.</p>
+      <div class="cta-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Start the Conversation →</a>
+        <a href="https://brightlyfuture.co.uk/services" class="btn-o">Explore Our Services</a>
+      </div>
+    </div>
+  </div>
+
+</div>
