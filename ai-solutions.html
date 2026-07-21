@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Solutions — Chatbots, Automation & Intelligent Integrations | BrightlyFuture</title>
+<meta name="description" content="BrightlyFuture builds custom AI solutions for UK businesses — intelligent chatbots, workflow automation, and AI integrations that reduce costs and accelerate growth.">
+<link rel="canonical" href="https://brightlyfuture.co.uk/ai-solutions">
+<meta property="og:title" content="AI Solutions — BrightlyFuture">
+<meta property="og:description" content="Custom AI chatbots, automation and intelligent integrations built for UK businesses.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI Solutions",
+  "provider": { "@type": "Organization", "name": "BrightlyFuture", "url": "https://brightlyfuture.co.uk" },
+  "description": "Custom AI chatbots, workflow automation and intelligent integrations for UK businesses.",
+  "areaServed": "GB",
+  "serviceType": "AI Development"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #07061A;
+  --bg2:      #100F26;
+  --bg3:      #181630;
+  --border:   rgba(123,53,232,0.18);
+  --border2:  rgba(255,255,255,0.07);
+  --violet:   #7B35E8;
+  --violet-d: #5A1EC6;
+  --violet-l: #A87EF5;
+  --violet-g: rgba(123,53,232,0.12);
+  --amber:    #F5A623;
+  --cyan:     #06B6D4;
+  --green:    #10B981;
+  --text:     #EEE8FF;
+  --text-m:   #9E9ABF;
+  --text-d:   #6B6890;
+  --radius:   14px;
+  --radius-l: 22px;
+  --shadow-v: 0 4px 32px rgba(123,53,232,0.22);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--violet-l); text-decoration: none; }
+a:hover { color: var(--violet); }
+
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+/* Hero */
+.hero {
+  padding: 5rem 0 4rem;
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(123,53,232,0.14) 0%, transparent 65%), var(--bg);
+  position: relative; text-align: center;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(123,53,232,0.07) 1px, transparent 1px);
+  background-size: 32px 32px; pointer-events: none;
+}
+.hero-inner { position: relative; }
+.service-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(123,53,232,0.12); border: 1px solid rgba(123,53,232,0.3);
+  border-radius: 999px; padding: 0.3rem 1rem;
+  font-size: 0.78rem; font-weight: 700; color: var(--violet-l);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.75rem;
+}
+.hero-icon {
+  width: 80px; height: 80px; border-radius: 22px; margin: 0 auto 2rem;
+  background: linear-gradient(135deg, rgba(123,53,232,0.3), rgba(123,53,232,0.1));
+  border: 1px solid rgba(123,53,232,0.35);
+  display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+  box-shadow: var(--shadow-v);
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
+  letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--violet-l), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { font-size: 1.1rem; color: var(--text-m); max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.75; }
+.hero-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.75rem; border-radius: var(--radius); font-size: 0.95rem; font-weight: 700;
+  background: var(--violet); color: #fff; border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 24px rgba(123,53,232,0.35);
+}
+.btn-primary:hover { background: var(--violet-d); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(123,53,232,0.45); color: #fff; }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.75rem; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+  background: none; color: var(--text); border: 1px solid var(--border2); cursor: pointer; transition: all .2s;
+}
+.btn-outline:hover { border-color: var(--violet-l); color: var(--violet-l); }
+
+/* Stats strip */
+.stats-strip { background: var(--bg2); border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); padding: 2rem 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border2); border-radius: var(--radius); overflow: hidden; }
+.stat-cell { background: var(--bg2); padding: 1.5rem; text-align: center; }
+.stat-val { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: var(--violet-l); font-variant-numeric: tabular-nums; }
+.stat-lbl { font-size: 0.8rem; color: var(--text-m); margin-top: 0.25rem; }
+
+/* Features */
+.features { padding: 5rem 0; }
+.sec-tag {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--violet-l); margin-bottom: 1rem;
+}
+.sec-tag::before { content: ''; width: 16px; height: 2px; background: var(--violet-l); border-radius: 1px; }
+.sec-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -0.8px; text-wrap: balance; line-height: 1.15; margin-bottom: 1rem; }
+.sec-sub { font-size: 1rem; color: var(--text-m); max-width: 540px; line-height: 1.7; margin-bottom: 3rem; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.feature-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-l); padding: 2rem;
+  transition: border-color .25s, background .25s;
+}
+.feature-card:hover { border-color: rgba(123,53,232,0.4); background: var(--bg3); }
+.feature-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+.feature-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+.feature-desc { font-size: 0.875rem; color: var(--text-m); line-height: 1.65; }
+
+/* Process */
+.process { padding: 5rem 0; background: var(--bg2); }
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.process-steps::before {
+  content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), transparent);
+}
+.process-step { text-align: center; padding: 0 1.5rem; position: relative; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 1.25rem;
+  background: linear-gradient(135deg, var(--violet), var(--violet-d));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800; color: #fff;
+  box-shadow: 0 0 0 6px var(--bg2), 0 0 0 7px rgba(123,53,232,0.3);
+}
+.step-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+.step-desc { font-size: 0.825rem; color: var(--text-m); line-height: 1.6; }
+
+/* Use cases */
+.usecases { padding: 5rem 0; }
+.usecases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.usecase-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-l); padding: 2rem; display: flex; gap: 1.25rem; align-items: flex-start;
+  transition: border-color .25s;
+}
+.usecase-card:hover { border-color: rgba(123,53,232,0.35); }
+.usecase-ico { font-size: 1.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+.usecase-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+.usecase-desc { font-size: 0.85rem; color: var(--text-m); line-height: 1.6; }
+
+/* CTA */
+.cta-section { padding: 5rem 0; }
+.cta-box {
+  background: linear-gradient(135deg, rgba(123,53,232,0.2) 0%, rgba(6,182,212,0.08) 100%);
+  border: 1px solid rgba(123,53,232,0.3); border-radius: var(--radius-l);
+  padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(123,53,232,0.15) 0%, transparent 70%);
+}
+.cta-tag { display: inline-block; background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.3); border-radius: 999px; padding: 0.25rem 0.9rem; font-size: 0.75rem; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
+.cta-box h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.8px; margin-bottom: 1rem; }
+.cta-box p { font-size: 1rem; color: var(--text-m); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.cta-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+/* FAQ */
+.faq { padding: 5rem 0; background: var(--bg2); }
+.faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1px; }
+.faq-item { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.faq-q {
+  width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.95rem; font-weight: 600; color: var(--text); font-family: inherit;
+  gap: 1rem;
+}
+.faq-q:hover { color: var(--violet-l); }
+.faq-chevron { color: var(--text-m); transition: transform .2s; flex-shrink: 0; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-a { padding: 0 1.5rem 1.25rem; font-size: 0.875rem; color: var(--text-m); line-height: 1.7; display: none; }
+.faq-item.open .faq-a { display: block; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-steps::before { display: none; }
+  .usecases-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr; }
+  .cta-box { padding: 2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="service-badge">🤖 AI Solutions</div>
+    <div class="hero-icon">🧠</div>
+    <h1>Intelligent AI Solutions<br><em>Built for Your Business</em></h1>
+    <p class="hero-sub">From custom chatbots to end-to-end workflow automation — BrightlyFuture designs and deploys AI systems that cut costs, speed up operations, and create smarter customer experiences.</p>
+    <div class="hero-actions">
+      <a href="https://brightlyfuture.co.uk/contact" class="btn-primary">Get a Free Consultation →</a>
+      <a href="https://brightlyfuture.co.uk/tools" class="btn-outline">Try Our Free AI Tools</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-val">60%</div><div class="stat-lbl">Average cost reduction</div></div>
+      <div class="stat-cell"><div class="stat-val">24/7</div><div class="stat-lbl">Automated support coverage</div></div>
+      <div class="stat-cell"><div class="stat-val">4–8 wk</div><div class="stat-lbl">Typical deployment time</div></div>
+      <div class="stat-cell"><div class="stat-val">UK-based</div><div class="stat-lbl">Team & data handling</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <div class="sec-tag">What We Build</div>
+    <h2 class="sec-title">AI capabilities that move the needle</h2>
+    <p class="sec-sub">We don't implement off-the-shelf tools and call it AI. We engineer solutions trained on your data, integrated with your systems, and measured against your goals.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-name">Custom AI Chatbots</div>
+        <p class="feature-desc">Intelligent chatbots trained on your products, policies, and tone. Deployed on your website, WhatsApp, or CRM — handling queries without human intervention.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-name">Workflow Automation</div>
+        <p class="feature-desc">Identify and eliminate repetitive manual tasks. We map your existing processes and replace bottlenecks with AI-driven automation that scales as you grow.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <div class="feature-name">Intelligent Integrations</div>
+        <p class="feature-desc">Connect your CRM, ERP, e-commerce platform, and third-party tools into one intelligent ecosystem — with AI enriching data at every step.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-name">AI-Powered Analytics</div>
+        <p class="feature-desc">Turn raw business data into actionable insight. Predictive models, anomaly detection, and smart dashboards that highlight what matters.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✍️</div>
+        <div class="feature-name">Content & Copy AI</div>
+        <p class="feature-desc">Custom content generation pipelines for product descriptions, email campaigns, and SEO content — on-brand, at scale, with human review checkpoints.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-name">Responsible AI Governance</div>
+        <p class="feature-desc">GDPR-compliant AI architectures with audit trails, bias monitoring, and explainability built in — not bolted on. Your data stays yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <div class="sec-header" style="text-align:center;margin-bottom:3.5rem;">
+      <div class="sec-tag" style="justify-content:center;">Our Process</div>
+      <h2 class="sec-title">From discovery to deployment in weeks, not months</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Discovery Workshop</div>
+        <p class="step-desc">We audit your processes, data assets, and pain points to identify where AI delivers the fastest ROI.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Solution Design</div>
+        <p class="step-desc">Architecture, model selection, and integration planning — scoped, costed, and signed off before we write a line of code.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Build & Train</div>
+        <p class="step-desc">Iterative development with your team involved. We build in stages, test with real data, and refine continuously.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Deploy & Support</div>
+        <p class="step-desc">Production deployment with monitoring, alerting, and ongoing performance optimisation included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases">
+  <div class="container">
+    <div class="sec-tag">Use Cases</div>
+    <h2 class="sec-title">AI working across every sector</h2>
+    <p class="sec-sub" style="margin-bottom:2.5rem;">Whether you're a retailer, professional services firm, or SaaS startup — there's an AI solution that fits.</p>
+    <div class="usecases-grid">
+      <div class="usecase-card">
+        <div class="usecase-ico">🛒</div>
+        <div><div class="usecase-title">E-commerce & Retail</div><p class="usecase-desc">AI product recommendations, automated customer service, inventory demand forecasting, and personalised email sequences.</p></div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-ico">⚖️</div>
+        <div><div class="usecase-title">Professional Services</div><p class="usecase-desc">Document summarisation, contract analysis, client onboarding chatbots, and AI-assisted report generation for legal, finance, and consulting firms.</p></div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-ico">🏥</div>
+        <div><div class="usecase-title">Healthcare & Wellness</div><p class="usecase-desc">Patient triage chatbots, appointment scheduling automation, and care plan generation — fully GDPR and NHS-data compliant.</p></div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-ico">🏗️</div>
+        <div><div class="usecase-title">Property & Construction</div><p class="usecase-desc">Lead qualification chatbots, automated valuation queries, site document management, and project status reporting via AI.</p></div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-ico">📚</div>
+        <div><div class="usecase-title">Education & Training</div><p class="usecase-desc">Personalised learning assistants, automated marking pipelines, student Q&A bots, and AI-generated course content.</p></div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-ico">🏭</div>
+        <div><div class="usecase-title">Manufacturing & Logistics</div><p class="usecase-desc">Predictive maintenance alerts, supply chain optimisation, automated quality control flagging, and delivery route AI.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-tag">⚡ Free Consultation</div>
+      <h2>Ready to put AI to work in your business?</h2>
+      <p>Book a no-obligation discovery call with our AI team. We'll assess your processes, identify quick wins, and outline a roadmap — at no cost.</p>
+      <div class="cta-actions">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-primary">Book a Free Call →</a>
+        <a href="https://brightlyfuture.co.uk/" class="btn-outline">Learn About BrightlyFuture</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div class="sec-tag" style="justify-content:center;">FAQ</div>
+      <h2 class="sec-title">Common questions about AI solutions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need a large dataset to use AI in my business? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Not necessarily. Many AI solutions work effectively with modest amounts of structured data. During our discovery phase, we assess your data maturity and recommend approaches that fit what you actually have — including fine-tuning on existing documents, knowledge bases, or CRM records.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does it take to build and deploy an AI solution? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">A focused AI chatbot or automation can typically be live within 4–6 weeks. More complex integrations involving multiple systems or custom model training take 8–14 weeks. We always provide a clear milestone plan before work begins.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is my business data kept private and secure? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Absolutely. We design all AI systems to be GDPR-compliant from the ground up. Your data is never used to train third-party public models. We use UK or EU data processing where required and provide full data-processing agreements.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can AI integrate with our existing software stack? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Yes — integration is one of our core strengths. We connect AI solutions to popular platforms including Salesforce, HubSpot, WordPress, Shopify, Microsoft 365, and bespoke PHP or database systems via APIs and webhooks.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What happens after the AI is deployed? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">We provide ongoing monitoring, performance reporting, and model refinement as part of our support packages. AI systems improve over time — we make sure yours does too, with regular review cycles and proactive optimisations.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

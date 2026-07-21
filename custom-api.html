@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom API Development — REST, GraphQL & System Integrations | BrightlyFuture</title>
+<meta name="description" content="BrightlyFuture builds custom APIs and system integrations that connect your tools, automate data flows, and power new digital products — built for UK businesses.">
+<link rel="canonical" href="https://brightlyfuture.co.uk/custom-api">
+<meta property="og:title" content="Custom API Development — BrightlyFuture">
+<meta property="og:description" content="Bespoke REST and GraphQL APIs, webhook systems, and third-party integrations built for UK businesses.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Custom API Development",
+  "provider": { "@type": "Organization", "name": "BrightlyFuture", "url": "https://brightlyfuture.co.uk" },
+  "description": "Bespoke REST and GraphQL APIs, webhook systems and system integrations for UK businesses.",
+  "areaServed": "GB",
+  "serviceType": "API Development"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #07061A;
+  --bg2:      #100F26;
+  --bg3:      #181630;
+  --border:   rgba(245,166,35,0.18);
+  --border2:  rgba(255,255,255,0.07);
+  --accent:   #F5A623;
+  --accent-d: #D4861A;
+  --accent-l: #FDD07A;
+  --accent-g: rgba(245,166,35,0.12);
+  --violet:   #7B35E8;
+  --violet-l: #A87EF5;
+  --cyan:     #06B6D4;
+  --green:    #10B981;
+  --text:     #EEE8FF;
+  --text-m:   #9E9ABF;
+  --text-d:   #6B6890;
+  --radius:   14px;
+  --radius-l: 22px;
+  --shadow-a: 0 4px 32px rgba(245,166,35,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--accent-l); text-decoration: none; }
+a:hover { color: var(--accent); }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+/* Hero */
+.hero {
+  padding: 5rem 0 4rem; text-align: center;
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(245,166,35,0.1) 0%, transparent 65%), var(--bg);
+  position: relative;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(245,166,35,0.05) 1px, transparent 1px);
+  background-size: 32px 32px; pointer-events: none;
+}
+.hero-inner { position: relative; }
+.service-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.28);
+  border-radius: 999px; padding: 0.3rem 1rem;
+  font-size: 0.78rem; font-weight: 700; color: var(--accent-l);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.75rem;
+}
+.hero-icon {
+  width: 80px; height: 80px; border-radius: 22px; margin: 0 auto 2rem;
+  background: linear-gradient(135deg, rgba(245,166,35,0.25), rgba(245,166,35,0.08));
+  border: 1px solid rgba(245,166,35,0.3);
+  display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+  box-shadow: var(--shadow-a);
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
+  letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 1.25rem; text-wrap: balance;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent-l), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { font-size: 1.1rem; color: var(--text-m); max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.75; }
+.hero-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.75rem; border-radius: var(--radius); font-size: 0.95rem; font-weight: 700;
+  background: var(--accent); color: #07061A; border: none; cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 24px rgba(245,166,35,0.28);
+}
+.btn-primary:hover { background: var(--accent-d); transform: translateY(-2px); color: #07061A; }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.75rem; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+  background: none; color: var(--text); border: 1px solid var(--border2); cursor: pointer; transition: all .2s;
+}
+.btn-outline:hover { border-color: var(--accent-l); color: var(--accent-l); }
+
+/* Stats */
+.stats-strip { background: var(--bg2); border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); padding: 2rem 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border2); border-radius: var(--radius); overflow: hidden; }
+.stat-cell { background: var(--bg2); padding: 1.5rem; text-align: center; }
+.stat-val { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: var(--accent-l); font-variant-numeric: tabular-nums; }
+.stat-lbl { font-size: 0.8rem; color: var(--text-m); margin-top: 0.25rem; }
+
+/* Features */
+.features { padding: 5rem 0; }
+.sec-tag {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--accent-l); margin-bottom: 1rem;
+}
+.sec-tag::before { content: ''; width: 16px; height: 2px; background: var(--accent-l); border-radius: 1px; }
+.sec-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; letter-spacing: -0.8px; text-wrap: balance; line-height: 1.15; margin-bottom: 1rem; }
+.sec-sub { font-size: 1rem; color: var(--text-m); max-width: 540px; line-height: 1.7; margin-bottom: 3rem; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.feature-card {
+  background: var(--bg2); border: 1px solid rgba(245,166,35,0.15);
+  border-radius: var(--radius-l); padding: 2rem; transition: border-color .25s, background .25s;
+}
+.feature-card:hover { border-color: rgba(245,166,35,0.35); background: var(--bg3); }
+.feature-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+.feature-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+.feature-desc { font-size: 0.875rem; color: var(--text-m); line-height: 1.65; }
+
+/* Integration logos / chips */
+.integrations { padding: 4rem 0; background: var(--bg3); border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); }
+.int-title { text-align: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-d); margin-bottom: 1.5rem; }
+.int-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; }
+.int-chip {
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 0.75rem 1rem; text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--text-m);
+  transition: border-color .2s, color .2s;
+}
+.int-chip:hover { border-color: rgba(245,166,35,0.3); color: var(--text); }
+
+/* Process */
+.process { padding: 5rem 0; background: var(--bg2); }
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.process-steps::before {
+  content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--cyan), transparent);
+}
+.process-step { text-align: center; padding: 0 1.5rem; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 1.25rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-d));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800; color: #07061A;
+  box-shadow: 0 0 0 6px var(--bg2), 0 0 0 7px rgba(245,166,35,0.3);
+}
+.step-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+.step-desc { font-size: 0.825rem; color: var(--text-m); line-height: 1.6; }
+
+/* CTA */
+.cta-section { padding: 5rem 0; }
+.cta-box {
+  background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(123,53,232,0.08) 100%);
+  border: 1px solid rgba(245,166,35,0.25); border-radius: var(--radius-l);
+  padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 70%);
+}
+.cta-tag { display: inline-block; background: rgba(123,53,232,0.15); border: 1px solid rgba(123,53,232,0.3); border-radius: 999px; padding: 0.25rem 0.9rem; font-size: 0.75rem; font-weight: 700; color: var(--violet-l); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
+.cta-box h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.8px; margin-bottom: 1rem; }
+.cta-box p { font-size: 1rem; color: var(--text-m); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.cta-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+/* FAQ */
+.faq { padding: 5rem 0; background: var(--bg2); }
+.faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1px; }
+.faq-item { background: var(--bg3); border: 1px solid rgba(245,166,35,0.12); border-radius: var(--radius); overflow: hidden; }
+.faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem; font-weight: 600; color: var(--text); font-family: inherit; gap: 1rem; }
+.faq-q:hover { color: var(--accent-l); }
+.faq-chevron { color: var(--text-m); transition: transform .2s; flex-shrink: 0; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-a { padding: 0 1.5rem 1.25rem; font-size: 0.875rem; color: var(--text-m); line-height: 1.7; display: none; }
+.faq-item.open .faq-a { display: block; }
+
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .process-steps::before { display: none; }
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr; }
+  .cta-box { padding: 2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="service-badge">🔗 Custom API</div>
+    <div class="hero-icon">⚙️</div>
+    <h1>Custom APIs &<br><em>Smart Integrations</em></h1>
+    <p class="hero-sub">Connect your systems, unlock your data, and automate the handoffs between tools. BrightlyFuture engineers secure, well-documented APIs that become the backbone of your digital operation.</p>
+    <div class="hero-actions">
+      <a href="https://brightlyfuture.co.uk/contact" class="btn-primary">Discuss Your Integration →</a>
+      <a href="https://brightlyfuture.co.uk/" class="btn-outline">About BrightlyFuture</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-val">50+</div><div class="stat-lbl">APIs & integrations built</div></div>
+      <div class="stat-cell"><div class="stat-val">99.9%</div><div class="stat-lbl">Uptime across live APIs</div></div>
+      <div class="stat-cell"><div class="stat-val">&lt;100ms</div><div class="stat-lbl">Median response time</div></div>
+      <div class="stat-cell"><div class="stat-val">Full</div><div class="stat-lbl">OpenAPI documentation</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <div class="sec-tag">What We Build</div>
+    <h2 class="sec-title">APIs engineered to connect, scale, and last</h2>
+    <p class="sec-sub">We design APIs that other developers enjoy consuming. Clear contracts, predictable behaviour, proper error codes, and documentation that doesn't need a support ticket to understand.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <div class="feature-name">REST API Development</div>
+        <p class="feature-desc">Standards-compliant RESTful APIs with versioning, rate limiting, token-based authentication, and full OpenAPI / Swagger documentation delivered as standard.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-name">GraphQL APIs</div>
+        <p class="feature-desc">Flexible data querying for frontend-heavy applications and mobile apps. Reduce over-fetching, improve frontend performance, and expose exactly the data each client needs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-name">Webhook Systems</div>
+        <p class="feature-desc">Real-time event-driven architectures that push data to your tools the moment something happens — no polling, no delays, no missed events.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-name">Third-Party Integrations</div>
+        <p class="feature-desc">CRM, payment, shipping, accounting, and marketing platform connections — engineered to be resilient, with retry logic, error handling, and monitoring built in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏢</div>
+        <div class="feature-name">Enterprise Middleware</div>
+        <p class="feature-desc">Message queues, event buses, and data transformation layers that bridge legacy systems with modern platforms — without rewriting either side.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <div class="feature-name">API Security & Compliance</div>
+        <p class="feature-desc">OAuth 2.0, JWT authentication, API key management, IP allowlisting, and penetration-tested endpoints — because your API is only as good as its security.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<div class="integrations">
+  <div class="container">
+    <div class="int-title">Platforms & Services We Integrate With</div>
+    <div class="int-grid">
+      <div class="int-chip">Salesforce</div>
+      <div class="int-chip">HubSpot</div>
+      <div class="int-chip">Stripe</div>
+      <div class="int-chip">Xero</div>
+      <div class="int-chip">QuickBooks</div>
+      <div class="int-chip">Shopify</div>
+      <div class="int-chip">WooCommerce</div>
+      <div class="int-chip">Zapier</div>
+      <div class="int-chip">Twilio</div>
+      <div class="int-chip">SendGrid</div>
+      <div class="int-chip">Google APIs</div>
+      <div class="int-chip">Microsoft 365</div>
+      <div class="int-chip">Slack</div>
+      <div class="int-chip">AWS S3 / SQS</div>
+      <div class="int-chip">Royal Mail</div>
+      <div class="int-chip">Companies House</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3.5rem;">
+      <div class="sec-tag" style="justify-content:center;">Our Approach</div>
+      <h2 class="sec-title">Design first. Build second. Document always.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Integration Mapping</div>
+        <p class="step-desc">We map every system, data flow, and event trigger — so we design the right solution rather than the fastest one.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">API Contract Design</div>
+        <p class="step-desc">Schema design, endpoint planning, and OpenAPI spec creation — agreed and signed off before a line of code is written.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Build & Test</div>
+        <p class="step-desc">Development with automated contract tests, load testing, and sandbox environment for your team to integrate against.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Deploy & Monitor</div>
+        <p class="step-desc">Production deployment with logging, alerting, and a monitoring dashboard so you always know your API health at a glance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-tag">🔗 Let's Connect Your Stack</div>
+      <h2>Ready to stop copy-pasting between systems?</h2>
+      <p>Tell us which tools need to talk to each other and what you want to automate. We'll design a solution that works reliably — and stays working.</p>
+      <div class="cta-actions">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-primary">Get a Free Scoping Call →</a>
+        <a href="https://brightlyfuture.co.uk/" class="btn-outline">View Our Other Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div class="sec-tag" style="justify-content:center;">FAQ</div>
+      <h2 class="sec-title">API development questions answered</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">REST or GraphQL — which is right for my project? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">REST is the right choice for most server-to-server integrations, webhook-driven systems, and straightforward CRUD operations. GraphQL suits frontend-heavy applications where different clients need different data shapes — mobile apps and SPAs benefit most. We'll recommend the right fit for your use case during discovery.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do you handle API versioning and breaking changes? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">We version all APIs from day one (e.g. /api/v1/). When breaking changes are necessary, we maintain both versions simultaneously during a deprecation window, provide migration guides to consumers, and never sunset a version without advance notice and agreement.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What security measures do you implement on APIs? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Our APIs ship with OAuth 2.0 or API key authentication, HTTPS enforcement, rate limiting, input validation, SQL injection prevention, CORS configuration, and security headers. We also provide a penetration test or security review on production APIs.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can you integrate with software that doesn't have an API? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Yes — we can extract data from systems via database-level integration, file-based exchange (SFTP, CSV), screen scraping where legally permissible, or by building a lightweight API wrapper around legacy systems. We'll assess the feasibility and cost during discovery.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do you provide API monitoring and alerting after launch? <span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Yes. We configure uptime monitoring, error-rate alerts, latency dashboards, and log aggregation so you can see exactly what your API is doing in production. Alerts go to your team via Slack, email, or PagerDuty.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
