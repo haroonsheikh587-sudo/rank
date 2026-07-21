@@ -1,0 +1,195 @@
+<!-- BrightlyFuture — AI Solutions Page Widget -->
+<style>
+.bfw-ai{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:#1E1040;line-height:1.65;background:#F0ECFF}
+.bfw-ai *{box-sizing:border-box;margin:0;padding:0}
+.bfw-ai a{text-decoration:none}
+.bfw-ai .wrap{max-width:1060px;margin:0 auto;padding:0 1.5rem}
+
+/* HERO */
+.bfw-ai .hero{padding:4rem 1.5rem 3rem;text-align:center;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(109,40,217,0.1) 0%,transparent 65%),#F0ECFF;position:relative}
+.bfw-ai .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(109,40,217,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.bfw-ai .hero-inner{position:relative}
+.bfw-ai .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(124,58,237,0.1);border:1px solid rgba(109,40,217,0.25);border-radius:999px;padding:.25rem .9rem;font-size:.72rem;font-weight:700;color:#7C3AED;text-transform:uppercase;letter-spacing:1px;margin-bottom:1.5rem}
+.bfw-ai .h-icon{width:72px;height:72px;border-radius:20px;margin:0 auto 1.5rem;background:rgba(124,58,237,0.1);border:1px solid rgba(109,40,217,0.22);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 20px rgba(109,40,217,0.15)}
+.bfw-ai .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-1.2px;line-height:1.1;margin-bottom:1.1rem;color:#1E1040}
+.bfw-ai .hero h1 em{font-style:normal;background:linear-gradient(135deg,#7C3AED,#5B21B6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bfw-ai .hero p{font-size:1.05rem;color:#5E538A;max-width:560px;margin:0 auto 2.25rem;line-height:1.75}
+.bfw-ai .hero-btns{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap}
+.bfw-ai .btn-p{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:700;background:#7C3AED;color:#fff;box-shadow:0 4px 20px rgba(109,40,217,0.28);transition:background .2s,transform .15s}
+.bfw-ai .btn-p:hover{background:#5B21B6;transform:translateY(-2px);color:#fff}
+.bfw-ai .btn-o{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:600;background:#fff;color:#1E1040;border:1px solid rgba(109,40,217,0.2);transition:all .2s}
+.bfw-ai .btn-o:hover{border-color:#7C3AED;color:#7C3AED}
+
+/* STATS */
+.bfw-ai .stats{background:#E8E2FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15);padding:1.75rem 1.5rem}
+.bfw-ai .stats-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(109,40,217,0.15);border-radius:12px;overflow:hidden;max-width:1060px;margin:0 auto}
+.bfw-ai .sc{background:#E8E2FF;padding:1.25rem;text-align:center}
+.bfw-ai .sv{font-size:1.75rem;font-weight:800;color:#7C3AED;letter-spacing:-1px}
+.bfw-ai .sl{font-size:.75rem;color:#5E538A;margin-top:.2rem}
+
+/* SECTION HEADER */
+.bfw-ai .sec{padding:3.5rem 1.5rem}
+.bfw-ai .stag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#7C3AED;margin-bottom:.7rem}
+.bfw-ai .stag::before{content:'';width:14px;height:2px;background:#7C3AED;border-radius:1px}
+.bfw-ai .stitle{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.7px;line-height:1.15;margin-bottom:.75rem;color:#1E1040}
+.bfw-ai .ssub{font-size:.95rem;color:#5E538A;max-width:520px;line-height:1.7;margin-bottom:2.5rem}
+
+/* FEATURE GRID */
+.bfw-ai .fg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.bfw-ai .fc{background:#fff;border:1px solid rgba(109,40,217,0.18);border-radius:16px;padding:1.75rem;transition:border-color .22s,box-shadow .22s;box-shadow:0 1px 6px rgba(109,40,217,0.07)}
+.bfw-ai .fc:hover{border-color:#7C3AED;box-shadow:0 6px 22px rgba(109,40,217,0.13)}
+.bfw-ai .fi{font-size:1.6rem;margin-bottom:.85rem}
+.bfw-ai .fn{font-size:.95rem;font-weight:700;color:#1E1040;margin-bottom:.5rem}
+.bfw-ai .fd{font-size:.83rem;color:#5E538A;line-height:1.6}
+
+/* PROCESS */
+.bfw-ai .proc{padding:3.5rem 1.5rem;background:#EDE9FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15)}
+.bfw-ai .proc-inner{max-width:1060px;margin:0 auto}
+.bfw-ai .proc h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.6px;text-align:center;margin-bottom:2.5rem;color:#1E1040}
+.bfw-ai .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.bfw-ai .steps::before{content:'';position:absolute;top:27px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#7C3AED,#9489C4,transparent)}
+.bfw-ai .step{text-align:center;padding:0 1.2rem}
+.bfw-ai .sn{width:54px;height:54px;border-radius:50%;margin:0 auto 1.1rem;background:linear-gradient(135deg,#7C3AED,#5B21B6);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:#fff;box-shadow:0 0 0 5px #EDE9FF,0 0 0 6px rgba(109,40,217,0.22)}
+.bfw-ai .st{font-size:.9rem;font-weight:700;color:#1E1040;margin-bottom:.4rem}
+.bfw-ai .sd{font-size:.8rem;color:#5E538A;line-height:1.55}
+
+/* USE CASES */
+.bfw-ai .uc-g{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.bfw-ai .uc{background:#fff;border:1px solid rgba(109,40,217,0.18);border-radius:16px;padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .22s,box-shadow .22s;box-shadow:0 1px 6px rgba(109,40,217,0.07)}
+.bfw-ai .uc:hover{border-color:#7C3AED;box-shadow:0 5px 18px rgba(109,40,217,0.12)}
+.bfw-ai .ui{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.bfw-ai .un{font-size:.9rem;font-weight:700;color:#1E1040;margin-bottom:.35rem}
+.bfw-ai .ud{font-size:.82rem;color:#5E538A;line-height:1.55}
+
+/* CTA */
+.bfw-ai .cta{padding:3.5rem 1.5rem}
+.bfw-ai .cta-box{max-width:1060px;margin:0 auto;background:linear-gradient(135deg,rgba(109,40,217,0.09),rgba(8,145,178,0.05));border:1px solid rgba(109,40,217,0.2);border-radius:20px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.bfw-ai .cta-box::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,0.08) 0%,transparent 70%)}
+.bfw-ai .ctag{display:inline-block;background:rgba(180,83,9,0.1);border:1px solid rgba(180,83,9,0.22);border-radius:999px;padding:.2rem .85rem;font-size:.7rem;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1.25rem}
+.bfw-ai .cta-box h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;letter-spacing:-.6px;margin-bottom:.85rem;color:#1E1040}
+.bfw-ai .cta-box p{font-size:.95rem;color:#5E538A;max-width:460px;margin:0 auto 2rem;line-height:1.7}
+.bfw-ai .cta-btns{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap}
+
+/* FAQ */
+.bfw-ai .faq{padding:3.5rem 1.5rem;background:#E8E2FF;border-top:1px solid rgba(109,40,217,0.15)}
+.bfw-ai .faq-inner{max-width:700px;margin:0 auto}
+.bfw-ai .faq h2{text-align:center;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;letter-spacing:-.5px;margin-bottom:2rem;color:#1E1040}
+.bfw-ai .fi-wrap{display:flex;flex-direction:column;gap:.5rem}
+.bfw-ai .fitem{background:#fff;border:1px solid rgba(109,40,217,0.18);border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(109,40,217,0.06)}
+.bfw-ai .fq{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:1.1rem 1.35rem;display:flex;align-items:center;justify-content:space-between;font-size:.9rem;font-weight:600;color:#1E1040;font-family:inherit;gap:.75rem}
+.bfw-ai .fq:hover{color:#7C3AED}
+.bfw-ai .fchev{color:#9489C4;transition:transform .2s;flex-shrink:0}
+.bfw-ai .fitem.open .fchev{transform:rotate(180deg)}
+.bfw-ai .fa{padding:0 1.35rem 1.1rem;font-size:.84rem;color:#5E538A;line-height:1.65;display:none}
+.bfw-ai .fitem.open .fa{display:block}
+
+@media(max-width:860px){.bfw-ai .fg{grid-template-columns:1fr 1fr}.bfw-ai .steps{grid-template-columns:1fr 1fr;gap:1.75rem}.bfw-ai .steps::before{display:none}.bfw-ai .uc-g{grid-template-columns:1fr}}
+@media(max-width:540px){.bfw-ai .stats-g{grid-template-columns:1fr 1fr}.bfw-ai .fg{grid-template-columns:1fr}.bfw-ai .steps{grid-template-columns:1fr}.bfw-ai .cta-box{padding:2rem 1.25rem}}
+</style>
+
+<div class="bfw-ai">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="badge">🤖 AI Solutions</div>
+      <div class="h-icon">🧠</div>
+      <h1>Intelligent AI Solutions<br><em>Built for Your Business</em></h1>
+      <p>From custom chatbots to end-to-end workflow automation — BrightlyFuture designs and deploys AI systems that cut costs, speed up operations, and create smarter customer experiences.</p>
+      <div class="hero-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Get a Free Consultation →</a>
+        <a href="https://brightlyfuture.co.uk/tools" class="btn-o">Try Our Free AI Tools</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-g">
+      <div class="sc"><div class="sv">60%</div><div class="sl">Average cost reduction</div></div>
+      <div class="sc"><div class="sv">24/7</div><div class="sl">Automated support coverage</div></div>
+      <div class="sc"><div class="sv">4–8 wk</div><div class="sl">Typical deployment time</div></div>
+      <div class="sc"><div class="sv">UK-based</div><div class="sl">Team &amp; data handling</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="sec">
+    <div class="wrap">
+      <div class="stag">What We Build</div>
+      <h2 class="stitle">AI capabilities that move the needle</h2>
+      <p class="ssub">We don't implement off-the-shelf tools and call it AI. We engineer solutions trained on your data, integrated with your systems, and measured against your goals.</p>
+      <div class="fg">
+        <div class="fc"><div class="fi">💬</div><div class="fn">Custom AI Chatbots</div><p class="fd">Intelligent chatbots trained on your products, policies, and tone — handling queries without human intervention across your website, WhatsApp, or CRM.</p></div>
+        <div class="fc"><div class="fi">⚡</div><div class="fn">Workflow Automation</div><p class="fd">Identify and eliminate repetitive manual tasks. We map your processes and replace bottlenecks with AI-driven automation that scales as you grow.</p></div>
+        <div class="fc"><div class="fi">🔗</div><div class="fn">Intelligent Integrations</div><p class="fd">Connect your CRM, ERP, e-commerce platform, and third-party tools into one intelligent ecosystem — with AI enriching data at every step.</p></div>
+        <div class="fc"><div class="fi">📊</div><div class="fn">AI-Powered Analytics</div><p class="fd">Turn raw business data into actionable insight. Predictive models, anomaly detection, and smart dashboards that highlight what matters.</p></div>
+        <div class="fc"><div class="fi">✍️</div><div class="fn">Content &amp; Copy AI</div><p class="fd">Custom content generation pipelines for product descriptions, email campaigns, and SEO content — on-brand, at scale, with human review checkpoints.</p></div>
+        <div class="fc"><div class="fi">🛡️</div><div class="fn">Responsible AI Governance</div><p class="fd">GDPR-compliant AI architectures with audit trails, bias monitoring, and explainability built in — not bolted on. Your data stays yours.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="proc">
+    <div class="proc-inner">
+      <h2>From discovery to deployment in weeks, not months</h2>
+      <div class="steps">
+        <div class="step"><div class="sn">01</div><div class="st">Discovery Workshop</div><p class="sd">We audit your processes, data assets, and pain points to identify where AI delivers the fastest ROI.</p></div>
+        <div class="step"><div class="sn">02</div><div class="st">Solution Design</div><p class="sd">Architecture, model selection, and integration planning — scoped, costed, and signed off before we write a line of code.</p></div>
+        <div class="step"><div class="sn">03</div><div class="st">Build &amp; Train</div><p class="sd">Iterative development with your team involved. We build in stages, test with real data, and refine continuously.</p></div>
+        <div class="step"><div class="sn">04</div><div class="st">Deploy &amp; Support</div><p class="sd">Production deployment with monitoring, alerting, and ongoing performance optimisation included.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USE CASES -->
+  <div class="sec">
+    <div class="wrap">
+      <div class="stag">Use Cases</div>
+      <h2 class="stitle">AI working across every sector</h2>
+      <p class="ssub">Whether you're a retailer, professional services firm, or SaaS startup — there's an AI solution that fits.</p>
+      <div class="uc-g">
+        <div class="uc"><div class="ui">🛒</div><div><div class="un">E-commerce &amp; Retail</div><p class="ud">AI product recommendations, automated customer service, inventory demand forecasting, and personalised email sequences.</p></div></div>
+        <div class="uc"><div class="ui">⚖️</div><div><div class="un">Professional Services</div><p class="ud">Document summarisation, contract analysis, client onboarding chatbots, and AI-assisted report generation for legal, finance, and consulting firms.</p></div></div>
+        <div class="uc"><div class="ui">🏥</div><div><div class="un">Healthcare &amp; Wellness</div><p class="ud">Patient triage chatbots, appointment scheduling automation, and care plan generation — fully GDPR and NHS-data compliant.</p></div></div>
+        <div class="uc"><div class="ui">🏗️</div><div><div class="un">Property &amp; Construction</div><p class="ud">Lead qualification chatbots, automated valuation queries, site document management, and project status reporting via AI.</p></div></div>
+        <div class="uc"><div class="ui">📚</div><div><div class="un">Education &amp; Training</div><p class="ud">Personalised learning assistants, automated marking pipelines, student Q&amp;A bots, and AI-generated course content.</p></div></div>
+        <div class="uc"><div class="ui">🏭</div><div><div class="un">Manufacturing &amp; Logistics</div><p class="ud">Predictive maintenance alerts, supply chain optimisation, automated quality control flagging, and delivery route AI.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-box">
+      <div class="ctag">⚡ Free Consultation</div>
+      <h2>Ready to put AI to work in your business?</h2>
+      <p>Book a no-obligation discovery call with our AI team. We'll assess your processes, identify quick wins, and outline a roadmap — at no cost.</p>
+      <div class="cta-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Book a Free Call →</a>
+        <a href="https://brightlyfuture.co.uk/" class="btn-o">Learn About BrightlyFuture</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="faq-inner">
+      <h2>Common questions about AI solutions</h2>
+      <div class="fi-wrap">
+        <div class="fitem"><button class="fq" onclick="bfwFaq(this)">Do I need a large dataset to use AI in my business? <span class="fchev">▾</span></button><div class="fa">Not necessarily. Many AI solutions work effectively with modest amounts of structured data. During our discovery phase we assess your data maturity and recommend approaches that fit what you actually have — including fine-tuning on existing documents, knowledge bases, or CRM records.</div></div>
+        <div class="fitem"><button class="fq" onclick="bfwFaq(this)">How long does it take to build and deploy an AI solution? <span class="fchev">▾</span></button><div class="fa">A focused AI chatbot or automation can typically be live within 4–6 weeks. More complex integrations involving multiple systems or custom model training take 8–14 weeks. We always provide a clear milestone plan before work begins.</div></div>
+        <div class="fitem"><button class="fq" onclick="bfwFaq(this)">Is my business data kept private and secure? <span class="fchev">▾</span></button><div class="fa">Absolutely. We design all AI systems to be GDPR-compliant from the ground up. Your data is never used to train third-party public models. We use UK or EU data processing where required and provide full data-processing agreements.</div></div>
+        <div class="fitem"><button class="fq" onclick="bfwFaq(this)">Can AI integrate with our existing software stack? <span class="fchev">▾</span></button><div class="fa">Yes — integration is one of our core strengths. We connect AI solutions to Salesforce, HubSpot, WordPress, Shopify, Microsoft 365, and bespoke PHP or database systems via APIs and webhooks.</div></div>
+        <div class="fitem"><button class="fq" onclick="bfwFaq(this)">What happens after the AI is deployed? <span class="fchev">▾</span></button><div class="fa">We provide ongoing monitoring, performance reporting, and model refinement as part of our support packages. AI systems improve over time — we make sure yours does too, with regular review cycles and proactive optimisations.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function bfwFaq(btn){var item=btn.closest('.fitem'),open=item.classList.contains('open');document.querySelectorAll('.bfw-ai .fitem.open').forEach(function(i){i.classList.remove('open')});if(!open)item.classList.add('open')}
+</script>
+<!-- /BrightlyFuture AI Solutions Widget -->

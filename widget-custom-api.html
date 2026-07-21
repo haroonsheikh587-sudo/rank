@@ -1,0 +1,281 @@
+<!-- BrightlyFuture — Custom API Page Widget -->
+<style>
+.bfw-api{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:#1E1040;line-height:1.65;background:#F0ECFF}
+.bfw-api *{box-sizing:border-box;margin:0;padding:0}
+.bfw-api a{text-decoration:none}
+.bfw-api .wrap{max-width:1060px;margin:0 auto;padding:0 1.5rem}
+
+/* HERO */
+.bfw-api .hero{padding:4rem 1.5rem 3rem;text-align:center;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(180,83,9,0.1) 0%,transparent 65%),#F0ECFF;position:relative}
+.bfw-api .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(180,83,9,0.06) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
+.bfw-api .hero-inner{position:relative}
+.bfw-api .badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(180,83,9,0.1);border:1px solid rgba(180,83,9,0.28);border-radius:999px;padding:.25rem .9rem;font-size:.72rem;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:1px;margin-bottom:1.5rem}
+.bfw-api .h-icon{width:72px;height:72px;border-radius:20px;margin:0 auto 1.5rem;background:rgba(180,83,9,0.08);border:1px solid rgba(180,83,9,0.22);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 20px rgba(180,83,9,0.12)}
+.bfw-api .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-1.2px;line-height:1.1;margin-bottom:1.1rem;color:#1E1040}
+.bfw-api .hero h1 em{font-style:normal;background:linear-gradient(135deg,#B45309,#92400E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bfw-api .hero p{font-size:1.05rem;color:#5E538A;max-width:560px;margin:0 auto 2.25rem;line-height:1.75}
+.bfw-api .hero-btns{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap}
+.bfw-api .btn-p{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:700;background:#B45309;color:#fff;box-shadow:0 4px 20px rgba(180,83,9,0.28);transition:background .2s,transform .15s}
+.bfw-api .btn-p:hover{background:#92400E;transform:translateY(-2px);color:#fff}
+.bfw-api .btn-o{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 1.6rem;border-radius:12px;font-size:.9rem;font-weight:600;background:#fff;color:#1E1040;border:1px solid rgba(180,83,9,0.2);transition:all .2s}
+.bfw-api .btn-o:hover{border-color:#B45309;color:#B45309}
+
+/* STATS */
+.bfw-api .stats{background:#E8E2FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15);padding:1.75rem 1.5rem}
+.bfw-api .stats-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(109,40,217,0.15);border-radius:12px;overflow:hidden;max-width:1060px;margin:0 auto}
+.bfw-api .sc{background:#E8E2FF;padding:1.25rem;text-align:center}
+.bfw-api .sv{font-size:1.75rem;font-weight:800;color:#B45309;letter-spacing:-1px}
+.bfw-api .sl{font-size:.75rem;color:#5E538A;margin-top:.2rem}
+
+/* SECTION HEADER */
+.bfw-api .sec{padding:3.5rem 1.5rem}
+.bfw-api .stag{display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#B45309;margin-bottom:.7rem}
+.bfw-api .stag::before{content:'';width:14px;height:2px;background:#B45309;border-radius:1px}
+.bfw-api .stitle{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.7px;line-height:1.15;margin-bottom:.75rem;color:#1E1040}
+.bfw-api .ssub{font-size:.95rem;color:#5E538A;max-width:520px;line-height:1.7;margin-bottom:2.5rem}
+
+/* FEATURE GRID */
+.bfw-api .fg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.bfw-api .fc{background:#fff;border:1px solid rgba(180,83,9,0.15);border-radius:16px;padding:1.75rem;transition:border-color .22s,box-shadow .22s;box-shadow:0 1px 6px rgba(180,83,9,0.06)}
+.bfw-api .fc:hover{border-color:#B45309;box-shadow:0 6px 22px rgba(180,83,9,0.12)}
+.bfw-api .fi{font-size:1.6rem;margin-bottom:.85rem}
+.bfw-api .fn{font-size:.95rem;font-weight:700;color:#1E1040;margin-bottom:.5rem}
+.bfw-api .fd{font-size:.83rem;color:#5E538A;line-height:1.6}
+
+/* INTEGRATIONS */
+.bfw-api .integ{padding:2.5rem 1.5rem;background:#EDE9FF;border-top:1px solid rgba(109,40,217,0.12);border-bottom:1px solid rgba(109,40,217,0.12)}
+.bfw-api .integ-inner{max-width:1060px;margin:0 auto}
+.bfw-api .int-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#5E538A;text-align:center;margin-bottom:1rem}
+.bfw-api .int-chips{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center}
+.bfw-api .chip{padding:.35rem .9rem;border-radius:999px;font-size:.78rem;font-weight:600;background:#fff;border:1px solid rgba(180,83,9,0.2);color:#92400E}
+
+/* PROCESS */
+.bfw-api .proc{padding:3.5rem 1.5rem;background:#EDE9FF;border-top:1px solid rgba(109,40,217,0.15);border-bottom:1px solid rgba(109,40,217,0.15)}
+.bfw-api .proc-inner{max-width:1060px;margin:0 auto}
+.bfw-api .proc h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.6px;text-align:center;margin-bottom:2.5rem;color:#1E1040}
+.bfw-api .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.bfw-api .steps::before{content:'';position:absolute;top:27px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#B45309,#9489C4,transparent)}
+.bfw-api .step{text-align:center;padding:0 .5rem}
+.bfw-api .snum{width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #B45309;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:#B45309;margin:0 auto 1rem;position:relative;z-index:1}
+.bfw-api .sn{font-size:.9rem;font-weight:700;color:#1E1040;margin-bottom:.35rem}
+.bfw-api .sd{font-size:.8rem;color:#5E538A;line-height:1.55}
+
+/* CTA */
+.bfw-api .cta{padding:4rem 1.5rem;background:linear-gradient(135deg,rgba(180,83,9,0.1),rgba(146,64,14,0.06));border-top:1px solid rgba(180,83,9,0.2)}
+.bfw-api .cta-inner{max-width:700px;margin:0 auto;text-align:center}
+.bfw-api .cta h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;letter-spacing:-.7px;margin-bottom:1rem;color:#1E1040;line-height:1.15}
+.bfw-api .cta p{font-size:.95rem;color:#5E538A;margin-bottom:2rem;line-height:1.7}
+.bfw-api .cta-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+
+/* FAQ */
+.bfw-api .faq{padding:3.5rem 1.5rem;background:#E8E2FF;border-top:1px solid rgba(109,40,217,0.15)}
+.bfw-api .faq-inner{max-width:760px;margin:0 auto}
+.bfw-api .faq h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.6px;text-align:center;margin-bottom:2rem;color:#1E1040}
+.bfw-api .fitem{border:1px solid rgba(180,83,9,0.15);border-radius:12px;background:#fff;margin-bottom:.75rem;overflow:hidden}
+.bfw-api .fq{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.25rem;cursor:pointer;font-weight:600;font-size:.92rem;color:#1E1040;gap:1rem;background:none;border:none;width:100%;text-align:left}
+.bfw-api .fq:hover{color:#B45309}
+.bfw-api .fq-arrow{font-size:1rem;transition:transform .3s;flex-shrink:0;color:#B45309}
+.bfw-api .fa-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.bfw-api .fa-body p{padding:.1rem 1.25rem 1.1rem;font-size:.87rem;color:#5E538A;line-height:1.7}
+.bfw-api .fitem.open .fa-body{max-height:300px}
+.bfw-api .fitem.open .fq-arrow{transform:rotate(180deg)}
+
+@media(max-width:860px){
+  .bfw-api .fg{grid-template-columns:1fr 1fr}
+  .bfw-api .steps{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .bfw-api .steps::before{display:none}
+  .bfw-api .stats-g{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .bfw-api .fg{grid-template-columns:1fr}
+  .bfw-api .steps{grid-template-columns:1fr}
+  .bfw-api .stats-g{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="bfw-api">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="badge">⚙️ Custom API Development</div>
+      <div class="h-icon">⚙️</div>
+      <h1>APIs That Connect<br><em>Everything You Use</em></h1>
+      <p>Secure, well-documented APIs that integrate your tools, automate data flows, and unlock new digital products — built to REST, GraphQL, and OpenAPI standards.</p>
+      <div class="hero-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Discuss Your Integration →</a>
+        <a href="https://brightlyfuture.co.uk/php-development" class="btn-o">See PHP Development</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-g">
+      <div class="sc"><div class="sv">50+</div><div class="sl">APIs Built & Delivered</div></div>
+      <div class="sc"><div class="sv">99.9%</div><div class="sl">Uptime SLA</div></div>
+      <div class="sc"><div class="sv">&lt;100ms</div><div class="sl">Median Response Time</div></div>
+      <div class="sc"><div class="sv">100%</div><div class="sl">OpenAPI Documented</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="sec">
+    <div class="wrap">
+      <div class="stag">What We Build</div>
+      <div class="stitle">Custom API Services</div>
+      <p class="ssub">Whether you need to expose your data, consume third-party services, or connect disparate systems, we build the glue that holds your stack together.</p>
+      <div class="fg">
+        <div class="fc">
+          <div class="fi">🔌</div>
+          <div class="fn">RESTful API Development</div>
+          <p class="fd">Standards-compliant REST APIs with proper HTTP semantics, pagination, filtering, versioning, and full OpenAPI 3.0 documentation for your team and partners.</p>
+        </div>
+        <div class="fc">
+          <div class="fi">🔷</div>
+          <div class="fn">GraphQL APIs</div>
+          <p class="fd">Flexible GraphQL schemas that let clients request exactly the data they need — ideal for mobile apps, dashboards, and complex data relationships.</p>
+        </div>
+        <div class="fc">
+          <div class="fi">🔔</div>
+          <div class="fn">Webhooks & Event Streams</div>
+          <p class="fd">Real-time event delivery, reliable webhook endpoints with retry logic, signature verification, and dead-letter queuing for mission-critical event flows.</p>
+        </div>
+        <div class="fc">
+          <div class="fi">🔗</div>
+          <div class="fn">System Integrations</div>
+          <p class="fd">Bi-directional integrations between your CRM, ERP, accounting software, e-commerce platform, and any REST or SOAP service — mapped to your data model.</p>
+        </div>
+        <div class="fc">
+          <div class="fi">🛡️</div>
+          <div class="fn">API Security & Auth</div>
+          <p class="fd">OAuth 2.0, API key management, JWT, rate limiting, IP allowlisting, and field-level permissions — security built in from the start, not bolted on.</p>
+        </div>
+        <div class="fc">
+          <div class="fi">🔀</div>
+          <div class="fn">Middleware & Data Pipelines</div>
+          <p class="fd">Transform, validate, and route data between services — field mapping, format conversion, de-duplication, and error handling across your entire integration layer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRATIONS -->
+  <div class="integ">
+    <div class="integ-inner">
+      <div class="int-label">Platforms We Integrate With</div>
+      <div class="int-chips">
+        <span class="chip">Salesforce</span>
+        <span class="chip">HubSpot</span>
+        <span class="chip">Xero</span>
+        <span class="chip">QuickBooks</span>
+        <span class="chip">Stripe</span>
+        <span class="chip">PayPal</span>
+        <span class="chip">Shopify</span>
+        <span class="chip">WooCommerce</span>
+        <span class="chip">Slack</span>
+        <span class="chip">Microsoft Teams</span>
+        <span class="chip">Twilio</span>
+        <span class="chip">SendGrid</span>
+        <span class="chip">AWS S3</span>
+        <span class="chip">Google Cloud</span>
+        <span class="chip">Royal Mail</span>
+        <span class="chip">DPD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="proc">
+    <div class="proc-inner">
+      <h2>From Brief to Live API</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="sn">Integration Mapping</div>
+          <p class="sd">We audit your systems, map data flows, and identify the cleanest integration points before any contracts are signed.</p>
+        </div>
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="sn">API Design</div>
+          <p class="sd">Schema design, endpoint naming, auth model, and OpenAPI spec agreed in writing — your team can review before build begins.</p>
+        </div>
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="sn">Build & Test</div>
+          <p class="sd">Test-driven development, sandbox environment, Postman collection, and full integration testing against real third-party services.</p>
+        </div>
+        <div class="step">
+          <div class="snum">4</div>
+          <div class="sn">Deploy & Monitor</div>
+          <p class="sd">Blue-green deployment, uptime monitoring, alerting, and API analytics dashboards from day one of production.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-inner">
+      <h2>Got Systems That Don't Talk to Each Other?</h2>
+      <p>Tell us what you're trying to connect and we'll scope a solution — free consultation, no commitment.</p>
+      <div class="cta-btns">
+        <a href="https://brightlyfuture.co.uk/contact" class="btn-p">Start the Conversation →</a>
+        <a href="https://brightlyfuture.co.uk/ai-solutions" class="btn-o">Explore AI Solutions</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="faq-inner">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="fitem">
+        <button class="fq" onclick="bfwApiFaq(this)">
+          Do you provide documentation for the APIs you build?
+          <span class="fq-arrow">▾</span>
+        </button>
+        <div class="fa-body"><p>Yes, always. Every API we deliver ships with full OpenAPI 3.0 specification, a Postman collection, authentication guide, error reference, and example requests in multiple languages. Partners and third parties can integrate without needing to contact us.</p></div>
+      </div>
+
+      <div class="fitem">
+        <button class="fq" onclick="bfwApiFaq(this)">
+          Can you integrate with our existing legacy systems?
+          <span class="fq-arrow">▾</span>
+        </button>
+        <div class="fa-body"><p>Yes. We regularly build middleware layers between modern systems and older SOAP services, database-driven systems, or proprietary platforms without public APIs. We assess what's available — database access, file exports, screen scraping — and find the right integration approach.</p></div>
+      </div>
+
+      <div class="fitem">
+        <button class="fq" onclick="bfwApiFaq(this)">
+          How do you handle API security and rate limiting?
+          <span class="fq-arrow">▾</span>
+        </button>
+        <div class="fa-body"><p>Security is built in from the design phase, not added later. We implement OAuth 2.0 or API key authentication, HTTPS-only, rate limiting per consumer, request signing where required, and audit logging. We follow OWASP API Security guidelines as a baseline.</p></div>
+      </div>
+
+      <div class="fitem">
+        <button class="fq" onclick="bfwApiFaq(this)">
+          What happens if a third-party API we integrate with changes?
+          <span class="fq-arrow">▾</span>
+        </button>
+        <div class="fa-body"><p>We design integrations to abstract the third-party surface behind our own internal interface, which limits the blast radius of upstream changes. For clients on maintenance retainers, we monitor for deprecation notices and update integrations proactively.</p></div>
+      </div>
+
+      <div class="fitem">
+        <button class="fq" onclick="bfwApiFaq(this)">
+          Can you take over an API someone else built?
+          <span class="fq-arrow">▾</span>
+        </button>
+        <div class="fa-body"><p>Absolutely. We perform a full code and architecture review, document what's there, identify risks and technical debt, and take it forward from a position of full understanding. We'll tell you honestly if something needs a rebuild rather than just patching it.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function bfwApiFaq(btn){var item=btn.closest('.fitem');var open=item.classList.contains('open');document.querySelectorAll('.bfw-api .fitem.open').forEach(function(el){el.classList.remove('open')});if(!open){item.classList.add('open')}}
+</script>
